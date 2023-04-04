@@ -7,9 +7,25 @@
         return BASE_URL;
     }
     
+
+
+    // retornar los js y css
     function media(){
 
         return BASE_URL."/Assets";
+    }
+
+
+    // funcion para retornar el header_admin y footer_admin
+    function headerAdmin($data=""){
+
+        $view_header = "Views/Template/header_admin.php";
+        require_once ($view_header);
+    } 
+
+    function footerAdmin($data = ""){
+        $view_footer = "Views/Template/footer_admin.php";
+        require_once ($view_footer);
     }
 
     // Nueva informacion formateada
