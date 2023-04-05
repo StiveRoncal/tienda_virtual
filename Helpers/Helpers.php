@@ -38,6 +38,13 @@
         return $format;
     }
 
+    // Retornar modales a nivel global de una solo carpeta, se usa cada vex que se quiera mostrar un modal
+    function getModal(string $nameModal, $data){
+        // retorna direccion de eso y usa las extension.php para reconocer
+        $view_modal = "Views/Template/Modals/{$nameModal}.php";
+        require_once $view_modal;
+    }
+
     // Eliminar exceso de espacios entre palabras
     function strClean($strCadena){
 
