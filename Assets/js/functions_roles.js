@@ -69,7 +69,25 @@ document.addEventListener('DOMContentLoaded', function(){
             // condiconal si llega a las respuesta de envios
             if(request.readyState == 4 && request.status == 200){
 
-                console.log(request.responseText);
+                // console.log(request.responseText);
+                
+                var objData = JSON.parse(request.responseText);
+
+                if(objData.status){
+                    
+                    $('#modalFormRol').modal("hide");
+                    formRol.reset();
+                    swal("Roles de usuario", objData.msg ,"success");
+
+                    tableRoles.api().ajax.reload(function(){
+                        
+                    });
+
+                }else{
+                    swal("Error", objData.msg, "error");
+                }
+
+
             }
 
            
