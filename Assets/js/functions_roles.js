@@ -105,7 +105,41 @@ $('#tableRoles').DataTable();
 
 function openModal(){
 
+    // validacion para evitar conficto en modales de agregar y actulizar de roles 
+    document.querySelector('#idRol').value="";
+    document.querySelector('.modal-header').classList.replace("headerUpdate", "headerRegister");
+    document.querySelector('#btnActionForm').classList.replace("btn-info", "btn-primary");
+    document.querySelector('#btnText').innerHTML = "Guardar";
+    document.querySelector('#titleModal').innerHTML = "Nuevo Rol";
+    document.querySelector("#formRol").reset();
+
     $('#modalFormRol').modal('show');
 
+
+}
+
+// agregar elemento cuando se carge el documenta y carge la funcion
+window.addEventListener('load', function(){
+    fntEditRol();
+}, false);
+
+// configuracion para mostar el editar de los roles
+function fntEditRol(){
+    // varaible que guardar el atributo de clase
+    var btnEditRol = document.querySelectorAll(".btnEditRol");
+    btnEditRol.forEach(function(btnEditRol){
+        btnEditRol.addEventListener('click',function(){
+
+            // Cambiar las propiedad de su html
+            document.querySelector('#titleModal').innerHTML = "Actualizar Rol";
+            document.querySelector('.modal-header').classList.replace("headerRegister", "headerUpdate");
+            document.querySelector('#btnActionForm').classList.replace("btn-primary","btn-info");
+            document.querySelector('#btnText').innerHTML = "Actualizar";    
+
+            $('#modalFormRol').modal('show');
+        });
+
+
+    });
 
 }
