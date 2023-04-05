@@ -24,6 +24,17 @@
         $this->views->getView($this,"roles",$data);
     }
 
+    // 2do Metodo Obtener Roles
+    public function getRoles(){
+
+      $arrData = $this->model->selectRoles();
+
+      // json_encode: devuele los datos de variables en formato json
+      // JSON_UNESCAPED_UNICODE: evita caracteres especiales
+      echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
+      die();
+    }
+
 
   
 
