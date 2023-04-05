@@ -20,13 +20,13 @@
                 </div>
                 <div class="form-group">
                   <label class="control-label">Descripcion</label>
-                  <textarea class="form-control" id="txtDescripcion" name="txtDescripcion" rows="2" placeholder="Descripción del Rol"></textarea>
+                  <textarea class="form-control" id="txtDescripcion" name="txtDescripcion" rows="2" placeholder="Descripción del Rol" required=""></textarea>
                 </div>
                 
                 <!-- ComboBox -->
                 <div class="form-group">
                     <label for="exampleSelect1">Estados</label>
-                    <select class="form-control" id="listStatus" name="listStatus">
+                    <select class="form-control" id="listStatus" name="listStatus" required="">
                       <option value="1">Activo</option>
                       <option value="2">Inactivo</option>
                      
