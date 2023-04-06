@@ -134,9 +134,58 @@ function fntEditRol(){
             document.querySelector('#titleModal').innerHTML = "Actualizar Rol";
             document.querySelector('.modal-header').classList.replace("headerRegister", "headerUpdate");
             document.querySelector('#btnActionForm').classList.replace("btn-primary","btn-info");
-            document.querySelector('#btnText').innerHTML = "Actualizar";    
+            document.querySelector('#btnText').innerHTML = "Actualizar";   
+            
+            // Obtener los datos de scrip ejeuctar ajax para obtener datos de table de roles atraves del id gaudaro en rl
+            var idrol = this.getAttribute("rl");
+            var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+            var ajaxUrl = base_url+'/Roles/getRol/'+idrol;
+            request.open("GET",ajaxUrl,true);
+            request.send();
 
-            $('#modalFormRol').modal('show');
+            // condicional si se enviaron correctamente
+            request.onreadystatechange = function(){
+                if(request.readyState == 4 && request.status == 200){
+
+                    // console.log(request.responseText);
+                    // convertir los json en objetos
+                    var objData =JSON.parse(request.responseText);
+                
+                    // Si est es status: true
+                if(objData.status){
+                    
+                    // Asignar variales  a los campos de los campos
+                    document.querySelector("#idRol").value = objData.data.idrol;
+                    document.querySelector("#txtNombre").value = objData.data.nombrerol;
+                    document.querySelector("#txtDescripcion").value = objData.data.descripcion;
+                 
+                    // Validacion  de estados es 1 armar variables
+                    if(objData.data.status == 1){
+
+                        var optionSelect = '<option value="1" selected class="notBlock">Activo</option>';
+                    }else{
+
+                        var optionSelect = '<option value="2" selected class="notBlock">Inactivo</option>';
+                    }
+
+                    var htmlSelect = `${optionSelect}
+                                    <option value="1">Activo</option>
+                                    <option value="2">Inactivo</option>
+                                    `;
+                    // colocar el html los elementos de esataos
+                    document.querySelector("#listStatus").innerHTML = htmlSelect;
+                    // mostrar formilaropo
+                    $('#modalFormRol').modal('show');
+                }else{
+
+                    swal("Error", objData.msg, "error");
+                }
+
+            }
+        }
+           
+
+           
         });
 
 

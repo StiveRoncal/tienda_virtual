@@ -54,6 +54,33 @@
       die();
     }
 
+    // metodo para extraer un rol para el editar
+    public function getRol(int $idrol){
+
+      $intIdrol = intval(strClean($idrol));
+
+      // condicional si el datos tiene un id validos realizo procesos
+      if($intIdrol > 0){
+
+        $arrData = $this->model->selectRol($intIdrol);
+        // Si no encontro o esta vacia manda errror
+        // Basicamente hace si detecta el id Existe lo corre si no manda mensahe de error
+        if(empty($arrData)){
+
+          $arrResponse = array('status' => false, 'msg' => 'Datos No Encontrados.');
+        }else{
+
+          $arrResponse = array('status'=> true, 'data' => $arrData);
+        }
+
+        echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
+
+      }
+
+      die();
+
+    }
+
     public function setRol(){
       // dep($_POST);
       // almacenar datos guardano la varaibles del los campos

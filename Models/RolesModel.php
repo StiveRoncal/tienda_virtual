@@ -24,6 +24,17 @@
             return $request;
         }
 
+        // 3ra funcion   para selecionar un rol sirve para caputrar solo un id y editar ese id
+        public function selectRol(int $idrol){
+            // Buscar rol por id
+            $this->intIdrol = $idrol;
+            // instrucion sql para selcionar unsolo rol
+            $sql = "SELECT * FROM rol WHERE idrol = $this->intIdrol";
+            $request = $this->select($sql);
+            return $request;
+
+        }
+
         // 2da Funcion para insertar datos
         public function insertRol(string $rol, string $descripcion, int $status){
             
