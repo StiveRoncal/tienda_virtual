@@ -44,6 +44,9 @@ document.addEventListener('DOMContentLoaded', function(){
         // prevenir recarga
         e.preventDefault();
 
+        // nuevo Id para ver estos si se actualizan
+        var intIdRol =document.querySelector('#idRol').value;
+
         // Validar campossi estan vacios
         var strNombre = document.querySelector('#txtNombre').value;
         var strDescripcion = document.querySelector('#txtDescripcion').value;
@@ -79,8 +82,10 @@ document.addEventListener('DOMContentLoaded', function(){
                     formRol.reset();
                     swal("Roles de usuario", objData.msg ,"success");
 
+                    // Sirve para evitar Perder el evento en cada Interaccion de un boton
                     tableRoles.api().ajax.reload(function(){
-                        
+                        // Esto asigna el evento
+                        fntEditRol();
                     });
 
                 }else{

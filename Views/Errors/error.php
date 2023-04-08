@@ -7,7 +7,13 @@
     <title>Página no Encontrada</title>
 </head>
 <body>
-    <h1>Página No Encontrada Error 404 </h1>
     
+    <main class="app-content">
+      <div class="page-error tile">
+        <h1><i class="fa fa-exclamation-circle"></i> Error 404: Pagina no Encontrada</h1>
+        <p>La Pagina no Existe.</p>
+        <p><a class="btn btn-primary" href="javascript:window.history.back();">Go Back</a></p>
+      </div>
+    </main>
 </body>
 </html>
