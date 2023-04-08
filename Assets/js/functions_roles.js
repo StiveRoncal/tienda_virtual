@@ -127,6 +127,7 @@ function openModal(){
 window.addEventListener('load', function(){
     fntEditRol();
     fntDelRol();
+    fntPermisos();
 }, false);
 
 // configuracion para mostar el editar de los roles
@@ -267,4 +268,25 @@ function fntDelRol(){
         });
     });
 });
+}
+
+// Funcion para permisos de usuario
+function fntPermisos(){
+    
+    // selecionar todo los valores del boton permisos
+    var btnPermisosRol = document.querySelectorAll(".btnPermisosRol");
+
+    
+    // Recorre todo esos botones con un buvle y le da una funcion global, donde se le asigna una duncion
+    btnPermisosRol.forEach(function(btnPermisosRol){
+
+        // varaible desde la funcion que hara un evento cuando ponemos click
+        btnPermisosRol.addEventListener('click',function(){
+            // Abre un modal
+
+            $('.modalPermisos').modal('show');
+
+        });
+    });
+
 }
