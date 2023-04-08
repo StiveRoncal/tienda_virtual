@@ -81,6 +81,8 @@
 
     }
 
+    // Metod para actualizar o crear usuario cumple doble funcionamiento
+
     public function setRol(){
       // dep($_POST);
       // Para El Id ya ponder nuevo rol
@@ -126,6 +128,37 @@
       }
       
       echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
+      die();
+
+    }
+
+    // metodo para eliminar el Rol
+    public function delRol(){
+      // si se envio
+      if($_POST){
+
+        // varaiblke que guarda el  el idrol
+        $intIdrol = intval($_POST['idrol']);
+
+        // ejecuta un proceso desde el modelo para eliminar
+        $requestDelete = $this->model->deleteRol($intIdrol);
+
+        // Si mi respuesta es OK
+        if($requestDelete == 'ok'){
+
+          // Ejecuta el mensaje del proceso
+          $arrResponse = array('status' => true, 'msg' => 'Se Ha Eliminado El Rol');
+        // de lo contraio manda error
+        }else if($requestDelete == 'exist'){
+
+          $arrResponse = array('status' => false, 'msg' => 'No es posible eliminar un Rol asociado a Usuario');
+        }
+        // varaible guardado en json evitando caracteres especiales
+
+        echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+      }
+
+      // De lo contrario muere
       die();
 
     }

@@ -126,6 +126,7 @@ function openModal(){
 // agregar elemento cuando se carge el documenta y carge la funcion
 window.addEventListener('load', function(){
     fntEditRol();
+    fntDelRol();
 }, false);
 
 // configuracion para mostar el editar de los roles
@@ -196,4 +197,74 @@ function fntEditRol(){
 
     });
 
+}
+
+// Funcion para eliminar rol con los atributos rl que son auto incrementables
+// Se llamara cuando se cargue todo el html
+function fntDelRol(){
+
+    // variable que almacena el atributo class de eliminar rol del boton todos elementos
+    var btnDelRol = document.querySelectorAll(".btnDelRol");
+    btnDelRol.forEach(function(btnDelRol){
+
+        btnDelRol.addEventListener('click', function(){
+            // obtner atributo rl
+            var idrol = this.getAttribute("rl");
+            
+            // Nos scrip para preguntar si quiere eliminar
+
+    
+        swal({
+            title: "Eliminar Rol",
+            text: "¿Realmente quieres Eliminar el Rol?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonText: "si, Eliminar!",
+            cancelButtonText: "No, Cancelar!",
+            closeOnConfirm: false,
+            closeOnCancel: true, 
+            // Condicional si Eliminar si es confirmad
+        },function(isConfirm){
+
+            // funcion para Eliminar con scrip complementametne
+            var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+            // Direccion para funcion de rutra
+            var ajaxUrl = base_url+'/Roles/delRol/';
+            // parametros  de id Si es Igual al atributo rl
+            var strData = "idrol="+idrol;
+            // abrir conexion
+            request.open("POST",ajaxUrl,true);
+            // Forma en como se enviaran los datos
+            request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            // enviar datos id como parametro
+            request.send(strData);
+
+            // Condicional de envio si cumple el 100% de ser ejecutado
+            request.onreadystatechange = function(){
+
+                if(request.readyState == 4 && request.status == 200){
+
+                    // comvertir json en objeto
+                    var objData = JSON.parse(request.responseText);
+
+                    // Validad si es verdadero 1 o 0
+                    if(objData.status){
+
+                        swal("Eliminar!", objData.msg, "success");
+
+                        // Recargar los eventos 
+                        tableRoles.api().ajax.reload(function(){
+                            fntEditRol();
+                            fntDelRol();
+                        });
+                    }else{
+
+                        swal("Atención!", objData.msg, "error");
+                    }
+
+                }
+            }
+        });
+    });
+});
 }

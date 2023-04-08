@@ -91,6 +91,43 @@
 
             return $request;
         }
+
+        // #5 Metodo para Eliminar Rol
+        public function deleteRol(int $idrol){
+
+            // invocar varaible publica y asignar con parametro
+            $this->intIdrol = $idrol;
+            // consulta para selecionar tabla persona si encuentra idrol igual al id enviado
+            $sql = "SELECT * FROM persona WHERE rolid = $this->intIdrol";
+            // variable que executa una funcion heredad por mysql.php
+            $request = $this->select_all($sql);
+
+
+            // Condicional si esta vacio no hay tabla persona relacionado con el
+
+            if(empty($request)){
+                // Realiza el proceso para actualizar los valores de un estado 1 a 0
+                $sql = "UPDATE rol SET status = ? WHERE idrol = $this->intIdrol ";
+                // Setea el valor 0
+                $arrData = array(0);
+                // ejecuta funcion de mysql.php
+                $request = $this->update($sql,$arrData);
+
+                // Si se cumplio manda ol
+                if($request){
+
+                    $request = 'ok';
+                }else{
+
+                    $request = 'error';
+                }
+            }else{
+
+                $request = 'exist';
+            }
+            
+            return $request;
+        }
         
 
     }
