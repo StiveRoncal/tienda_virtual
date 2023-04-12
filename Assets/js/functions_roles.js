@@ -282,9 +282,28 @@ function fntPermisos(){
 
         // varaible desde la funcion que hara un evento cuando ponemos click
         btnPermisosRol.addEventListener('click',function(){
-            // Abre un modal
+            
+            // peticion get para obtener los modulos
+            var idrol = this.getAttribute("rl");
+            var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+            var ajaxUrl = base_url+'/Permisos/getPermisosRol/'+idrol;
+            request.open("GET",ajaxUrl,true);
+            request.send();
 
-            $('.modalPermisos').modal('show');
+            request.onreadystatechange = function(){
+                if(request.readyState == 4 && request.status == 200){
+
+                    console.log(request.responseText);
+                    // referencia 
+                    document.querySelector('#contentAjax').innerHTML = request.responseText;
+                    // Abre un modal
+                    $('.modalPermisos').modal('show');
+                }
+
+            }
+
+
+            
 
         });
     });
