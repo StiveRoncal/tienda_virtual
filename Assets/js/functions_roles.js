@@ -86,6 +86,8 @@ document.addEventListener('DOMContentLoaded', function(){
                     tableRoles.api().ajax.reload(function(){
                         // Esto asigna el evento
                         fntEditRol();
+                        fntDelRol();
+                        fntPermisos();
                     });
 
                 }else{
@@ -257,6 +259,7 @@ function fntDelRol(){
                         tableRoles.api().ajax.reload(function(){
                             fntEditRol();
                             fntDelRol();
+                            fntPermisos();
                         });
                     }else{
 
