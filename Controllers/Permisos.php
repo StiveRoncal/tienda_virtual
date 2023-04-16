@@ -67,6 +67,13 @@
         die();
     }
 
+
+    #2 Funcion para guardar los permisos
+    public function setPermisos(){
+
+      dep($_POST);
+      die();
+    }
   
 
   }

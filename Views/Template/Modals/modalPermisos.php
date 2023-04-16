@@ -23,6 +23,8 @@
       <div class="col-md-12">
           <div class="tile">
            <form action="" id="formPermisos" name="formPermisos">
+            <!-- imput escodndido  con el id de rol para guardlo con eso-->
+            <input type="hidden" name="idrol" id="idrol" value="<?= $data['idrol'];?>" required="">
             <div class="table-responsive">
               <table class="table">
                 <thead>

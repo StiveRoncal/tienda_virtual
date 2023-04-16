@@ -293,11 +293,14 @@ function fntPermisos(){
             request.onreadystatechange = function(){
                 if(request.readyState == 4 && request.status == 200){
 
-                    console.log(request.responseText);
+                    // console.log(request.responseText);
                     // referencia 
                     document.querySelector('#contentAjax').innerHTML = request.responseText;
                     // Abre un modal
                     $('.modalPermisos').modal('show');
+
+                    //Funcion oara guardar permisos asignados a mos modulos 
+                    document.querySelector('#formPermisos').addEventListener('submit', fntSavePermisos,false);
                 }
 
             }
@@ -308,4 +311,18 @@ function fntPermisos(){
         });
     });
 
+
+    // Funcion para guardar los cambios en permisos de cada rol
+    function fntSavePermisos(evnet){
+        // Evitar que se recarge la pagina
+        evnet.preventDefault();
+        var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+        // Ruta de la funcion que vamos a utilizar
+        var ajaxUrl = base_url+'/Permisos/setPermisos';
+
+        var formElement = document.querySelector("#formPermisos");
+        var formData = new FormData(formElement);
+        request.open("POST",ajaxUrl,true);
+        request.send(formData);
+    }
 }
