@@ -71,7 +71,44 @@
     #2 Funcion para guardar los permisos
     public function setPermisos(){
 
-      dep($_POST);
+      // dep($_POST);
+      // die();
+
+      // Validar si enviamos informacion
+      if($_POST){
+
+        // guardar variable idrol de asignacion de permisos
+        $intIdrol = intval($_POST['idrol']);
+        // referencia al arreglo del sub arreglo
+        $modulos = $_POST['modulos'];
+
+        // referencia al metodo  del modelo cono parameto de la varaible que tenemos
+        $this->model->deletePermisos($intIdrol);
+
+        foreach($modulos as $modulo){
+          // recore todos los elementos de los arreglos de los sub arreglos
+          $idModulo = $modulo['idmodulo'];
+          // condicionales 0 y 1 si son enviados indicandolo los acceso
+          $r = empty($modulo['r']) ? 0 : 1;
+          $w = empty($modulo['w']) ? 0 : 1;
+          $u = empty($modulo['u']) ? 0 : 1;
+          $d = empty($modulo['d']) ? 0 : 1; 
+
+          // Metodo del modelo para insertar enviando valores de los parametros
+          $requestPermisos = $this->model->insertPermisos($intIdrol, $idModulo, $r , $w, $u, $d);
+        }
+
+        // Si hay registro es mayor a 0
+        if($requestPermisos > 0){
+
+          $arrResponse = array('status'=> true, 'msg' => 'Permisos Asignados Correctamente.');
+        }else{
+
+          $arrResponse = array("status" => false, "msg" => 'No es Posible Asignar los Permisos');
+        }
+        // arreglo en formato json
+        echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
+      }
       die();
     }
   

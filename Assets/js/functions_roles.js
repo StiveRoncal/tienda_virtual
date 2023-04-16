@@ -324,5 +324,22 @@ function fntPermisos(){
         var formData = new FormData(formElement);
         request.open("POST",ajaxUrl,true);
         request.send(formData);
+
+        // Validacion si se envio correctamente el guardao de peromisos
+        request.onreadystatechange = function(){
+            if(request.readyState == 4 && request.status == 200){
+
+                // convertir en objeto un foramto json
+                var objData = JSON.parse(request.responseText);
+                // Si el estatis es 0 o 1
+                if(objData.status){
+
+                    swal("Permisos de usuario", objData.msg, "success");
+                }else{
+
+                    swal("Error",objData.msg, "error");
+                }
+            }
+        }
     }
 }

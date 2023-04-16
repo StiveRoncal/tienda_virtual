@@ -36,6 +36,33 @@
         return $request;
     }
 
+    #3 Metodo para Eliminar un permisos
+    public function deletePermisos(int $idrol){
+
+        $this->intRolid = $idrol;
+        $sql = "DELETE FROM permisos WHERE rolid = $this->intRolid";
+        $request = $this->delete($sql);
+        return $request;
+    }
+
+
+    #4 Metodo Insertar Permisos para almacenar en DDBB
+    public function insertPermisos(int $idrol, int $idmodulo, int $r, int $w, int $u, int $d){
+
+    //   Asignacion de variables publicas con parametros
+        $this->intRolid = $idrol;
+        $this->intModuloid = $idmodulo; 
+        $this->r = $r;
+        $this->w = $w;
+        $this->u = $u;
+        $this->d = $d;
+
+        $query_insert = "INSERT INTO permisos(rolid,moduloid,r,w,u,d) VALUES(?,?,?,?,?,?)";
+
+        $arrData = array($this->intRolid, $this->intModuloid, $this->r, $this->w, $this->u, $this->d);
+        $request_insert = $this->insert($query_insert,$arrData);
+        return $request_insert;
+    }
       
 
     }
