@@ -10,7 +10,9 @@
     <title><?= $data['page_tag'];?></title>
     <!-- Main CSS-->
     <link rel="stylesheet" type="text/css" href="<?= media(); ?>/css/main.css">
+    <link rel="stylesheet" type="text/css" href="<?= media(); ?>/css/bootstrap-select.min.css">
     <link rel="stylesheet" type="text/css" href="<?= media(); ?>/css/styles.css">
+  
    
     
   </head>

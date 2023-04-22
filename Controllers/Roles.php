@@ -24,6 +24,31 @@
         $this->views->getView($this,"roles",$data);
     }
 
+
+    // 3er Medto Relacionado con Functions_Roles.js  fntRolesUsuario();
+    // Selecionar Todos los Roles En Un Select de bootstrap-select en Libreria
+    public function getSelectRoles(){
+
+      // Variable vacioa
+      $htmlOptions = "";
+      // Varaible que usa un modelo su metodo
+      $arrData = $this->model->selectRoles();
+
+      // Condicional, Si la cantidad de Registro de la varaible que extrea todo los roles es maypr a o0 si hay registro
+      if(count($arrData) > 0 ){
+
+        // incementecaion de roles que selcciona uno por 1
+        for($i=0; $i < count($arrData); $i++){
+            
+          // Armado de options con los roles
+            $htmlOptions .= '<option value="'.$arrData[$i]['idrol'].'">'.$arrData[$i]['nombrerol'].'</option>';
+        }
+
+        echo $htmlOptions;
+        exit();
+      }
+    }
+
     // 2do Metodo Obtener Roles
     public function getRoles(){
 

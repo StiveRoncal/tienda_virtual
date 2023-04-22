@@ -61,12 +61,12 @@
                     <!-- Rol Usuario -->
                     <div class="form-group col-md-6">
                         <label for="listRolid">Rol Usuario</label>
-                        <select  class="form-control" name="listRolid" id="listRolid" required></select>
+                        <select  class="form-control" data-live-search="true" name="listRolid" id="listRolid" required></select>
                     </div>
                     <!-- Status -->
                     <div class="form-group col-md-6">
                         <label for="listStatus">Status</label>
-                        <select  class="form-control" name="listStatus" id="listStatus" required>
+                        <select  class="form-control selectpicker" name="listStatus" id="listStatus" required>
                             <option value="1">Activo</option>
                             <option value="2">Inactivo</option>
                         </select>
