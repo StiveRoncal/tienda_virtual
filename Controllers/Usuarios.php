@@ -72,7 +72,35 @@
       die();
     }
 
+    public function getUsuarios(){
 
+      $arrData = $this->model->selectUsuarios();
+      
+      for($i=0; $i < count($arrData); $i++){
+
+        
+        if($arrData[$i]['status'] == 1){
+          
+            $arrData[$i]['status'] = '<span class="badge badge-success">Activo</span>';
+        }else{
+
+            $arrData[$i]['status'] = '<span class="badge badge-danger">Inactivo</span>';
+        }
+
+       
+        $arrData[$i]['options'] = '<div class="text-center">
+        <button class="btn btn-info btn-sm btnViewUsuario" us="'.$arrData[$i]['idpersona'].'" title="Ver usuario"><i class="far fa-eye"></i></button>
+        <button class="btn btn-primary btn-sm btnEditUsuario" us="'.$arrData[$i]['idpersona'].'" title="Editar usuario"><i class="fas fa-pencil-alt"></i></button>
+
+
+        <button class="btn btn-danger btn-sm btnDelUsuario" us="'.$arrData[$i]['idpersona'].'" title="Eliminar usuario"><i class="far fa-trash-alt"></i></button>
+        </div>';
+      }
+      
+      echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
+      die();
+
+    }
   
 
   }
