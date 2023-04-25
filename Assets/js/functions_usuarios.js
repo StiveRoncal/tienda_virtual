@@ -1,3 +1,56 @@
+var tableUsuarios;  
+document.addEventListener('DOMContentLoaded', function(){
+
+    var formUsuario = document.querySelector("#formUsuario");
+    formUsuario.onsubmit = function(e){
+        e.preventDefault();
+
+        var strIdentificacion = document.querySelector('#txtIdentificacion').value;
+        var strNombre = document.querySelector('#txtNombre').value;
+        var strApellido = document.querySelector('#txtApellido').value;
+        var strEmail = document.querySelector('#txtEmail').value;
+        var intTelefono = document.querySelector('#txtTelefono').value;
+        var intTipousuario = document.querySelector('#listRolid').value;
+        var strPassword = document.querySelector('#txtPassword').value;
+
+
+        if(strIdentificacion == '' || strApellido == '' || strNombre == '' || strEmail == '' || intTelefono == '' || intTipousuario == ''){
+
+            swal("Atencion","Todos Los Campos son Obligatorios", "error");
+            return false;
+
+        }
+
+        var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+        var ajaxUrl = base_url+'/Usuarios/setUsuario';
+        var formData = new FormData(formUsuario);
+        request.open("POST",ajaxUrl,true);
+        request.send(formData);
+
+        request.onreadystatechange = function(){
+
+            if(request.readyState == 4 && request.status == 200){
+
+                var objData = JSON.parse(request.responseText);
+
+                if(objData.status){
+
+                    $('#modalFormUsuario').modal("hide");
+                    formUsuario.reset();
+                    swal("Usuarios", objData.msg , "success");
+
+                    tableUsuarios.api().ajax.reload(function(){
+
+                    });
+                }else{
+                    swal("Error", objData.msg , "error");
+                }
+            }
+        }
+
+    }
+}, false);
+
 // ejecutar la funcion en momento que carga los archviso
 
 window.addEventListener('load',function(){ 

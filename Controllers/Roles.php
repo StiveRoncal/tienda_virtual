@@ -45,7 +45,7 @@
         }
 
         echo $htmlOptions;
-        exit();
+        die();
       }
     }
 
