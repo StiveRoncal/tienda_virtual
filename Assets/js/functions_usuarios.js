@@ -90,6 +90,7 @@ document.addEventListener('DOMContentLoaded', function(){
 window.addEventListener('load',function(){ 
     fntRolesUsuario();
     fntViewUsuario();
+    fntEditUsuario();
 }, false);
 
 // Funcion PEticion ajax
@@ -166,6 +167,66 @@ function fntViewUsuario(){
     });
 }
 
+// Funcion para editar similiar al fntviewusuario
+function fntEditUsuario(){
+
+    var btnEditUsuario = document.querySelectorAll(".btnEditUsuario");
+
+    btnEditUsuario.forEach(function(btnEditUsuario){
+
+        // Configuracion de apariencia
+        document.querySelector('#titleModal').innerHTML = "Actualizar Usuario";
+        document.querySelector('.modal-header').classList.replace("headerRegister", "headerUpdate");
+        document.querySelector('#btnActionForm').classList.replace("btn-primary", "btn-info");
+        document.querySelector('#btnText').innerHTML = "Actualizar";
+
+        btnEditUsuario.addEventListener('click', function(){
+
+            var idpersona = this.getAttribute("us");
+            var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+            var ajaxUrl = base_url+'/Usuarios/getUsuario/'+idpersona;
+
+            request.open("GET",ajaxUrl,true);
+            request.send();
+
+            request.onreadystatechange = function(){
+
+                if(request.status == 200){
+
+                    var objData = JSON.parse(request.responseText);
+
+                    if(objData.status){
+
+                        document.querySelector("#idUsuario").value = objData.data.idpersona;
+                        document.querySelector("#txtIdentificacion").value = objData.data.identificacion;
+                        document.querySelector("#txtNombre").value = objData.data.nombres;
+                        document.querySelector("#txtApellido").value = objData.data.apellidos;
+                        document.querySelector("#txtTelefono").value = objData.data.telefono;
+                        document.querySelector("#txtEmail").value = objData.data.email_user;
+                        document.querySelector("#listRolid").value = objData.data.idrol;
+
+                        $('#listRolid').selectpicker('render');
+
+                        // cambiar el estado 
+                        if(objData.data.status == 1){
+
+                            document.querySelector("#listStatus").value = 1;
+                        }else{
+
+                            document.querySelector("#listStatus").value = 2;
+                        }
+
+                        $('#listStatus').selectpicker('render');
+                    }
+                }
+
+               $('#modalFormUsuario').modal('show');
+            }
+
+          
+        });
+    });
+}
 // Funcion para abrir modal 
 function openModal(){
 
