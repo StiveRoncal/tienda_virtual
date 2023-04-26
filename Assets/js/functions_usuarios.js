@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function(){
                         fntRolesUsuario();
                         fntViewUsuario();
                         fntEditUsuario();
-                        
+                        fntDelUsuario();
                     });
                 }else{
                     swal("Error", objData.msg , "error");
@@ -94,6 +94,7 @@ window.addEventListener('load',function(){
     fntRolesUsuario();
     fntViewUsuario();
     fntEditUsuario();
+    fntDelUsuario();
 }, false);
 
 // Funcion PEticion ajax
@@ -230,6 +231,81 @@ function fntEditUsuario(){
         });
     });
 }
+
+
+// Eliminar Usuario
+function fntDelUsuario(){
+
+    // variable que almacena el atributo class de eliminar rol del boton todos elementos
+    var btnDelUsuario = document.querySelectorAll(".btnDelUsuario");
+    btnDelUsuario.forEach(function(btnDelUsuario){
+
+        btnDelUsuario.addEventListener('click', function(){
+            // obtner atributo rl
+            var idUsuario = this.getAttribute("us");
+            
+            // Nos scrip para preguntar si quiere eliminar
+
+    
+        swal({
+            title: "Eliminar Usuario",
+            text: "¿Realmente quieres Eliminar el Usuario?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonText: "si, Eliminar!",
+            cancelButtonText: "No, Cancelar!",
+            closeOnConfirm: false,
+            closeOnCancel: true, 
+            // Condicional si Eliminar si es confirmad
+        },function(isConfirm){
+
+            // funcion para Eliminar con scrip complementametne
+            var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+            // Direccion para funcion de rutra
+            var ajaxUrl = base_url+'/Usuarios/delUsuario/';
+            // parametros  de id Si es Igual al atributo rl
+            var strData = "idUsuario="+idUsuario;
+            // abrir conexion
+            request.open("POST",ajaxUrl,true);
+            // Forma en como se enviaran los datos
+            request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            // enviar datos id como parametro
+            request.send(strData);
+
+            // Condicional de envio si cumple el 100% de ser ejecutado
+            request.onreadystatechange = function(){
+
+                if(request.readyState == 4 && request.status == 200){
+
+                    // comvertir json en objeto
+                    var objData = JSON.parse(request.responseText);
+
+                    // Validad si es verdadero 1 o 0
+                    if(objData.status){
+
+                        swal("Eliminar!", objData.msg, "success");
+
+                        // Recargar los eventos 
+                        tableUsuarios.api().ajax.reload(function(){
+                            fntRolesUsuario();
+                            fntViewUsuario();
+                            fntEditUsuario();
+                            fntDelUsuario();
+                            
+                        });
+                    }else{
+
+                        swal("Atención!", objData.msg, "error");
+                    }
+
+                }
+            }
+        });
+    });
+});
+}
+
+
 // Funcion para abrir modal 
 function openModal(){
 
