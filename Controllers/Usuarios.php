@@ -101,6 +101,12 @@
       die();
 
     }
+
+
+    public function getUsuario(int $idpersona){
+      echo $idpersona;
+      die();
+    }
   
 
   }

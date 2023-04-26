@@ -89,6 +89,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 window.addEventListener('load',function(){ 
     fntRolesUsuario();
+    fntViewUsuario();
 }, false);
 
 // Funcion PEticion ajax
@@ -117,7 +118,26 @@ function fntRolesUsuario(){
     }
 }
 
+// Funcion para abrir el detalle de los usuarios
+function fntViewUsuario(){
 
+    var btnViewUsuario = document.querySelectorAll(".btnViewUsuario");
+
+    btnViewUsuario.forEach(function(btnViewUsuario){
+
+        btnViewUsuario.addEventListener('click', function(){
+
+            var idpersona = this.getAttribute("us");
+            var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+            var ajaxUrl = base_url+'/Usuarios/getUsuario/'+idpersona;
+
+            request.open("GET",ajaxUrl,true);
+            request.send();
+
+            $('#modalViewUser').modal('show');
+        });
+    });
+}
 
 // Funcion para abrir modal 
 function openModal(){
