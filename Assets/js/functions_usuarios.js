@@ -74,7 +74,10 @@ document.addEventListener('DOMContentLoaded', function(){
                     swal("Usuarios", objData.msg , "success");
 
                     tableUsuarios.api().ajax.reload(function(){
-
+                        fntRolesUsuario();
+                        fntViewUsuario();
+                        fntEditUsuario();
+                        
                     });
                 }else{
                     swal("Error", objData.msg , "error");
@@ -137,7 +140,7 @@ function fntViewUsuario(){
 
             request.onreadystatechange = function(){
 
-                if(request.status == 200){
+                if(request.readyState == 4 && request.status == 200){
 
                     var objData = JSON.parse(request.responseText);
 
@@ -191,7 +194,7 @@ function fntEditUsuario(){
 
             request.onreadystatechange = function(){
 
-                if(request.status == 200){
+                if( request.readyState == 4 && request.status == 200){
 
                     var objData = JSON.parse(request.responseText);
 
