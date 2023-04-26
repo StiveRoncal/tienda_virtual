@@ -62,6 +62,8 @@ class UsuariosModel extends Mysql{
         return $return;
     }
 
+    
+    #2 Para varios Usuarios
     public function selectUsuarios(){
 
         $sql = "SELECT p.idpersona,p.identificacion,p.nombres,p.apellidos,p.telefono,p.email_user,p.status,
@@ -72,6 +74,21 @@ class UsuariosModel extends Mysql{
                         WHERE p.status != 0";
         $request = $this->select_all($sql);
 
+        return $request;
+    }
+
+    public function selectUsuario(int $idpersona){
+
+        $this->intIdUsuario = $idpersona;
+
+        $sql = "SELECT p.idpersona, p.identificacion, p.nombres, p.apellidos, p.telefono, p.email_user, p.dni, p.nombrefiscal,
+                    r.idrol, r.nombrerol, p.status, DATE_FORMAT(p.datecreated, '%d-%m-%Y') as fechaRegistro
+                    FROM persona p
+                    INNER JOIN rol r
+                    ON p.rolid = r.idrol
+                    WHERE p.idpersona = $this->intIdUsuario";
+        
+        $request = $this->select($sql);
         return $request;
     }
 

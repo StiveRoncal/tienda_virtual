@@ -134,7 +134,34 @@ function fntViewUsuario(){
             request.open("GET",ajaxUrl,true);
             request.send();
 
-            $('#modalViewUser').modal('show');
+            request.onreadystatechange = function(){
+
+                if(request.status == 200){
+
+                    var objData = JSON.parse(request.responseText);
+
+                    if(objData.status){
+
+                        var estadoUsuario = objData.data.status == 1 ? '<span class="badge badge-success">Activo</span>':'<span class="badge badge-danger">Inactivo</span>';
+                        
+                        document.querySelector("#celIdentificacion").innerHTML = objData.data.identificacion;
+                        document.querySelector("#celNombre").innerHTML = objData.data.nombres;
+                        document.querySelector("#celApellido").innerHTML = objData.data.apellidos;
+                        document.querySelector("#celTelefono").innerHTML = objData.data.telefono;
+                        document.querySelector("#celEmail").innerHTML = objData.data.email_user;
+                        document.querySelector("#celTipoUsuario").innerHTML = objData.data.nombrerol;
+                        document.querySelector("#celEstado").innerHTML = estadoUsuario;
+                        document.querySelector("#celFechaRegistro").innerHTML = objData.data.fechaRegistro;
+
+                        $('#modalViewUser').modal('show');
+                    }else{
+
+                        swal("Error", objData.msg, "error");
+                    }
+                }
+            }
+
+          
         });
     });
 }

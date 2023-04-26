@@ -131,6 +131,10 @@
                     </tr>
                     <tr>
                         <td>Email (Usuario):</td>
+                        <td id="celEmail"></td>
+                    </tr>
+                    <tr>
+                        <td>Tipo Usuario:</td>
                         <td id="celTipoUsuario"></td>
                     </tr>
                     <tr>

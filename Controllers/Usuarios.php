@@ -104,7 +104,25 @@
 
 
     public function getUsuario(int $idpersona){
-      echo $idpersona;
+
+      $idusuario = intval($idpersona);
+      if($idpersona > 0){
+
+        $arrData = $this->model->selectUsuario($idusuario);
+        
+        // Condiciona y hay o se excede de numero no existe
+        if(empty($arrData)){
+          
+          $arrResponse = array('status' => false, 'msg' => 'Datos No Encontrado, Se Excedio de Numero');
+
+        }else{
+
+          $arrResponse = array('status' => true, 'data' => $arrData);
+
+        }
+
+        echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
+      }
       die();
     }
   
