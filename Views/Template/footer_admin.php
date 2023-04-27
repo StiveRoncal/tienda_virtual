@@ -22,7 +22,7 @@
     <script type="text/javascript" src="<?= media(); ?>/js/plugins/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="<?= media(); ?>/js/plugins/dataTables.bootstrap.min.js"></script>
     <script type="text/javascript" src="<?= media(); ?>/js/plugins/bootstrap-select.min.js"></script>
-    
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <!-- Condicionales Roles -->
     <?php if($data['page_name'] == "rol_usuario"){ ?>
