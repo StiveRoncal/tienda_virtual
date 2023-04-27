@@ -236,8 +236,58 @@ function fntEditUsuario(){
 // Eliminar Usuario
 function fntDelUsuario(){
 
-   
+    // variable que almacena el atributo class de eliminar rol del boton todos elementos
+    var btnDelUsuario = document.querySelectorAll(".btnDelUsuario");
+    btnDelUsuario.forEach(function(btnDelUsuario){
+
+        btnDelUsuario.addEventListener('click', function(){
+            // obtner atributo rl
+            var idUsuario = this.getAttribute("us");
+            
+            // Nos scrip para preguntar si quiere eliminar
+            swal({
+                title: "Eliminar Usuario",
+                text: "¿Realmente quieres Eliminar el Usuario?",
+                icon: "warning",
+                buttons: ["No, Cancelar","Si,Eliminar"],
+                dangerMode: true,
+              })
+              .then((willDelete) => {
+                if(willDelete){
+
+                    var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+                    var ajaxUrl = base_url+'/Usuarios/delUsuario/';
+                    var strData = "idUsuario="+idUsuario;
+                    request.open("POST",ajaxUrl,true);
+                    request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                    request.send(strData);
+
+                    request.onreadystatechange = function(){
+                        if(request.readyState == 4 && request.status == 200){
+                            var objData = JSON.parse(request.responseText);
+
+                            if(objData.status){
+
+                                swal("Eliminar!", objData.msg, "success");
+
+                                tableUsuarios.api().ajax.reload(function(){
+                                    fntRolesUsuario();
+                                    fntViewUsuario();
+                                    fntEditUsuario();
+                                    fntDelUsuario();
+                                });
+                            }else{
+                                swal("Atención!", objData.msg, "error");
+                            }
+                        }
+                    }
+                }
+              });
+            });
+});
+
 }
+
 
 
 // Funcion para abrir modal 
