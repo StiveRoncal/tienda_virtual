@@ -39,14 +39,15 @@
 
         // incementecaion de roles que selcciona uno por 1
         for($i=0; $i < count($arrData); $i++){
-            
+            // validacion de roles para que no se muestre en ususarios cuando esten vacios en selectoption
+            if($arrData[$i]['status'] == 1){
           // Armado de options con los roles
             $htmlOptions .= '<option value="'.$arrData[$i]['idrol'].'">'.$arrData[$i]['nombrerol'].'</option>';
+            }
         }
-
-        echo $htmlOptions;
-        die();
       }
+      echo $htmlOptions;
+      die();
     }
 
     // 2do Metodo Obtener Roles

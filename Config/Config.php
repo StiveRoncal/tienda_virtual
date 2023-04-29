@@ -14,7 +14,7 @@
     const DB_NAME="db_tiendavirtual";
     const DB_USER="root";
     const DB_PASSWORD = ""; 
-    const DB_CHARSET = "charset=utf8";
+    const DB_CHARSET = "utf8";
 
     // Delimitador decimal y millar ej. 24,50.00
     const SPD = ".";
