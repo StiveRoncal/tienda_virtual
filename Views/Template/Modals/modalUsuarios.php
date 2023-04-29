@@ -29,12 +29,12 @@
                     <!-- Nombre -->
                     <div class="form-group col-md-6">
                         <label for="txtNombre">Nombres</label>
-                        <input type="text" class="form-control" id="txtNombre" name="txtNombre" required="">
+                        <input type="text" class="form-control valid validText" id="txtNombre" name="txtNombre" required="">
                     </div>
                     <!-- Apellido -->
                     <div class="form-group col-md-6">
                         <label for="txtApellido">Apellidos</label>
-                        <input type="text" class="form-control" id="txtApellido" name="txtApellido" required="">
+                        <input type="text" class="form-control valid validText" id="txtApellido" name="txtApellido" required="">
                     </div>
                 </div>
 
@@ -46,12 +46,12 @@
                     <!-- Telefono -->
                     <div class="form-group col-md-6">
                         <label for="txtTelefono">Teléfono</label>
-                        <input type="text" class="form-control" id="txtTelefono" name="txtTelefono" required="">
+                        <input type="text" class="form-control valid validNumber" id="txtTelefono" name="txtTelefono" required="" onkeypress="return controlTag(event);">
                     </div>
                     <!-- Email -->
                     <div class="form-group col-md-6">
                         <label for="txtEmail">Email</label>
-                        <input type="text" class="form-control" id="txtEmail" name="txtEmail" required="">
+                        <input type="text" class="form-control valid validEmail" id="txtEmail" name="txtEmail" required="">
                     </div>
                 </div>
 

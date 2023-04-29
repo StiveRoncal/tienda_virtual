@@ -83,6 +83,21 @@ document.addEventListener('DOMContentLoaded', function(){
 
         }
 
+        // script para validar los elemeto de campos para ingresar usuario si estan no cumple con los requerimiento
+
+        // selecciona todos los elemtos con valid
+        let elementsValid = document.getElementsByClassName("valid");
+        //cuenta todo slos elemento string
+        for(let i=0; i < elementsValid.length; i++ ){
+
+            // verifica poscion 1, verifica si elemento contiene la clase is valid ose el campo esta rojo
+            if(elementsValid[i].classList.contains('is-invalid')){
+
+                swal("Atención","Porfavor Verifique los campos en Rojo", "error");
+                return false;
+            }
+        }
+
         var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
         var ajaxUrl = base_url+'/Usuarios/setUsuario';
         var formData = new FormData(formUsuario);
