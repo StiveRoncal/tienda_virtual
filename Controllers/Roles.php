@@ -18,6 +18,7 @@
         $data['page_tag'] = "Roles Usuarios";
         $data['page_name'] = "rol_usuario"; 
         $data['page_title'] = "Roles Usuario <small>Tienda Virtual</small>";
+        $data['page_functions_js'] = "functions_roles.js";
  
 
         // invocar la vista su metodo libraries/Core/Views.php

@@ -32,16 +32,11 @@
     <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
     
     <script src="<?= media(); ?>/js/functions_admin.js"></script>
-    <!-- Condicionales Roles -->
-    <?php if($data['page_name'] == "rol_usuario"){ ?>
-        <script src="<?= media(); ?>/js/functions_roles.js"></script>
-    <?php } ?>
+
+    <!-- carga archivo de roles e usuarios para ahorra codigo functios_roles.js e functions_usuarios.js -->
+    <script src="<?= media(); ?>/js/<?= $data['page_functions_js'];?>"></script>
 
 
-    <!-- Condicionales Usuarios -->
-  <?php if($data['page_name'] == "usuarios"){     ?>
-        <script src="<?= media(); ?>/js/functions_usuarios.js"></script>
-  <?php } ?>
 
    
   </body>

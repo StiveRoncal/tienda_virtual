@@ -18,7 +18,7 @@
         $data['page_tag'] = "Usuarios";
         $data['page_title'] = "Usuarios <small>Tienda Virtual</small>";
         $data['page_name'] = "usuarios";
-        
+        $data['page_functions_js'] = "functions_usuarios.js";
 
         // invocar la vista su metodo libraries/Core/Views.php
         $this->views->getView($this,"usuarios",$data);
