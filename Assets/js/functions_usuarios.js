@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
         "resonsieve":"true",
         "bDestroy": true,
-        "iDisplayLength": 10,
+        "iDisplayLength": 3,
         "order":[[0,"desc"]]
     });
 
@@ -73,12 +73,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     formUsuario.reset();
                     swal("Usuarios", objData.msg , "success");
 
-                    tableUsuarios.api().ajax.reload(function(){
-                        fntRolesUsuario();
-                        fntViewUsuario();
-                        fntEditUsuario();
-                        fntDelUsuario();
-                    });
+                    tableUsuarios.api().ajax.reload();
                 }else{
                     swal("Error", objData.msg , "error");
                 }
@@ -92,9 +87,9 @@ document.addEventListener('DOMContentLoaded', function(){
 
 window.addEventListener('load',function(){ 
     fntRolesUsuario();
-    fntViewUsuario();
-    fntEditUsuario();
-    fntDelUsuario();
+    // fntViewUsuario();
+    // fntEditUsuario();
+    // fntDelUsuario();
 }, false);
 
 // Funcion PEticion ajax
@@ -124,15 +119,10 @@ function fntRolesUsuario(){
 }
 
 // Funcion para abrir el detalle de los usuarios
-function fntViewUsuario(){
+function fntViewUsuario(idpersona){
 
-    var btnViewUsuario = document.querySelectorAll(".btnViewUsuario");
-
-    btnViewUsuario.forEach(function(btnViewUsuario){
-
-        btnViewUsuario.addEventListener('click', function(){
-
-            var idpersona = this.getAttribute("us");
+    
+            var idpersona = idpersona;
             var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
             var ajaxUrl = base_url+'/Usuarios/getUsuario/'+idpersona;
 
@@ -167,26 +157,22 @@ function fntViewUsuario(){
             }
 
           
-        });
-    });
+       
 }
 
 // Funcion para editar similiar al fntviewusuario
-function fntEditUsuario(){
+function fntEditUsuario(idpersona){
 
-    var btnEditUsuario = document.querySelectorAll(".btnEditUsuario");
-
-    btnEditUsuario.forEach(function(btnEditUsuario){
-
+    
         // Configuracion de apariencia
         document.querySelector('#titleModal').innerHTML = "Actualizar Usuario";
         document.querySelector('.modal-header').classList.replace("headerRegister", "headerUpdate");
         document.querySelector('#btnActionForm').classList.replace("btn-primary", "btn-info");
         document.querySelector('#btnText').innerHTML = "Actualizar";
 
-        btnEditUsuario.addEventListener('click', function(){
+        
 
-            var idpersona = this.getAttribute("us");
+            var idpersona = idpersona;
             var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
             var ajaxUrl = base_url+'/Usuarios/getUsuario/'+idpersona;
 
@@ -228,21 +214,16 @@ function fntEditUsuario(){
             }
 
           
-        });
-    });
+        
 }
 
 
 // Eliminar Usuario
-function fntDelUsuario(){
+function fntDelUsuario(idpersona){
 
-    // variable que almacena el atributo class de eliminar rol del boton todos elementos
-    var btnDelUsuario = document.querySelectorAll(".btnDelUsuario");
-    btnDelUsuario.forEach(function(btnDelUsuario){
-
-        btnDelUsuario.addEventListener('click', function(){
+ 
             // obtner atributo rl
-            var idUsuario = this.getAttribute("us");
+            var idUsuario = idpersona;
             
             // Nos scrip para preguntar si quiere eliminar
             swal({
@@ -283,8 +264,7 @@ function fntDelUsuario(){
                     }
                 }
               });
-            });
-});
+          
 
 }
 

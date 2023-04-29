@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
         "resonsieve":"true",
         "bDestroy": true,
-        "iDisplayLength": 10,
+        "iDisplayLength": 3,
         "order":[[0,"desc"]]
     });
 
@@ -83,12 +83,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     swal("Roles de usuario", objData.msg ,"success");
 
                     // Sirve para evitar Perder el evento en cada Interaccion de un boton
-                    tableRoles.api().ajax.reload(function(){
-                        // Esto asigna el evento
-                        fntEditRol();
-                        fntDelRol();
-                        fntPermisos();
-                    });
+                    tableRoles.api().ajax.reload();
 
                 }else{
                     swal("Error", objData.msg, "error");
@@ -127,17 +122,14 @@ function openModal(){
 
 // agregar elemento cuando se carge el documenta y carge la funcion
 window.addEventListener('load', function(){
-    fntEditRol();
-    fntDelRol();
-    fntPermisos();
+    // fntEditRol();
+    // fntDelRol();
+    // fntPermisos();
 }, false);
 
 // configuracion para mostar el editar de los roles
-function fntEditRol(){
-    // varaible que guardar el atributo de clase
-    var btnEditRol = document.querySelectorAll(".btnEditRol");
-    btnEditRol.forEach(function(btnEditRol){
-        btnEditRol.addEventListener('click',function(){
+function fntEditRol(idrol){
+ 
 
             // Cambiar las propiedad de su html
             document.querySelector('#titleModal').innerHTML = "Actualizar Rol";
@@ -146,7 +138,7 @@ function fntEditRol(){
             document.querySelector('#btnText').innerHTML = "Actualizar";   
             
             // Obtener los datos de scrip ejeuctar ajax para obtener datos de table de roles atraves del id gaudaro en rl
-            var idrol = this.getAttribute("rl");
+            var idrol = idrol;
             var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
             var ajaxUrl = base_url+'/Roles/getRol/'+idrol;
             request.open("GET",ajaxUrl,true);
@@ -195,24 +187,15 @@ function fntEditRol(){
            
 
            
-        });
-
-
-    });
-
+     
 }
 
 // Funcion para eliminar rol con los atributos rl que son auto incrementables
 // Se llamara cuando se cargue todo el html
-function fntDelRol(){
+function fntDelRol(idrol){
 
-    // variable que almacena el atributo class de eliminar rol del boton todos elementos
-    var btnDelRol = document.querySelectorAll(".btnDelRol");
-    btnDelRol.forEach(function(btnDelRol){
-
-        btnDelRol.addEventListener('click', function(){
-            // obtner atributo rl
-            var idrol = this.getAttribute("rl");
+    
+            var idrol = idrol;
             
             // Nos scrip para preguntar si quiere eliminar
             swal({
@@ -252,26 +235,17 @@ function fntDelRol(){
                     }
                 }
               });
-            });
-});
+           
 
 }
 
 // Funcion para permisos de usuario
-function fntPermisos(){
+function fntPermisos(idrol){
     
-    // selecionar todo los valores del boton permisos
-    var btnPermisosRol = document.querySelectorAll(".btnPermisosRol");
-
-    
-    // Recorre todo esos botones con un buvle y le da una funcion global, donde se le asigna una duncion
-    btnPermisosRol.forEach(function(btnPermisosRol){
-
-        // varaible desde la funcion que hara un evento cuando ponemos click
-        btnPermisosRol.addEventListener('click',function(){
+   
             
             // peticion get para obtener los modulos
-            var idrol = this.getAttribute("rl");
+            var idrol = idrol;
             var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
             var ajaxUrl = base_url+'/Permisos/getPermisosRol/'+idrol;
             request.open("GET",ajaxUrl,true);
@@ -291,41 +265,35 @@ function fntPermisos(){
                 }
 
             }
+  
+}
 
+ // Funcion para guardar los cambios en permisos de cada rol
+ function fntSavePermisos(evnet){
+    // Evitar que se recarge la pagina
+    evnet.preventDefault();
+    var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    // Ruta de la funcion que vamos a utilizar
+    var ajaxUrl = base_url+'/Permisos/setPermisos';
 
-            
+    var formElement = document.querySelector("#formPermisos");
+    var formData = new FormData(formElement);
+    request.open("POST",ajaxUrl,true);
+    request.send(formData);
 
-        });
-    });
+    // Validacion si se envio correctamente el guardao de peromisos
+    request.onreadystatechange = function(){
+        if(request.readyState == 4 && request.status == 200){
 
+            // convertir en objeto un foramto json
+            var objData = JSON.parse(request.responseText);
+            // Si el estatis es 0 o 1
+            if(objData.status){
 
-    // Funcion para guardar los cambios en permisos de cada rol
-    function fntSavePermisos(evnet){
-        // Evitar que se recarge la pagina
-        evnet.preventDefault();
-        var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-        // Ruta de la funcion que vamos a utilizar
-        var ajaxUrl = base_url+'/Permisos/setPermisos';
+                swal("Permisos de usuario", objData.msg, "success");
+            }else{
 
-        var formElement = document.querySelector("#formPermisos");
-        var formData = new FormData(formElement);
-        request.open("POST",ajaxUrl,true);
-        request.send(formData);
-
-        // Validacion si se envio correctamente el guardao de peromisos
-        request.onreadystatechange = function(){
-            if(request.readyState == 4 && request.status == 200){
-
-                // convertir en objeto un foramto json
-                var objData = JSON.parse(request.responseText);
-                // Si el estatis es 0 o 1
-                if(objData.status){
-
-                    swal("Permisos de usuario", objData.msg, "success");
-                }else{
-
-                    swal("Error",objData.msg, "error");
-                }
+                swal("Error",objData.msg, "error");
             }
         }
     }
