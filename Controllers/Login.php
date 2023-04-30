@@ -63,10 +63,16 @@
               // Creacion de varaivle de sesion
               $_SESSION['idUser'] = $arrData['idpersona'];
               $_SESSION['login'] = true;
+
+              // Varaible que almacena un modelo como variables de session de una funcion que deuvel y parametro de idusuario
+              // cargar los datos sin cerrar sesion
+              $arrData =$this->model->sessionLogin($_SESSION['idUser']);
+              // obtener todos los datos de usuario y alamdenra en vraible de ssion
+              $_SESSION['userData'] = $arrData;
               
               // si hizo login de forma correcta
-              $arrResponse = array('status'=>true, 'msg' => 'OK');
-
+              $arrResponse = array('status'=>true, 'msg' => 'OK');  
+       
 
             }else{
                 $arrResponse = array('status' => false, 'msg' => 'Usuario Inactivo');

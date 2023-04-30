@@ -7,14 +7,16 @@
     
     public function __construct(){
 
-      //verifica inicio de session
+      session_start();
+
       if(empty($_SESSION['login'])){
 
-        //redireciona 
-        header('Location: '.base_url().'/login');
+          header('Location:'.base_url().'/login');
+
       }
 
       parent::__construct();
+
 
     }
 
