@@ -9,10 +9,10 @@
     <link rel="shortcut icon" href="<?= media();?>/images/uploads/favicon.png" type="image/x-icon">
     
     <link rel="stylesheet" type="text/css" href="<?= media();?>/css/main.css">
-    <link rel="stylesheet" type="text/css" href="<?= media();?>/css/style.css">
+    <link rel="stylesheet" type="text/css" href="<?= media();?>/css/styles.css">
 
 
-    <title><?php $data['page_tag'];?></title>
+    <title><?= $data['page_tag'];?></title>
   </head>
   <body>
     <section class="material-half-bg">
@@ -22,18 +22,19 @@
     <!-- Formulario login -->
     <section class="login-content">
       <div class="logo">
-        <h1>Tienda Virtual Stive Roncal</h1>
+        <h1><?= $data['page_title'];?></h1>
       </div>
       <div class="login-box">
-        <form class="login-form" action="index.html">
+
+        <form class="login-form" name="formLogin" id="formLogin" action="">
           <h3 class="login-head"><i class="fa fa-lg fa-fw fa-user"></i>INICIAR SESIÓN</h3>
           <div class="form-group">
             <label class="control-label">USUARIO</label>
-            <input id="txtEmail" class="form-control" type="email" placeholder="Email" autofocus>
+            <input id="txtEmail" name="txtEmail" class="form-control" type="email" placeholder="Email" autofocus>
           </div>
           <div class="form-group">
             <label class="control-label">CONSTRASEÑA</label>
-            <input  id="txtPassword" class="form-control" type="password" placeholder="Constraseña">
+            <input  id="txtPassword" name="txtPassword" class="form-control" type="password" placeholder="Constraseña">
           </div>
           <div class="form-group">
             <div class="utility">
@@ -62,6 +63,10 @@
         </form>
       </div>
     </section>
+
+    <script>
+      const base_url = "<?= base_url();?>";
+    </script>
     <!-- Essential javascripts for application to work-->
     <script src="<?= media(); ?>/js/jquery-3.3.1.min.js"></script>
     <script src="<?= media(); ?>/js/popper.min.js"></script>
@@ -71,8 +76,8 @@
     <script src="<?= media(); ?>/js/main.js"></script>
     <!-- The javascript plugin to display page loading on top-->
     <script src="<?= media(); ?>/js/plugins/pace.min.js"></script>
-
-    
+    <script type="text/javascript" src="<?= media(); ?>/js/plugins/sweetalert.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <!-- php al de alto nivel recuerda que es una condenacion solo php no te asustes -->
     <script src="<?= media(); ?>/js/<?= $data['page_functions_js'];?>"></script>
     
