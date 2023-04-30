@@ -23,8 +23,10 @@ document.addEventListener('DOMContentLoaded', function(){
             let strPassword = document.querySelector('#txtPassword').value;
 
             if(strEmail == "" || strPassword == ""){
+
                 swal("Por favor","Escribe Usuario y Contraseña","error");
                 return false;
+
             }else{
 
                 // Enviar los datos al controlador
@@ -37,9 +39,34 @@ document.addEventListener('DOMContentLoaded', function(){
                 request.open("POST",ajaxUrl,true);
                 request.send(formData);
 
-                console.log(request);
+                request.onreadystatechange = function(){
+                    
+                if(request.readyState != 4) return;
+        
+                if(request.status == 200){
+
+                    // Si el envio es exito convertir el json en objeto
+                    var objData = JSON.parse(request.responseText);
+
+                    // si es verdadero hizo login de forma correcta
+                    if(objData.status){
+                        // redirecionar
+                        window.location = base_url+'/dashboard';
+
+                    }else{
+
+                        swal("Atencion", objData.msg, "error");
+
+                        document.querySelector('#txtPassword').value="";
+                    }
+                }else{
+                    swal("Atencion", "Error en el Proceso", "error");
+                }
+
+                return false;
             }
 
+            }
         }
     }
 }, false);

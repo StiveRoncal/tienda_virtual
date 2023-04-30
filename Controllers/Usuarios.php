@@ -4,9 +4,17 @@
 
   class Usuarios extends Controllers{
 
+    
     public function __construct(){
 
-    parent::__construct();
+      //verifica inicio de session
+      if(empty($_SESSION['login'])){
+
+        //redireciona 
+        header('Location: '.base_url().'/login');
+      }
+
+      parent::__construct();
 
     }
 

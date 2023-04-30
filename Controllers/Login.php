@@ -7,10 +7,14 @@
     public function __construct(){
       // Iniciar una variable de sesion
       session_start();
+      // condicional si esxiste la variabe¿le seesion
+      if(isset($_SESSION['login'])){
 
-      
-        parent::__construct();
+        //redireciona 
+        header('Location: '.base_url().'/dashboard');
+      }
 
+      parent::__construct();
     }
 
 
