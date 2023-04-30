@@ -86,6 +86,12 @@
     }
 
   
+    // #2 metodo para recetar usuario con correo
+
+    public function resetPass(){
+      dep($_POST);
+      die();
+    }
 
   }
 ?>

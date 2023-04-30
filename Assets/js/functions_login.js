@@ -9,6 +9,9 @@ $('.login-content [data-toggle="flip"]').click(function() {
 // documento de recarga a todos las funciones
 
 document.addEventListener('DOMContentLoaded', function(){
+
+
+    //#1 Valicion de Login
     // condicional
     //si existe ese elemento en el documento
     if(document.querySelector("#formLogin")){
@@ -66,6 +69,41 @@ document.addEventListener('DOMContentLoaded', function(){
                 return false;
             }
 
+            }
+        }
+    }
+
+
+    //#2 Validacion de resetar Usuario para recuprar cuenta
+
+    if(document.querySelector("#formRecetPass")){
+
+        let formRecetPass = document.querySelector("#formRecetPass");
+
+        formRecetPass.onsubmit = function(e){
+            e.preventDefault();
+
+            let strEmail = document.querySelector('#txtEmailReset').value;
+
+            if(strEmail == ""){
+
+                swal("Porfavor", "Escriba Tu Correo Electrónico", "error");
+                return false;
+            }else{
+
+                var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+
+                var ajaxUrl = base_url+'/Login/resetPass';
+
+                var formData = new FormData(formRecetPass);
+
+                request.open("POST",ajaxUrl,true);
+                request.send(formData);
+                
+                request.onreadystatechange = function(){
+
+                    console.log(request);
+                }
             }
         }
     }
