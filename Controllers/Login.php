@@ -89,7 +89,54 @@
     // #2 metodo para recetar usuario con correo
 
     public function resetPass(){
-      dep($_POST);
+      // validar si se envio un post
+      if($_POST){
+        
+        // valida el campo email
+        if(empty($_POST['txtEmailReset'])){
+
+          $arrResponse = array('status' => false, 'msg' => 'Error de Datos');
+        }else{
+          // Variable token que esta en helper
+          $token = token();
+
+          $strEmail = strtolower(strClean($_POST['txtEmailReset']));
+          $arrData = $this->model->getUserEmail($strEmail);
+
+          // validar no encontro usuario
+          if(empty($arrData)){
+
+            $arrResponse = array('status'=>false, 'msg' => 'Usuario que no existe');
+          }else{
+
+            // devuelve datos sql
+            $idpersona = $arrData['idpersona'];
+            $nombreUsuario = $arrData['nombres'].' '.$arrData['apellidos'];
+
+            // Varable que alamcena la ruta para establecer la contraseña
+
+            $url_recovery = base_url().'/login/confirmUser/'.$strEmail.'/'.$token;
+
+            // invoka funcion de modelo para actualiza toke
+            $requestUpdate = $this->model->setTokenUser($idpersona,$token);
+
+            // MEnsejes si cumpplio
+            if($requestUpdate){
+
+              $arrResponse = array('status' => true, 'msg' => 'Se Ha Enviado Un Email a tu Cuenta de Correo Para cambiar Tu Contraseña');
+
+            }else{  
+
+              $arrResponse = array('status'=> false, 'msg' => 'No es posible realizar el proceso, Intenta más tarde');
+            }
+
+          }
+        }
+
+        echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
+
+      }
+
       die();
     }
 

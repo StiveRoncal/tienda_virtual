@@ -62,6 +62,35 @@
 
         }
 
+        // #3 Metodo selecionar email con campos de usuarios pero que su estado este activo, solo permite restarblecer contraseña
+
+        public function getUserEmail(string $strEmail){
+
+            $this->strUsuario = $strEmail;
+
+            $sql = "SELECT idpersona, nombres, apellidos, status
+                    FROM persona WHERE email_user = '$this->strUsuario' AND status = 1";
+
+            $request = $this->select($sql);
+            return $request;
+        }
+
+
+        // #4 funcion para actualiza el token
+        public function setTokenUser(int $idpersona, string $token){
+
+            // correspondecia de propieda
+            $this->intIdUsuario = $idpersona;
+            $this->strToken = $token;
+
+            // cconsutl apra actualizar 
+            $sql = "UPDATE persona SET token = ? WHERE idpersona = $this->intIdUsuario";
+            // datos que van hacer actualizados
+            $arrData = array($this->strToken);  
+            // toma calor retornable
+            $request = $this->update($sql,$arrData);
+            return $request;
+        }
 
         
 
