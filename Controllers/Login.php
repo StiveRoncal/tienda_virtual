@@ -167,7 +167,7 @@
               $data['page_name'] = "cambiar_contrasenia";
               $data['page_title'] = "Cambiar Contraseña";
               $data['idpersona'] = $arrResponse['idpersona'];
-
+              $data['page_functions_js'] = "functions_login.js";
               // regerencia al archivo de la vista
               $this->views->getView($this,"cambiar_password",$data);
           }
@@ -175,6 +175,14 @@
         }
        die();
    
+    }
+
+
+    // #4 Metodo
+
+    public function setPassword(){
+      dep($_POST);
+      die();
     }
 
   }
