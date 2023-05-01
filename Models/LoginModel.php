@@ -92,6 +92,19 @@
             return $request;
         }
 
+
+        //#5 funcion consultar que esten los mismo email e token con el estado activo
+        public function getUsuario(string $email, string $token){
+
+            $this->strUsuario = $email;
+            $this->strToken = $token;
+
+            $sql = "SELECT idpersona FROM persona WHERE
+                    email_user = '$this->strUsuario' AND token = '$this->strToken' AND status = 1";
+
+            $request = $this->select($sql);
+            return $request;
+        }
         
 
     }

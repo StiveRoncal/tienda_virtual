@@ -142,15 +142,39 @@
 
     // #3 Metodo para confirma el usuario para restablecer nueva contraseña
     public function confirmUser(string $params){
-      // Arreglo para cambiar otro pagina con otros datos
-      $data['page_tag'] = "Cambiar constraseña";
-      $data['page_name'] = "cambiar_contrasenia";
-      $data['page_title'] = "Cambiar Contraseña";
-      $data['idpersona'] = 1;
 
-      // regerencia al archivo de la vista
-      $this->views->getView($this,"cambiar_password",$data);
+      // Validar si trae un parametro en la url no aceptado por token, direccionamos
+      if(empty($params)){
+        header('Location: '.base_url());
+      }else{
+        // de lo contrario obtenemos estos parametros
+        // explode convertir array separando por coma 
+        $arrParams = explode(',',$params);
+        // poscion de los arreglos
+        $strEmail = strClean($arrParams[0]);
+        $strToken = strClean($arrParams[1]);
 
+        // consulta hacia db por medio de modelo
+        $arrResponse = $this->model->getUsuario($strEmail,$strToken);
+        // validar la consulta, si esta vacio retorna a la pagina principal
+        if(empty($arrResponse)){
+            header("Location: ".base_url());
+        }else{
+          // Muestra la Vista
+
+           // Arreglo para cambiar otro pagina con otros datos
+              $data['page_tag'] = "Cambiar constraseña";
+              $data['page_name'] = "cambiar_contrasenia";
+              $data['page_title'] = "Cambiar Contraseña";
+              $data['idpersona'] = $arrResponse['idpersona'];
+
+              // regerencia al archivo de la vista
+              $this->views->getView($this,"cambiar_password",$data);
+          }
+
+        }
+       die();
+   
     }
 
   }
