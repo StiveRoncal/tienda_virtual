@@ -140,5 +140,18 @@
       die();
     }
 
+    // #3 Metodo para confirma el usuario para restablecer nueva contraseña
+    public function confirmUser(string $params){
+      // Arreglo para cambiar otro pagina con otros datos
+      $data['page_tag'] = "Cambiar constraseña";
+      $data['page_name'] = "cambiar_contrasenia";
+      $data['page_title'] = "Cambiar Contraseña";
+      $data['idpersona'] = 1;
+
+      // regerencia al archivo de la vista
+      $this->views->getView($this,"cambiar_password",$data);
+
+    }
+
   }
 ?>

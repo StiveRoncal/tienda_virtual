@@ -102,7 +102,42 @@ document.addEventListener('DOMContentLoaded', function(){
                 
                 request.onreadystatechange = function(){
 
-                    console.log(request);
+                    // console.log(request);
+
+                    // Validcaion de envio
+                    if(request.readyState != 4) return;
+                    
+                    // si fue exito la peticion
+                    if(request.status == 200){
+
+                        // Converti json a objeto
+                        var objData = JSON.parse(request.responseText);
+
+                        if(objData.status){
+
+                            swal({
+                                title: "",
+                                text: objData.msg,
+                                type: "success",
+                                confirmButtonText: "Aceptar",
+                                closeOnConfirm: false,
+                            }, function(isConfirm){
+
+                                if(isConfirm){
+
+                                    window.location = base_url;
+                                }
+                            });
+
+                        }else{
+                            swal("Atención", objData.msg, "error");
+                        }
+                    }else{
+                        swal("Atención","Error en el Proceso","error");
+                    }
+
+                    return false;
+
                 }
             }
         }
