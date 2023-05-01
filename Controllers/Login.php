@@ -166,6 +166,8 @@
               $data['page_tag'] = "Cambiar constraseña";
               $data['page_name'] = "cambiar_contrasenia";
               $data['page_title'] = "Cambiar Contraseña";
+              $data['email'] = $strEmail;
+              $data['token'] = $strToken;
               $data['idpersona'] = $arrResponse['idpersona'];
               $data['page_functions_js'] = "functions_login.js";
               // regerencia al archivo de la vista
@@ -181,7 +183,50 @@
     // #4 Metodo
 
     public function setPassword(){
-      dep($_POST);
+      //Validar datos que no vallen vacio
+      if(empty($_POST['idUsuario']) || empty($_POST['txtEmail']) || empty($_POST['txtToken']) || empty($_POST['txtPassword']) || empty($_POST['txtPasswordConfirm'])){
+
+        $arrResponse = array('status' => false, 'msg' => 'Error de Datos..');
+
+      }else{
+
+        $intIdpersona = intval($_POST['idUsuario']);
+        $strPassword = $_POST['txtPassword'];
+        $strPasswordConfirm = $_POST['txtPasswordConfirm'];
+        $strEmail = strClean($_POST['txtEmail']);
+        $strToken = strClean($_POST['txtToken']);
+
+        if($strPassword != $strPasswordConfirm){
+
+          $arrResponse = array('status' => false, 'msg' => 'Las contraseñas no son iguales X(');
+        }else{
+
+            $arrResponseUser = $this->model->getUsuario($strEmail,$strToken);
+            
+            if(empty($arrResponseUser)){
+                $arrResponse = array('status' => false, 'msg' => 'Error de Datos X(');
+            }else{
+
+                // proceso de actualizacon de datos
+                // 
+                $strPassword = hash("SHA256",$strPassword);
+                $requestPass = $this->model->insertPassword($intIdpersona,$strPassword);
+
+                if($requestPass){
+
+                  $arrResponse = array('status' => true, 'msg' => 'Contraseña Actualizada con Exito');
+
+                }else{
+
+                  $arrResponse = array('status'=> false, 'msg' => 'No es posible realizar el proceso, Intente mas tarde');
+
+                }
+
+            }
+
+        }
+      }
+      echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
       die();
     }
 

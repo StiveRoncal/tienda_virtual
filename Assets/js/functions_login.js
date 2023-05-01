@@ -185,7 +185,28 @@ document.addEventListener('DOMContentLoaded', function(){
                     if(request.readyState != 4) return;
 
                     if(request.status == 200){
-                        console.log(request.responseText);
+                        
+                        var objData = JSON.parse(request.responseText);
+
+                        if(objData.status){
+
+                            swal({
+                                title: "",
+                                text: objData.msg,
+                                type: "success",
+                                confirmButtonText: "Iniciar sessión",
+                                closeOnConfirm: false,
+                            }, function(isConfirm){
+                                if(isConfirm){
+                                    window.location = base_url+'/login';
+                                }
+                               
+                            });
+                        }else{
+                            swal("Atencion",objData.msg,);
+                        }
+                    }else{
+                        swal("Atencion","Error en el Proceso","error");
                     }
                 }
             }
