@@ -44,17 +44,21 @@
               // Si tiene asignado algunos permisos
               for($i=0; $i< count($arrModulos); $i++){
                 // Modificar el array de cada item con la funcion de selecionar roles recorriendo el ciclo
+                   
+                // poner en false los valores que no se asginaron nada
+                   $arrPermisos = array('r' => 0, 'w' => 0, 'u' => 0, 'd' => 0);
+                // si existe el modulo en la tabla de los permiso, con algun permiso asignado
+                if(isset($arrPermisosRol[$i])){
+               
                 // asignar valor en arreglo deacurdo a lapsociion
                 $arrPermisos = array('r' => $arrPermisosRol[$i]['r'],
                                      'w' => $arrPermisosRol[$i]['w'],
                                      'u' => $arrPermisosRol[$i]['u'],
                                      'd' => $arrPermisosRol[$i]['d']
                                     );
-                // Validacion de arreglo si estas son iguales as sus
-                if($arrModulos[$i]['idmodulo'] == $arrPermisosRol[$i]['moduloid']){
-                  // asigan y setear el array principal de esta y los valores de permisos
-                  $arrModulos[$i]['permisos'] = $arrPermisos;
                 }
+                 // asigan y setear el array principal de esta y los valores de permisos
+                 $arrModulos[$i]['permisos'] = $arrPermisos;
               }
             }
 
