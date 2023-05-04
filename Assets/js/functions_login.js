@@ -6,6 +6,10 @@ $('.login-content [data-toggle="flip"]').click(function() {
 });
 
 
+
+// Funcion para animacion de carga cuando ingresa el usuario
+var divLoading = document.querySelector("#divLoading");
+
 // documento de recarga a todos las funciones
 
 document.addEventListener('DOMContentLoaded', function(){
@@ -31,6 +35,10 @@ document.addEventListener('DOMContentLoaded', function(){
                 return false;
 
             }else{
+
+
+                // antes de ingresar al dashboard en moento de logeo
+                divLoading.style.display="flex";
 
                 // Enviar los datos al controlador
                 var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
@@ -66,6 +74,9 @@ document.addEventListener('DOMContentLoaded', function(){
                     swal("Atencion", "Error en el Proceso", "error");
                 }
 
+                // OCULTAR LOADING DUESPUES DE RESPUESTA
+                divLoading.style.display="none";
+
                 return false;
             }
 
@@ -90,6 +101,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 swal("Porfavor", "Escriba Tu Correo Electrónico", "error");
                 return false;
             }else{
+                divLoading.style.display="flex";
 
                 var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 
@@ -135,6 +147,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     }else{
                         swal("Atención","Error en el Proceso","error");
                     }
+                    divLoading.style.display="none";
 
                     return false;
 
@@ -172,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     swal("Atencion","La contraseña no son iguales","error");
                     return false;
                 }
-
+                divLoading.style.display="flex";
                 var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 
                 var ajaxUrl = base_url+'/Login/setPassword';
@@ -208,6 +221,8 @@ document.addEventListener('DOMContentLoaded', function(){
                     }else{
                         swal("Atencion","Error en el Proceso","error");
                     }
+
+                    divLoading.style.display="none";
                 }
             }
         }
