@@ -5,6 +5,14 @@
   class Roles extends Controllers{
 
     public function __construct(){
+
+      session_start();
+
+      if(empty($_SESSION['login'])){
+
+          header('Location:'.base_url().'/login');
+
+      }
         // Ejecucion de dos metodos por su herencia y constructor de libnrtaties controllers
     parent::__construct();
 
