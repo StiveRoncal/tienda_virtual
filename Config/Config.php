@@ -19,4 +19,21 @@
     // Delimitador decimal y millar ej. 24,50.00
     const SPD = ".";
     const SPM = ',';
+
+
+    // Datos envio correo
+
+    const NOMBRE_REMITENTE = "Tienda Virtual GROSOTEC";
+    const EMAIL_REMITENTE = "no-reply@abelosh.com";
+
+
+    const NOMBRE_EMPRESA = "GROSOTEC";
+    const WEB_EMPRESA = "www.abelosh.com";
+
+    // const NOMBRE_REMITENTE = "Nombre Remitente de correo";
+	// const EMAIL_REMITENTE = "no-reply@abelosh.com";
+	// const NOMBRE_EMPESA = "Nombre Empresa";
+	// const WEB_EMPRESA = "Página Web empresa";
+
+  
 ?>

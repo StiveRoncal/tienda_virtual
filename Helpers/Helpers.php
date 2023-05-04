@@ -45,6 +45,36 @@
         require_once $view_modal;
     }
 
+
+    //Envio por correos
+    function sendEmail($data,$template){
+
+        $asunto = $data['asunto'];
+        $emailDestino = $data['email'];
+        $empresa = NOMBRE_REMITENTE;
+        $remitente = EMAIL_REMITENTE;
+
+        // ENVIO DE CORREO
+
+        // encabezado para enviar correctametn y que caiga en span, /(r)retorno (n)salto
+        $de = "MIME-Version: 1.0\r\n";
+        $de .= "Content-type: text/html; charset=UTF-8\r\n";
+        $de .= "From: {$empresa} <{$remitente}>\r\n";
+
+        // cargar menoria una archvio 
+        ob_start();
+        // el archivo que carga
+        require_once("Views/Template/Email/".$template.".php");
+        // obtiene archivo para ser uso de datos, que devuel el archivo cargado
+        $mensaje =ob_get_clean();
+        // mail=funcion de envios de correos con scireto parametros
+        
+        $send = mail($emailDestino, $asunto, $mensaje, $de);
+
+        return $send;
+    }
+
+
     // Eliminar exceso de espacios entre palabras
     function strClean($strCadena){
 

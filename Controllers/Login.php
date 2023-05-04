@@ -86,11 +86,13 @@
     }
 
   
-    // #2 metodo para recetar usuario con correo
+    // #2 metodo para recetar usuario con correor
 
     public function resetPass(){
       // validar si se envio un post
       if($_POST){
+
+        error_reporting(0);
         
         // valida el campo email
         if(empty($_POST['txtEmailReset'])){
@@ -109,26 +111,52 @@
             $arrResponse = array('status'=>false, 'msg' => 'Usuario que no existe');
           }else{
 
-            // devuelve datos sql
-            $idpersona = $arrData['idpersona'];
-            $nombreUsuario = $arrData['nombres'].' '.$arrData['apellidos'];
+                // devuelve datos sql
+                $idpersona = $arrData['idpersona'];
+                $nombreUsuario = $arrData['nombres'].' '.$arrData['apellidos'];
 
-            // Varable que alamcena la ruta para establecer la contraseña
+                // Varable que alamcena la ruta para establecer la contraseña
 
-            $url_recovery = base_url().'/login/confirmUser/'.$strEmail.'/'.$token;
+                $url_recovery = base_url().'/login/confirmUser/'.$strEmail.'/'.$token;
 
-            // invoka funcion de modelo para actualiza toke
-            $requestUpdate = $this->model->setTokenUser($idpersona,$token);
+                // invoka funcion de modelo para actualiza toke
+                $requestUpdate = $this->model->setTokenUser($idpersona,$token);
 
-            // MEnsejes si cumpplio
-            if($requestUpdate){
 
-              $arrResponse = array('status' => true, 'msg' => 'Se Ha Enviado Un Email a tu Cuenta de Correo Para cambiar Tu Contraseña');
+                // html que se enviara por correo, arreglo para dar a¿variable a los documenteos
+                $dataUsuario = array('nombreUsuario'=> $nombreUsuario,
+                                    'email' => $strEmail,
+                                    'asunto' => 'Recuperar Cuenta - '.NOMBRE_REMITENTE,
+                                    'url_recovery' => $url_recovery);
+          
 
-            }else{  
+                // $sendEmail = sendEmail($dataUsuario, 'email_cambioPassword');
 
-              $arrResponse = array('status'=> false, 'msg' => 'No es posible realizar el proceso, Intenta más tarde');
-            }
+
+
+
+                // MEnsejes si cumpplio
+                if($requestUpdate){
+
+
+                  // validacion de email enviado
+                  $sendEmail = sendEmail($dataUsuario,'email_cambioPassword');
+
+                    // si se envio al correo o no boleando
+                      if($sendEmail){
+
+                          $arrResponse = array('status' => true, 'msg' => 'Se ha enviado un email a tu cuenta de correo para cambiar tu connntraseña');
+                      }else{
+
+                        $arrResponse = array('status' => false, 'msg' => 'No es posible realizar el proceso, intente mas tarde');
+                      }
+
+                  // $arrResponse = array('status' => true, 'msg' => 'Se Hasss Enviado Un Email a tu Cuenta de Correo Para cambiar Tu Contraseña');
+
+                }else{  
+
+                  $arrResponse = array('status'=> false, 'msg' => 'No es posible realizar el proceso, Intenta más tarde');
+                }
 
           }
         }
