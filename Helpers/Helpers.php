@@ -74,6 +74,37 @@
         return $send;
     }
 
+    // 
+    function getPermisos(int $idmodulo){
+        // archivo espeficico
+        require_once("Models/PermisosModel.php");
+        // instancia de todo la clase a un objeto
+        $objPermisos = new PermisosModel();
+
+
+        // obtner el id del rol deacurdo con lo que estamos logeado
+        $idrol = $_SESSION['userData']['idrol'];
+
+        $arrPermisos = $objPermisos->permisosModulo($idrol);
+
+        // almacenar todos los permisos del rol
+        $permisos = '';
+        // alamcanar los permisos de cada modulo
+        $permisosMod = '';
+
+        // validad si array viene vacio, si trae registos
+        if(count($arrPermisos) > 0){
+
+            $permisos = $arrPermisos;
+            // condicional short verificando  si existe en la posicion del arreglo lo que envamos como parametro osea el id
+            //lo coloca todo el conjunto de elemento, si en caso no existe lo deja vacio
+            $permisosMod = isset($arrPermisos[$idmodulo]) ? $arrPermisos[$idmodulo] : "";
+        }
+        // Creacion de varaibkes de session para alamcenar esos dos arreglos creados
+        $_SESSION['permisos'] = $permisos;
+        $_SESSION['permisosMod'] = $permisosMod;
+    }
+
 
     // Eliminar exceso de espacios entre palabras
     function strClean($strCadena){

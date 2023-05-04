@@ -17,6 +17,8 @@
         //redireciona 
         header('location: '.base_url().'/login');
       }
+
+        // getPermisos(1);
       
     }
 

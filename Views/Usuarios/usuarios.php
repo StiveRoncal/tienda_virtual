@@ -6,6 +6,11 @@
     ?>
 
     <main class="app-content">
+      <?php
+        dep($_SESSION['permisos']);
+        dep( $_SESSION['permisosMod']);
+      
+      ?>
       <div class="app-title">
         <div>
           <h1><i class="fas fa-user-tag"></i> <?= $data['page_title'];?>
