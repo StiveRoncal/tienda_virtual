@@ -18,6 +18,8 @@
         header('location: '.base_url().'/login');
       }
 
+      dep(getPermisos(1));
+
         // getPermisos(1);
       
     }
