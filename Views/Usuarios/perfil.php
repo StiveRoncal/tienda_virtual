@@ -2,6 +2,8 @@
 
     headerAdmin($data);
 
+    // llamado de modal
+    getModal('modalPerfil', $data);
 
 ?>
 <main class="app-content">
@@ -30,7 +32,7 @@
               <div class="timeline-post">
                 <div class="post-media">
                   <div class="content">
-                    <h5>DATOS PERSONALES <button class="btn btn-sm btn-info" type="button" onclick="OpenModalPerfil();"><i class="fas fa-pencil-alt" aria-hidden="true"></i></button> </h5>
+                    <h5>DATOS PERSONALES  <button class="btn btn-sm btn-info" type="button" onclick="openModalPerfil();"><i class="fas fa-pencil-alt" aria-hidden="true"></i></button> </h5>
                     
                   </div>
                 </div>

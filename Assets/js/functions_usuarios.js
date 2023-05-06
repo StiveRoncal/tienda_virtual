@@ -63,6 +63,11 @@ document.addEventListener('DOMContentLoaded', function(){
         "order":[[0,"desc"]]
     });
 
+    // VALIDACION si existe ese elemento
+    if(document.querySelector('#formUsuario')){
+
+
+
     var formUsuario = document.querySelector("#formUsuario");
     formUsuario.onsubmit = function(e){
         e.preventDefault();
@@ -124,6 +129,9 @@ document.addEventListener('DOMContentLoaded', function(){
         }
 
     }
+
+    }
+
 }, false);
 
 // ejecutar la funcion en momento que carga los archviso
@@ -147,6 +155,9 @@ function fntRolesUsuario(){
 
     request.onreadystatechange = function(){
 
+        // VALIDACION si existe tal elemento
+        if(document.querySelector('#listRolid')){
+
         // Condicional si los datos fueron recibidos correctamtene
         if(request.readyState == 4 && request.status == 200){
 
@@ -158,6 +169,7 @@ function fntRolesUsuario(){
             // Actulizar el slect para que se muestr elos registros
             $('#listRolid').selectpicker('render');
         }
+    }
     }
 }
 
@@ -322,7 +334,12 @@ function openModal(){
     $('#modalFormUsuario').modal('show');
 
 
+}
 
 
+//Funcion para abrir modal de perfil
 
+function openModalPerfil(){
+
+    $('#modalFormPerfil').modal('show');
 }
