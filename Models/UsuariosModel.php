@@ -63,15 +63,21 @@ class UsuariosModel extends Mysql{
     }
 
     
-    #2 Para varios Usuarios
+    #2 Para Seleccionar varios Usuarios
     public function selectUsuarios(){
 
-        $sql = "SELECT p.idpersona,p.identificacion,p.nombres,p.apellidos,p.telefono,p.email_user,p.status,
+        // Validacion si La session no esta logeo con el super admin cambia de setencia para que no extariga a su super usuario
+        $whereAdmin = "";
+        if($_SESSION['idUser'] != 1){
+
+            $whereAdmin = " and p.idpersona != 1";
+        }
+        $sql = "SELECT p.idpersona,p.identificacion,p.nombres,p.apellidos,p.telefono,p.email_user,p.status,r.idrol,
                         r.nombrerol
                         FROM persona p
                         INNER JOIN rol r
                         ON p.rolid = r.idrol
-                        WHERE p.status != 0";
+                        WHERE p.status != 0".$whereAdmin;
         $request = $this->select_all($sql);
 
         return $request;

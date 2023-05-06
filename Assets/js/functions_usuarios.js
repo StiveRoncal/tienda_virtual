@@ -153,7 +153,7 @@ function fntRolesUsuario(){
             // seleciona el campos de lista de roles = pone los options
             document.querySelector('#listRolid').innerHTML = request.responseText;
             // Elige la lista per al primer options
-            document.querySelector('#listRolid').value = 1;
+            // document.querySelector('#listRolid').value = 1;
 
             // Actulizar el slect para que se muestr elos registros
             $('#listRolid').selectpicker('render');

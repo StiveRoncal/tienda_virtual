@@ -159,19 +159,40 @@
         // BOTON 02 Permisos (u=>update)(ACTUALIZAR) Boton Lapiz
         if($_SESSION['permisosMod']['u']){
 
-          $btnEdit = '<button class="btn btn-primary btn-sm btnEditUsuario" onClick="fntEditUsuario('.$arrData[$i]['idpersona'].')" title="Editar usuario"><i class="fas fa-pencil-alt"></i></button>';
+          // validacion para evitar que usuario root de permisos a terceros solo puedo hacer eso el SUPERADMIN(stiveroncal)
+          // si este es el usuario master tanto el iduser y el idrol primero // indicando si la varaible de seccion es la 1 o deferente de 1 no es administrador
+          if(($_SESSION['idUser'] == 1 and $_SESSION['userData']['idrol'] == 1) || ($_SESSION['userData']['idrol'] == 1 and $arrData[$i]['idrol'] != 1)){
+
+            $btnEdit = '<button class="btn btn-primary btn-sm btnEditUsuario" onClick="fntEditUsuario('.$arrData[$i]['idpersona'].')" title="Editar usuario"><i class="fas fa-pencil-alt"></i></button>';
+
+
+          }else{
+
+            $btnEdit = '<button class="btn btn-secondary btn-sm" disabled><i class="fas fa-pencil-alt"></i></button>';
+          }
+
         
         }
 
         // BOTON 03 Permisos (d=>delte)(ELIMINAR) Boton tacho de basura
         if($_SESSION['permisosMod']['d']){
+          
+          // validacion para evitar que usuario root de permisos a terceros solo puedo hacer eso el SUPERADMIN(stiveroncal)
+          // si este es el usuario master tanto el iduser y el idrol primero // indicando si la varaible de seccion es la 1 o deferente de 1 no es administrador
+          // Indicar si la varaible si tanbia es la misma persona del super admin
 
-          $bntDelete = '<button class="btn btn-danger btn-sm btnDelUsuario" onClick="fntDelUsuario('.$arrData[$i]['idpersona'].')" title="Eliminar usuario"><i class="far fa-trash-alt"></i></button>';
+            if(($_SESSION['idUser'] == 1 and $_SESSION['userData']['idrol'] == 1) ||
+              ($_SESSION['userData']['idrol'] == 1 and $arrData[$i]['idrol'] != 1) and 
+              ($_SESSION['userData']['idpersona'] != $arrData[$i]['idpersona'])){
+
+                $bntDelete = '<button class="btn btn-danger btn-sm btnDelUsuario" onClick="fntDelUsuario('.$arrData[$i]['idpersona'].')" title="Eliminar usuario"><i class="far fa-trash-alt"></i></button>';
+            }else{
+                $bntDelete = '<button class="btn btn-secondary btn-sm" disabled><i class="far fa-trash-alt"></i></button>';
+            }
         }
 
       //  Concadenamiento de varaibles para mostras botones de acciones
-        $arrData[$i]['options'] = '
-        <div class="text-center">'.$btnView.' '.$btnEdit.' '.$bntDelete.' </div>';
+        $arrData[$i]['options'] = '<div class="text-center">'.$btnView.' '.$btnEdit.' '.$bntDelete.' </div>';
       }
       
       echo json_encode($arrData,JSON_UNESCAPED_UNICODE);

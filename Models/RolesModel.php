@@ -17,9 +17,14 @@
 
         // 1ra funcion para selecionar roles varios roles
         public function selectRoles(){
+            $whereAdmin = "";   
+            // Si la session no es el admin master
+            if($_SESSION['idUser'] != 1){
 
+                $whereAdmin =  " and idrol != 1";
+            }
             // extraer los roles
-            $sql = "SELECT * FROM rol WHERE status != 0";
+            $sql = "SELECT * FROM rol WHERE status != 0".$whereAdmin;
             $request = $this->select_all($sql);
             return $request;
         }
