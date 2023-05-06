@@ -245,6 +245,20 @@
 
       die();
     }
+
+    // METODO PARA PERFIL con Funciones Similares
+    public function perfil(){
+
+       // arreglo de un parametro $data
+       $data['page_tag'] = "Perfil";
+       $data['page_title'] = "Perfil de Usuario";
+       $data['page_name'] = "perfil";
+       $data['page_functions_js'] = "functions_usuarios.js";
+
+       // invocar la vista su metodo libraries/Core/Views.php
+       $this->views->getView($this,"perfil",$data);
+
+    }
   
 
   }
