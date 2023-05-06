@@ -26,6 +26,13 @@
     // 1er Metodo
 
     public function Usuarios(){
+
+        //validacion si no tiene permisos asignados redireccion 
+        if(empty($_SESSION['permisosMod']['r']) ){
+
+          header("Location:".base_url().'/dashboard');
+
+        }
         // arreglo de un parametro $data
    
         $data['page_tag'] = "Usuarios";

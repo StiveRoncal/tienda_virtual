@@ -1,16 +1,10 @@
-    <?php  headerAdmin($data); ?>
-    <main class="app-content">
-    <?php
-
-        // CoONDICIONAL DE ACCESO CRUD EN TABLA DEACUERDO A OS PERMISOS ASIGNADOS
-        getModal('modalUsuarios',$data);
-        if(empty($_SESSION['permisosMod']['r']) ){
+    <?php  
+        headerAdmin($data);
+        getModal('modalUsuarios',$data); 
     ?>
+    <main class="app-content">
 
-      <p>Acceso Restringido</p>
-      <?php
-        }else{// dep( $_SESSION['permisosMod']);
-      ?>
+ 
       <div class="app-title">
         <div>
           <h1><i class="fas fa-user-tag"></i> <?= $data['page_title'];?>
@@ -67,7 +61,7 @@
           </div>
         </div>
       </div>
-    <?php } ?>
+
 
     </main>
 

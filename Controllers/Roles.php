@@ -5,6 +5,8 @@
   class Roles extends Controllers{
 
     public function __construct(){
+      // Ejecucion de dos metodos por su herencia y constructor de libnrtaties controllers
+      parent::__construct();
 
       session_start();
 
@@ -13,14 +15,23 @@
           header('Location:'.base_url().'/login');
 
       }
-        // Ejecucion de dos metodos por su herencia y constructor de libnrtaties controllers
-    parent::__construct();
+    //  agara dos modulos usuarios y roles
+      getPermisos(2);
 
     }
 
     // 1er Metodo
 
     public function Roles(){
+
+      
+        //validacion si no tiene permisos asignados redireccion 
+        if(empty($_SESSION['permisosMod']['r']) ){
+
+          header("Location:".base_url().'/dashboard');
+
+        }
+
         // arreglo de un parametro $data
         $data['page_id'] = 3;
         $data['page_tag'] = "Roles Usuarios";
@@ -67,6 +78,12 @@
       // Condicional de contar arregloo y validar si son 1 o 0 i
       for($i=0; $i < count($arrData); $i++){
 
+          // Varaibles para Sessiones de permisos
+          $btnView = '';
+          $btnEdit = '';
+          $bntDelete = '';
+          
+
         // Condicional 1 si es activo el status
         if($arrData[$i]['status'] == 1){
           // Guardamos el valor en un html como boton 
@@ -76,12 +93,27 @@
             $arrData[$i]['status'] = '<span class="badge badge-danger">Inactivo</span>';
         }
 
-        // Valor de variables para poner los botones de las acciones no se puede en el mismo html de roles 
-        $arrData[$i]['options'] = '<div class="text-center">
-        <button class="btn btn-secondary btn-sm btnPermisosRol" onClick="fntPermisos('.$arrData[$i]['idrol'].')" title="Permisos"><i class="fas fa-key"></i></button>
-        <button class="btn btn-primary btn-sm btnEditRol" onClick="fntEditRol('.$arrData[$i]['idrol'].')" title="Editar"><i class="fas fa-pencil-alt"></i></button>
-        <button class="btn btn-danger btn-sm btnDelRol" onClick="fntDelRol('.$arrData[$i]['idrol'].')" title="Eliminar"><i class="far fa-trash-alt"></i></button>
-        </div>';
+
+
+  
+          // BOTON 02 Permisos (u=>update)(ACTUALIZAR) Boton Lapiz
+          if($_SESSION['permisosMod']['u']){
+            
+            $btnView = '<button class="btn btn-secondary btn-sm btnPermisosRol" onClick="fntPermisos('.$arrData[$i]['idrol'].')" title="Permisos"><i class="fas fa-key"></i></button>';
+            $btnEdit = '<button class="btn btn-primary btn-sm btnEditRol" onClick="fntEditRol('.$arrData[$i]['idrol'].')" title="Editar"><i class="fas fa-pencil-alt"></i></button>';
+          
+          }
+  
+          // BOTON 03 Permisos (d=>delte)(ELIMINAR) Boton tacho de basura
+          if($_SESSION['permisosMod']['d']){
+  
+            $bntDelete = '<button class="btn btn-danger btn-sm btnDelRol" onClick="fntDelRol('.$arrData[$i]['idrol'].')" title="Eliminar"><i class="far fa-trash-alt"></i></button>';
+          }
+  
+          //  Concadenamiento de varaibles para mostras botones de acciones
+          $arrData[$i]['options'] = '
+          <div class="text-center">'.$btnView.' '.$btnEdit.' '.$bntDelete.' </div>';
+
       }
       // json_encode: devuele los datos de variables en formato json
       // JSON_UNESCAPED_UNICODE: evita caracteres especiales
