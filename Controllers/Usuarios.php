@@ -263,7 +263,55 @@
     //MEtod para actualizar perfil  de usuario
     public function putPerfil(){
 
-      dep($_POST);
+      if($_POST){
+
+        // Validar datos vacios4
+        if(empty($_POST['txtIdentificacion']) || empty($_POST['txtNombre']) || empty($_POST['txtApellido']) || empty($_POST['txtTelefono'])){
+
+          $arrResponse = array("status" => false, "msg" => 'Datos Incorrectos');
+
+        }else{
+
+          // Alamcernar la varainle envias por post
+          $idUsuario = $_SESSION['idUser'];
+          $strIdentificacion = strClean($_POST['txtIdentificacion']);
+          $strNombre = strClean($_POST['txtNombre']);
+          $strApellido = strClean($_POST['txtApellido']);
+          $intTelefono = intval(strClean($_POST['txtTelefono']));
+          
+          $strPassword = "";
+
+          // Si no esta vacio
+          if(!empty($_POST['txtPassword'])){
+
+            $strPassword = hash("SHA256",$_POST['txtPassword']);
+
+          }
+
+          // Invoca funcion de modelos  con parametro hechos arriba 
+          $request_user = $this->model->updatePerfil($idUsuario,
+                                                      $strIdentificacion,
+                                                      $strNombre,
+                                                      $strApellido,
+                                                      $intTelefono,
+                                                      $strPassword);
+          
+          // Validacion de Datos si se envio correctametne
+          if($request_user){
+            // funcion ubicado en Helper aun que paresca extraños
+            sessionUser($_SESSION['idUser']);
+            $arrResponse = array('status' => true, 'msg' => 'Datos Actualizados Correctamente');
+
+          }else{
+
+            $arrResponse = array("status" => false, "msg" => "No es posible actualizar los datos.");
+
+          }
+
+        }
+
+        echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
+      }
       die();
     }
   

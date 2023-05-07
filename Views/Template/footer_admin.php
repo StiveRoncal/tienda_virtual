@@ -16,13 +16,13 @@
     <script src="<?= media(); ?>/js/plugins/pace.min.js"></script>
     <!-- Page specific javascripts-->
     <!-- Google analytics script-->
-
+ 
     <script type="text/javascript" src="<?= media(); ?>/js/plugins/sweetalert.min.js"></script>
-
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script type="text/javascript" src="<?= media(); ?>/js/plugins/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="<?= media(); ?>/js/plugins/dataTables.bootstrap.min.js"></script>
     <script type="text/javascript" src="<?= media(); ?>/js/plugins/bootstrap-select.min.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+   
 
     <!-- IMPORTACION DE LIBREIAS EN datatables.net -->
     <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>

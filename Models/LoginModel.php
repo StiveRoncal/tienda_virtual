@@ -58,6 +58,11 @@
                     WHERE p.idpersona = $this->intIdUsuario";
 
             $request = $this->select($sql);
+
+            // de la consulta sql va ser almacena en una variable session
+
+            // Sirve para que el usuario no tenga la necesida de cerrar sesion y entra a session 
+            $_SESSION['userData'] = $request;
             return $request;
 
         }

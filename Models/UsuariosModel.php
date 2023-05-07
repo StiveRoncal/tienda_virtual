@@ -171,6 +171,45 @@ class UsuariosModel extends Mysql{
         return $request;
     }
 
+
+    // Actualizar Perfil
+    public function updatePerfil(int $idUsuario, string $identificacion, string $nombre, string $apellido, int $telefono, string $password){
+
+        $this->intIdUsuario = $idUsuario;
+        $this->strIdentificacion = $identificacion;
+        $this->strNombre = $nombre;
+        $this->strApellido = $apellido;
+        $this->intTelefono = $telefono;
+        $this->strPassword = $password;
+
+        // Validaciar si se esta envia datos al password ose que se quiere actualizar
+        if($this->strPassword != ""){
+
+            $sql = "UPDATE persona SET identificacion = ?, nombres = ?, apellidos = ?, telefono = ?, password = ?
+                    WHERE idpersona = $this->intIdUsuario";
+            
+            $arrData = array( $this->strIdentificacion,
+                            $this->strNombre,
+                            $this->strApellido,
+                            $this->intTelefono,
+                            $this->strPassword);
+
+            // Si no se hizo nada en el campo contraseña normal actual sin la contraseña
+        }else{
+
+            $sql = "UPDATE persona SET identificacion = ?, nombres = ?, apellidos = ?, telefono = ?
+                    WHERE idpersona = $this->intIdUsuario";
+            
+            $arrData = array( $this->strIdentificacion,
+                            $this->strNombre,
+                            $this->strApellido,
+                            $this->intTelefono);
+        }
+
+        $request = $this->update($sql,$arrData);
+        return $request;
+
+    }
  
 
 }

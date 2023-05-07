@@ -67,8 +67,9 @@
               // Varaible que almacena un modelo como variables de session de una funcion que deuvel y parametro de idusuario
               // cargar los datos sin cerrar sesion
               $arrData =$this->model->sessionLogin($_SESSION['idUser']);
-              // obtener todos los datos de usuario y alamdenra en vraible de ssion
-              $_SESSION['userData'] = $arrData;
+             
+              // Invocacion de helper para evita rehacer una variable dession
+              sessionUser($_SESSION['idUser']);
               
               // si hizo login de forma correcta
               $arrResponse = array('status'=>true, 'msg' => 'OK');  

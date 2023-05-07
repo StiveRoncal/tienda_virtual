@@ -106,6 +106,20 @@
     }
 
 
+    // Funcion
+    function sessionUser(int $idpersona){
+        
+        require_once("Models/LoginModel.php");
+        // Porque tiene un metodo sessionLogin para extraer todos sus datos
+
+        // Instanciar objrto
+        $objLogin = new LoginModel();
+        // usa un meto espeficio para extraer sus daots 
+        $request = $objLogin->sessionLogin($idpersona);
+
+        return $request;
+    }
+
     // Eliminar exceso de espacios entre palabras
     function strClean($strCadena){
 

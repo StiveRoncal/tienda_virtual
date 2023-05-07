@@ -220,8 +220,11 @@ document.addEventListener('DOMContentLoaded', function(){
                             type: "success",
                             confirmButtonText: "Aceptar",
                             closeOnConfirm: false,
-                        },function(isConfirm){
+                            
+                        }, function(isConfirm){
+
                             if(isConfirm){
+                                
                                 location.reload(); 
                             }
                         });
