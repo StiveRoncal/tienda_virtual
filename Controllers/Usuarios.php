@@ -48,7 +48,7 @@
     //actulizar o agregar usuario
     public function setUsuario(){
       if($_POST){
-        
+      
 
         if(empty($_POST['txtIdentificacion']) || empty($_POST['txtNombre']) || empty($_POST['txtApellido']) 
         || empty($_POST['txtTelefono']) || empty($_POST['txtEmail']) || empty($_POST['listRolid']) || empty($_POST['listStatus'])){
@@ -66,13 +66,16 @@
             $intTipoId = intval(strClean($_POST['listRolid']));
             $intStatus = intval(strClean($_POST['listStatus']));
 
+            // VALOR VACIO
+            $request_user = "";
             // Crear Usuario
             if($idUsuario == 0){
 
               $option = 1;
               $strPassword = empty($_POST['txtPassword']) ? hash("SHA256", passGenerator()) : hash("SHA256", $_POST['txtPassword']);
 
-              $request_user = $this->model->insertUsuario($strIdentificacion,
+              if($_SESSION['permisosMod']['w']){
+                $request_user = $this->model->insertUsuario($strIdentificacion,
                                                           $strNombre,
                                                           $strApellido,
                                                           $intTelefono,
@@ -80,13 +83,15 @@
                                                           $strPassword,
                                                           $intTipoId,
                                                           $intStatus );
-
+              }
             }else{
 
               $option = 2;
               $strPassword = empty($_POST['txtPassword']) ? "" : hash("SHA256", $_POST['txtPassword']);
 
-              $request_user = $this->model->updateUsuario($idUsuario,
+
+              if($_SESSION['permisosMod']['u']){
+                $request_user = $this->model->updateUsuario($idUsuario,
                                                           $strIdentificacion,
                                                           $strNombre,
                                                           $strApellido,
@@ -95,7 +100,7 @@
                                                           $strPassword,
                                                           $intTipoId,
                                                           $intStatus );
-
+              }
             } 
 
           
@@ -131,6 +136,10 @@
 
     public function getUsuarios(){
 
+      // Validacion para que no accesar roles secundarios sin permisos de root
+      if($_SESSION['permisosMod']['r']){
+
+     
       $arrData = $this->model->selectUsuarios();
       
       for($i=0; $i < count($arrData); $i++){
@@ -196,30 +205,34 @@
       }
       
       echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
+    }
       die();
 
     }
 
 
-    public function getUsuario(int $idpersona){
+    public function getUsuario($idpersona){
 
-      $idusuario = intval($idpersona);
-      if($idpersona > 0){
+      // Validacion de para acceso de resticcion de roles secundario sin o tienen permisos
+      if($_SESSION['permisosMod']['r']){
+        $idusuario = intval($idpersona);
+        if($idpersona > 0){
 
-        $arrData = $this->model->selectUsuario($idusuario);
-        
-        // Condiciona y hay o se excede de numero no existe
-        if(empty($arrData)){
+          $arrData = $this->model->selectUsuario($idusuario);
           
-          $arrResponse = array('status' => false, 'msg' => 'Datos No Encontrado, Se Excedio de Numero');
+          // Condiciona y hay o se excede de numero no existe
+          if(empty($arrData)){
+            
+            $arrResponse = array('status' => false, 'msg' => 'Datos No Encontrado, Se Excedio de Numero');
 
-        }else{
+          }else{
 
-          $arrResponse = array('status' => true, 'data' => $arrData);
+            $arrResponse = array('status' => true, 'data' => $arrData);
 
+          }
+
+          echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
         }
-
-        echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
       }
       die();
     }
@@ -229,20 +242,23 @@
     public function delUsuario(){
       if($_POST){
 
-        $intIdpersona = intval($_POST['idUsuario']);
-        $requestDelete = $this->model->deleteUsuario($intIdpersona);
 
-        if($requestDelete){
+        if($_SESSION['permisosMod']['d']){
 
-          $arrResponse = array('status' => true, 'msg' => 'Se Ha Eliminado El Usuario');
-        }else{
+            $intIdpersona = intval($_POST['idUsuario']);
+            $requestDelete = $this->model->deleteUsuario($intIdpersona);
 
-          $arrResponse = array('status' => false, 'msg' => 'Error al eliminar Usuario');
+            if($requestDelete){
+
+              $arrResponse = array('status' => true, 'msg' => 'Se Ha Eliminado El Usuario');
+            }else{
+
+              $arrResponse = array('status' => false, 'msg' => 'Error al eliminar Usuario');
+            }
+
+            echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
         }
-
-        echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
-      }
-
+    }
       die();
     }
 
