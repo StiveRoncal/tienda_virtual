@@ -106,7 +106,7 @@
     }
 
 
-    // Funcion
+    // Funcion para obtener datos de clase espeficia
     function sessionUser(int $idpersona){
         
         require_once("Models/LoginModel.php");
@@ -118,6 +118,29 @@
         $request = $objLogin->sessionLogin($idpersona);
 
         return $request;
+    }
+
+    // Funcio para tiempo en session limitar
+    function sessionStart(){
+        session_start();
+
+        $inactive = 60;
+        // si existe esa variable de session
+        if(isset($_SESSION['timeout'])){
+
+            $session_in = time() - $_SESSION['inicio'];
+
+
+            // Validacion
+            if($session_in > $inactive){
+
+                header("Location: ".BASE_URL."/logout");
+            }
+        }else{
+
+            header("Location: ".BASE_URL."/logout");
+
+        }
     }
 
     // Eliminar exceso de espacios entre palabras

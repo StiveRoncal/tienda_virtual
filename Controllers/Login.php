@@ -64,6 +64,10 @@
               $_SESSION['idUser'] = $arrData['idpersona'];
               $_SESSION['login'] = true;
 
+              // VARIBLES DE SESION DE TIEMPO
+              $_SESSION['timeout'] = true;
+              $_SESSION['inicio'] = time();
+
               // Varaible que almacena un modelo como variables de session de una funcion que deuvel y parametro de idusuario
               // cargar los datos sin cerrar sesion
               $arrData =$this->model->sessionLogin($_SESSION['idUser']);

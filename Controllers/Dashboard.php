@@ -6,19 +6,20 @@
 
     public function __construct(){
         // Ejecucion de dos metodos por su herencia y constructor de libnrtaties controllers
-    
-        parent::__construct();
-      //validar la session si esta cerro y no regresar
-      session_start();
 
-      // Indiciar que el id(SESSION(memoria interna)) Anterior se eliminar cuando cerramos seccion
-      session_regenerate_id(true);
+        // Reempalzo de session_start y usar un helper con timer de session activa
+        sessionStart();
+
+        parent::__construct();
+
+      
       
       // condicional si no esxiste la variabe¿le seesion
       if(empty($_SESSION['login'])){
 
         //redireciona 
         header('location: '.base_url().'/login');
+        die();
       }
 
       getPermisos(1);
