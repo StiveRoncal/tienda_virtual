@@ -10,6 +10,9 @@
         parent::__construct();
       //validar la session si esta cerro y no regresar
       session_start();
+
+      // Indiciar que el id(SESSION(memoria interna)) Anterior se eliminar cuando cerramos seccion
+      session_regenerate_id(true);
       
       // condicional si no esxiste la variabe¿le seesion
       if(empty($_SESSION['login'])){
@@ -18,10 +21,9 @@
         header('location: '.base_url().'/login');
       }
 
-      dep(getPermisos(1));
+      getPermisos(1);
 
-        // getPermisos(1);
-      
+  
     }
 
     // 1er Metodo
@@ -32,7 +34,7 @@
         $data['page_tag'] = "Dashboard - Tienda Virtual";
         $data['page_title'] = "Dashboard - Tienda Virtual";
         $data['page_name'] = "dashboard";
-        // $data['page_functions_js'] = "functions_dashboard.js";
+        $data['page_functions_js'] = "functions_dashboard.js";
    
 
         // invocar la vista su metodo libraries/Core/Views.php
