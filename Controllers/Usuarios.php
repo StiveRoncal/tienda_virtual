@@ -314,6 +314,14 @@
       }
       die();
     }
+
+
+    // Metodo para guardar informacio de Datos Fiscales
+    public function putDFiscal(){
+      dep($_POST);
+      die();
+
+    }
   
 
   }

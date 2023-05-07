@@ -220,7 +220,7 @@ document.addEventListener('DOMContentLoaded', function(){
                             type: "success",
                             confirmButtonText: "Aceptar",
                             closeOnConfirm: false,
-                            
+
                         }, function(isConfirm){
 
                             if(isConfirm){
@@ -236,7 +236,75 @@ document.addEventListener('DOMContentLoaded', function(){
     
         }
     
+    }
+
+
+     // #2 ACtualizar Datos Fiscales
+    // VALIDACION si existe ese elemento
+    if(document.querySelector('#formDataFiscal')){
+
+
+
+        var formDataFiscal = document.querySelector("#formDataFiscal");
+        formDataFiscal.onsubmit = function(e){
+            e.preventDefault();
+    
+            var strDni = document.querySelector('#txtDni').value;
+            var strNombreFiscal = document.querySelector('#txtNombreFiscal').value;
+            var strDirFiscal = document.querySelector('#txtDirFiscal').value;
+            
+    
+    
+            if(strDni == '' || strNombreFiscal == '' || strDirFiscal == ''){
+    
+                swal("Atencion","Todos Los Campos son Obligatorios", "error");
+                return false;
+    
+            }
+
+    
+            var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+            // Controllers/Usuarios.php
+            var ajaxUrl = base_url+'/Usuarios/putDFiscal';
+            var formData = new FormData(formDataFiscal);
+            request.open("POST",ajaxUrl,true);
+            request.send(formData);
+    
+            request.onreadystatechange = function(){
+
+                if(request.readyState != 4) return;
+
+                if(request.status == 200){
+    
+                    var objData = JSON.parse(request.responseText);
+    
+                    if(objData.status){
+
+                        $('#modalFormPerfil').modal("hide");
+
+                        swal({
+                            title:"",
+                            text: objData.msg,
+                            type: "success",
+                            confirmButtonText: "Aceptar",
+                            closeOnConfirm: false,
+
+                        }, function(isConfirm){
+
+                            if(isConfirm){
+                                
+                                location.reload(); 
+                            }
+                        });
+                    }else{
+                        swal("Error", objData.msg , "error");
+                    }
+                }
+            }
+    
         }
+    
+    }
 }, false);
 
 // ejecutar la funcion en momento que carga los archviso
