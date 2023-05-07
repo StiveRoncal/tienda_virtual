@@ -3,6 +3,9 @@
 // activar el data table y los valores de la tablas de roles
 var tableRoles;
 
+// LOADING
+var divLoading = document.querySelector("#divLoading");
+
 // evento par cargar y ejecutar
 document.addEventListener('DOMContentLoaded', function(){
 
@@ -58,6 +61,11 @@ document.addEventListener('DOMContentLoaded', function(){
             return false;
         }
 
+        // LOADING
+        // Loading
+          divLoading.style.display = "flex";
+
+
         // Ajax para hacer un metodo de guardado de datos
         var request =(window.XMLHttpRequest) ? new XMLHttpRequest : new ActiveXObject('Microsoft.XMLHTTP');
         // dirigire a la funcion
@@ -88,10 +96,10 @@ document.addEventListener('DOMContentLoaded', function(){
                 }else{
                     swal("Error", objData.msg, "error");
                 }
-
-
             }
-
+           // Loading
+           divLoading.style.display = "none";
+           return false;
            
         }
         

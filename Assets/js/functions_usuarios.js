@@ -1,4 +1,8 @@
 var tableUsuarios;  
+
+// Loading
+var divLoading = document.querySelector("#divLoading");
+
 document.addEventListener('DOMContentLoaded', function(){
 
     // DataTables
@@ -103,6 +107,9 @@ document.addEventListener('DOMContentLoaded', function(){
                 return false;
             }
         }
+        
+         // Loading
+         divLoading.style.display = "flex";
 
         var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
         var ajaxUrl = base_url+'/Usuarios/setUsuario';
@@ -127,6 +134,9 @@ document.addEventListener('DOMContentLoaded', function(){
                     swal("Error", objData.msg , "error");
                 }
             }
+             // Loading
+             divLoading.style.display = "none";
+             return false;
         }
 
     }
@@ -194,6 +204,9 @@ document.addEventListener('DOMContentLoaded', function(){
                     return false;
                 }
             }
+
+            // Loading
+            divLoading.style.display = "flex";
     
             var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
             // Controllers/Usuarios.php
@@ -232,6 +245,10 @@ document.addEventListener('DOMContentLoaded', function(){
                         swal("Error", objData.msg , "error");
                     }
                 }
+
+                divLoading.style.display = "none";
+                return false;
+
             }
     
         }
@@ -262,7 +279,9 @@ document.addEventListener('DOMContentLoaded', function(){
     
             }
 
-    
+            // Loading
+            divLoading.style.display = "flex";
+
             var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
             // Controllers/Usuarios.php
             var ajaxUrl = base_url+'/Usuarios/putDFiscal';
@@ -300,6 +319,9 @@ document.addEventListener('DOMContentLoaded', function(){
                         swal("Error", objData.msg , "error");
                     }
                 }
+
+                divLoading.style.display = "none";
+                return false;
             }
     
         }
