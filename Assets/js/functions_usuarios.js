@@ -64,6 +64,7 @@ document.addEventListener('DOMContentLoaded', function(){
     });
 
     // VALIDACION si existe ese elemento
+    //#1
     if(document.querySelector('#formUsuario')){
 
 
@@ -132,6 +133,107 @@ document.addEventListener('DOMContentLoaded', function(){
 
     }
 
+
+    // #2 ACtualizar perfil
+    // VALIDACION si existe ese elemento
+    if(document.querySelector('#formPerfil')){
+
+
+
+        var formPerfil = document.querySelector("#formPerfil");
+        formPerfil.onsubmit = function(e){
+            e.preventDefault();
+    
+            var strIdentificacion = document.querySelector('#txtIdentificacion').value;
+            var strNombre = document.querySelector('#txtNombre').value;
+            var strApellido = document.querySelector('#txtApellido').value;
+            var intTelefono = document.querySelector('#txtTelefono').value;
+
+            // Contraseñas
+            var strPassword = document.querySelector('#txtPassword').value;
+            var strPasswordConfirm = document.querySelector('#txtPasswordConfirm').value;
+            
+    
+    
+            if(strIdentificacion == '' || strApellido == '' || strNombre == ''  || intTelefono == '' ){
+    
+                swal("Atencion","Todos Los Campos son Obligatorios", "error");
+                return false;
+    
+            }
+
+            // VALIDACION DE CONSTRASEÑA SI SE ACTUALIZA Y VALIDA QUE LOS DOS SEAN IGUALES
+            if(strPassword != "" || strPasswordConfirm != ""){
+
+                if(strPassword != strPasswordConfirm){
+                    
+                    swal("Atención","Las Contraseñas no Son Iguales.", "info");
+                    return false;
+
+                }
+
+                if(strPassword.length < 5){
+
+                    swal("Atención", "La contraseña debe tener un mínimo de 5 caracteres", "info");
+                    return false;
+
+                }
+            }
+    
+            // script para validar los elemeto de campos para ingresar usuario si estan no cumple con los requerimiento
+    
+            // selecciona todos los elemtos con valid
+            let elementsValid = document.getElementsByClassName("valid");
+            //cuenta todo slos elemento string
+            for(let i=0; i < elementsValid.length; i++ ){
+    
+                // verifica poscion 1, verifica si elemento contiene la clase is valid ose el campo esta rojo
+                if(elementsValid[i].classList.contains('is-invalid')){
+    
+                    swal("Atención","Porfavor Verifique los campos en Rojo", "error");
+                    return false;
+                }
+            }
+    
+            var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+            // Controllers/Usuarios.php
+            var ajaxUrl = base_url+'/Usuarios/putPerfil';
+            var formData = new FormData(formPerfil);
+            request.open("POST",ajaxUrl,true);
+            request.send(formData);
+    
+            request.onreadystatechange = function(){
+
+                if(request.readyState != 4) return;
+
+                if(request.status == 200){
+    
+                    var objData = JSON.parse(request.responseText);
+    
+                    if(objData.status){
+
+                        $('#modalFormPerfil').modal("hide");
+
+                        swal({
+                            title:"",
+                            text: objData.msg,
+                            type: "success",
+                            confirmButtonText: "Aceptar",
+                            closeOnConfirm: false,
+                        },function(isConfirm){
+                            if(isConfirm){
+                                location.reload(); 
+                            }
+                        });
+                    }else{
+                        swal("Error", objData.msg , "error");
+                    }
+                }
+            }
+    
+        }
+    
+        }
 }, false);
 
 // ejecutar la funcion en momento que carga los archviso

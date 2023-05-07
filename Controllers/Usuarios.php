@@ -259,6 +259,13 @@
        $this->views->getView($this,"perfil",$data);
 
     }
+
+    //MEtod para actualizar perfil  de usuario
+    public function putPerfil(){
+
+      dep($_POST);
+      die();
+    }
   
 
   }

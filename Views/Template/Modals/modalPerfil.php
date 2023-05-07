@@ -11,7 +11,7 @@
       <div class="modal-body">
 
               <form id="formPerfil" name="formPerfil" class="form-horizontal">
-                <input type="hidden" id="idUsuario" name="idUsuario" value="">
+              
                 <p class="text-primary">Los Campos con Asterisco(<span class="required">*</span>) Son Obligatorios</p>
 
                 <!-- Identificacion -->

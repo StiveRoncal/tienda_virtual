@@ -16,8 +16,6 @@
             <div class="tile-body">Create a beautiful dashboard</div>
             <?php
               dep($_SESSION['userData']);
-        
-              
             ?>
           </div>
         </div>
