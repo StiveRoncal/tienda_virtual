@@ -318,7 +318,45 @@
 
     // Metodo para guardar informacio de Datos Fiscales
     public function putDFiscal(){
-      dep($_POST);
+      
+      // Validacion de envio POST
+
+      if($_POST){
+
+        if(empty($_POST['txtDni']) || empty($_POST['txtNombreFiscal']) || empty($_POST['txtDirFiscal']) ){
+
+          $arrResponse = array("status" => false, "msg" => 'Datos Incorrectos');
+
+        }else{
+
+          $idUsuario = $_SESSION['idUser'];
+          $strDni = strClean($_POST['txtDni']);
+          $strNomFiscal = strClean($_POST['txtNombreFiscal']);
+          $strDirFiscal = strClean($_POST['txtDirFiscal']);
+          
+          $request_datafiscal = $this->model->updateDataFiscal($idUsuario,
+                                                                $strDni,
+                                                                $strNomFiscal,
+                                                                $strDirFiscal);
+                                                    
+         //Condicional si es TRUE
+         if($request_datafiscal){
+
+            // Invocacion de funcion en helper con parametro de varaibe de session, recargar o consulta la informacion del cliente o usuaro
+            sessionUser($_SESSION['idUser']); 
+
+            $arrResponse = array('status' => true, 'msg' => 'Datos Actualizados Correctamente.');
+
+         }else{
+
+            $arrResponse = array("status" => false, "msg" => 'No es posible Actualizar los datos');
+
+         }
+
+        }
+
+        echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
+      }
       die();
 
     }

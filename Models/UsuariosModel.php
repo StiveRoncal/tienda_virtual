@@ -12,6 +12,10 @@ class UsuariosModel extends Mysql{
     private $strToken;
     private $intTipoId;
     private $intStatus;
+    private $strDni;
+    private $strNomFiscal;
+    private $strDirFiscal;
+
 
     public function __construct(){
 
@@ -207,6 +211,29 @@ class UsuariosModel extends Mysql{
         }
 
         $request = $this->update($sql,$arrData);
+        return $request;
+
+    }
+
+
+    // Funcion para actualizar datos fiscales
+    public function updateDataFiscal(int $idUsuario, string $strDni, string $strNomFiscal,string $strDirFiscal){
+
+        $this->intIdUsuario = $idUsuario;
+        $this->strDni = $strDni;
+        $this->strNomFiscal = $strNomFiscal;
+        $this->strDirFiscal = $strDirFiscal;
+
+        // consulta par actulizar y setiar
+        $sql = "UPDATE persona SET dni = ?, nombrefiscal = ?, direccionfiscal = ?
+                WHERE idpersona = $this->intIdUsuario ";
+        
+        $arrData = array($this->strDni,
+                        $this->strNomFiscal,
+                        $this->strDirFiscal);
+
+        $request = $this->update($sql,$arrData);
+
         return $request;
 
     }
