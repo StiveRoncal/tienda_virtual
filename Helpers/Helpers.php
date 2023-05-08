@@ -124,7 +124,7 @@
     function sessionStart(){
         session_start();
 
-        $inactive = 60;
+        $inactive = 360;
         // si existe esa variable de session
         if(isset($_SESSION['timeout'])){
 
