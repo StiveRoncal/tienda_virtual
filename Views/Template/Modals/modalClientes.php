@@ -12,30 +12,31 @@
 
               <form id="formCliente" name="formCliente" class="form-horizontal">
                 <input type="hidden" id="idUsuario" name="idUsuario" value="">
-                <p class="text-primary">Todos Los Campos Son Obligatorios.</p>
+                <p class="text-primary">Los Campos con Asterisco(<span class="required">*</span>) son Obligatorios</p>
 
-                <!-- Identificacion -->
+                
+               
+
+                <!--Identificacion, Nombres y Apellido -->
+
                 <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="txtIdentificacion">Identificación</label>
+                    <!-- Identificacion -->
+                    <div class="form-group col-md-4">
+                        <label for="txtIdentificacion">Identificación <span class="required">*</span></label>
                         <input type="text" class="form-control" id="txtIdentificacion" name="txtIdentificacion" required="">
                     </div>
-                </div>
-
-
-                <!-- Nombres y Apellido -->
-
-                <div class="form-row">
                     <!-- Nombre -->
-                    <div class="form-group col-md-6">
-                        <label for="txtNombre">Nombres</label>
+                    <div class="form-group col-md-4">
+                        <label for="txtNombre">Nombres <span class="required">*</span></label>
                         <input type="text" class="form-control valid validText" id="txtNombre" name="txtNombre" required="">
                     </div>
                     <!-- Apellido -->
-                    <div class="form-group col-md-6">
-                        <label for="txtApellido">Apellidos</label>
+                    <div class="form-group col-md-4">
+                        <label for="txtApellido">Apellidos <span class="required">*</span></label>
                         <input type="text" class="form-control valid validText" id="txtApellido" name="txtApellido" required="">
-                    </div>
+                    </div> 
+                  
+
                 </div>
 
 
@@ -44,42 +45,51 @@
 
                  <div class="form-row">
                     <!-- Telefono -->
-                    <div class="form-group col-md-6">
-                        <label for="txtTelefono">Teléfono</label>
+                    <div class="form-group col-md-4">
+                        <label for="txtTelefono">Teléfono <span class="required">*</span></label>
                         <input type="text" class="form-control valid validNumber" id="txtTelefono" name="txtTelefono" required="" onkeypress="return controlTag(event);">
                     </div>
                     <!-- Email -->
-                    <div class="form-group col-md-6">
-                        <label for="txtEmail">Email</label>
+                    <div class="form-group col-md-4">
+                        <label for="txtEmail">Email <span class="required">*</span></label>
                         <input type="text" class="form-control valid validEmail" id="txtEmail" name="txtEmail" required="">
                     </div>
+
+                      <!-- Password -->
+                      <div class="form-group col-md-4">
+                        <label for="txtPassword">Password</label>
+                        <input type="password" class="form-control" id="txtPassword" name="txtPassword">
+                    </div>
                 </div>
+                
+                <hr>
+                
+                <p class="text-primary">Datos Fiscales.</p>
 
-
-                <!-- Rol usuario y Status -->
+                <!-- DATOS FISCALES: identificacion,nombre,direccopm -->
                 <div class="form-row">
-                    <!-- Rol Usuario -->
-                    <div class="form-group col-md-6">
-                        <label for="listRolid">Rol Usuario</label>
-                        <select  class="form-control" data-live-search="true" name="listRolid" id="listRolid" required></select>
+                    <!-- identificacion -->
+                    <div class="form-group  col-md-6">
+                        <label for="">Identificacion tributarioa <span class="required">*</span></label>
+                        <input class="form-control" type="text" id="txtDni" name="txtDni" required="">
                     </div>
-                    <!-- Status -->
+                    <!-- Nombres -->
                     <div class="form-group col-md-6">
-                        <label for="listStatus">Status</label>
-                        <select  class="form-control selectpicker" name="listStatus" id="listStatus" required>
-                            <option value="1">Activo</option>
-                            <option value="2">Inactivo</option>
-                        </select>
+                        <label for="">Nombre Fiscal <span class="required">*</span></label>
+                        <input class="form-control" type="text" id="txtNombreFiscal" name="txtNombreFiscal" required="">
                     </div>
+                    <!-- Direccion -->
+                    <div class="form-group col-md-4">
+                        <label for="">Dirección Fiscal <span class="required">*</span></label>
+                        <input class="form-control" type="text" id="txtDirFiscal" name="txtDirFiscal" required="">
+                    </div>
+
                 </div>
 
 
                 <!-- Contraseña -->
                 <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="txtPassword">Password</label>
-                        <input type="password" class="form-control" id="txtPassword" name="txtPassword">
-                    </div>
+                    
                 </div>
 
                   <!-- Botones -->

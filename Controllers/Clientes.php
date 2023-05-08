@@ -52,5 +52,16 @@ class Clientes extends Controllers{
     }
 
 
+
+    // 2do Metodo
+
+    public function setCliente(){
+
+      dep($_POST);
+      die();
+
+    }
+
+
     }
 ?>
