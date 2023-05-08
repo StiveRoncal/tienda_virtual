@@ -29,16 +29,15 @@
           <div class="tile">
             <div class="tile-body">
               <div class="table-responsive">
-                <table class="table table-hover table-bordered" id="tableUsuarios">
+                <table class="table table-hover table-bordered" id="tableClientes">
                   <thead>
                     <tr>
                       <th>ID</th>
+                      <th>Identificacion</th>
                       <th>Nombres</th>
                       <th>Apellidos</th>
                       <th>Email</th>
                       <th>Teléfono</th>
-                      <th>Rol</th>
-                      <th>Status</th>
                       <th>Acciones</th>
                       
                     </tr>

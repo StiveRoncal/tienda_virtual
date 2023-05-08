@@ -24,6 +24,7 @@ class ClientesModel extends Mysql{
     }
 
 
+    // Insertar Clientes
     public function insertCliente(string $identificacion,string $nombre, string $apellido, int $telefono, 
     string $email, string $password, int $tipoid, string $dni, string $nomFiscal, string $dirFiscal){
 
@@ -76,6 +77,25 @@ class ClientesModel extends Mysql{
         }
         return $return;
     }
+
+
+
+    // 
+
+    public function selectClientes(){
+        
+        // porque rolid = 7 porque alli esta el cliente
+        // Extraer todos los registro con ID 7 porque son todos los cliente
+         $sql = "SELECT idpersona, identificacion, nombres, apellidos, telefono, email_user, status
+                FROM persona 
+                WHERE rolid = 7 and status != 0";
+
+         $request = $this->select_all($sql);
+ 
+         return $request;
+    }
+
+
 }
 
 ?>
