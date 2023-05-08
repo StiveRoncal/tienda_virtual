@@ -76,10 +76,10 @@
                     <!-- Nombres -->
                     <div class="form-group col-md-6">
                         <label for="">Nombre Fiscal <span class="required">*</span></label>
-                        <input class="form-control" type="text" id="txtNombreFiscal" name="txtNombreFiscal" required="">
+                        <input class="form-control" type="text" id="txtNombreFiscal" name="txtNomFiscal" required="">
                     </div>
                     <!-- Direccion -->
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-12">
                         <label for="">Dirección Fiscal <span class="required">*</span></label>
                         <input class="form-control" type="text" id="txtDirFiscal" name="txtDirFiscal" required="">
                     </div>
