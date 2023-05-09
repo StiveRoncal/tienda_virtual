@@ -87,7 +87,7 @@ class Clientes extends Controllers{
 
 
             // VALOR VACIO
-            // $request_user = "";
+            $request_user = "";
             // Crear Usuario
 
             if($idUsuario == 0){
@@ -96,7 +96,7 @@ class Clientes extends Controllers{
               $strPassword = empty($_POST['txtPassword']) ? passGenerator() : $_POST['txtPassword'];
 
               $strPasswordEncript = hash("SHA256", $strPassword) ;
-              // if($_SESSION['permisosMod']['w']){}
+              if($_SESSION['permisosMod']['w']){
               
               $request_user = $this->model->insertCliente($strIdentificacion,
                                                           $strNombre,
@@ -108,7 +108,7 @@ class Clientes extends Controllers{
                                                           $strDni,
                                                           $strNomFiscal,
                                                           $strDirFiscal );
-              
+              }
              } else{
 
               $option = 2;
@@ -253,7 +253,7 @@ class Clientes extends Controllers{
     // Eliminar Cliente
     public function delCliente(){
       if($_POST){
-
+        
 
         if($_SESSION['permisosMod']['d']){
 
