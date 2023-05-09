@@ -93,8 +93,9 @@ class Clientes extends Controllers{
             if($idUsuario == 0){
 
               $option = 1;
-              $strPassword = empty($_POST['txtPassword']) ? hash("SHA256", passGenerator()) : hash("SHA256", $_POST['txtPassword']);
+              $strPassword = empty($_POST['txtPassword']) ? passGenerator() : $_POST['txtPassword'];
 
+              $strPasswordEncript = hash("SHA256", $strPassword) ;
               // if($_SESSION['permisosMod']['w']){}
               
               $request_user = $this->model->insertCliente($strIdentificacion,
@@ -102,7 +103,7 @@ class Clientes extends Controllers{
                                                           $strApellido,
                                                           $intTelefono,
                                                           $strEmail,
-                                                          $strPassword,
+                                                          $strPasswordEncript,
                                                           $intTipoId,
                                                           $strDni,
                                                           $strNomFiscal,
@@ -136,6 +137,14 @@ class Clientes extends Controllers{
                 if($option == 1){
 
                   $arrResponse = array('status' => true, 'msg' =>'Datos Guardado Correctamente');
+                      //Variable par nombre usuario
+                      $nombreUsuario = $strNombre.' '.$strApellido; 
+                      // Codigo : Para El Correo Electronico Recuerda
+                      $dataUsuario = array('nombreUsuario'=> $nombreUsuario,
+                                        'email' => $strEmail,
+                                        'password' => $strPassword,
+                                        'asunto' => 'Bienvenido a Tu tienda en Línea');
+                      $sendEmail = sendEmail($dataUsuario,'email_bienvenida');
 
                 }
                 else{
