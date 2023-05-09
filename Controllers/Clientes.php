@@ -241,6 +241,31 @@ class Clientes extends Controllers{
     }
 
 
+    // Eliminar Cliente
+    public function delCliente(){
+      if($_POST){
+
+
+        if($_SESSION['permisosMod']['d']){
+
+            $intIdpersona = intval($_POST['idUsuario']);
+            $requestDelete = $this->model->deleteCliente($intIdpersona);
+
+            if($requestDelete){
+
+              $arrResponse = array('status' => true, 'msg' => 'Se Ha Eliminado El Cliente');
+            }else{
+
+              $arrResponse = array('status' => false, 'msg' => 'Error al eliminar al Cliente');
+            }
+
+            echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
+        }
+    }
+      die();
+    }
+
+
 
     }
 ?>

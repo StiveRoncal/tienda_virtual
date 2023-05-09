@@ -244,6 +244,50 @@ function fntEditInfo(idpersona){
     
 }
 
+// #3 BOTON ELIMINAR
+function fntDelInfo(idpersona){
+
+ 
+            var idUsuario = idpersona;
+            
+            // Nos scrip para preguntar si quiere eliminar
+            swal({
+                title: "Eliminar Cliente",
+                text: "¿Realmente quieres Eliminar al Cliente?",
+                icon: "warning",
+                buttons: ["No, Cancelar","Si,Eliminar"],
+                dangerMode: true,
+              })
+              .then((willDelete) => {
+                if(willDelete){
+
+                    var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+                    var ajaxUrl = base_url+'/Clientes/delCliente';
+                    var strData = "idUsuario="+idpersona;
+                    request.open("POST",ajaxUrl,true);
+                    request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                    request.send(strData);
+
+                    request.onreadystatechange = function(){
+                        if(request.readyState == 4 && request.status == 200){
+                            var objData = JSON.parse(request.responseText);
+
+                            if(objData.status){
+
+                                swal("Eliminar!", objData.msg, "success");
+
+                                tableClientes.api().ajax.reload();
+                            }else{
+                                swal("Atención!", objData.msg, "error");
+                            }
+                        }
+                    }
+                }
+              });
+          
+
+}
+
 
 
 
