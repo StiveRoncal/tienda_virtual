@@ -110,6 +110,74 @@ class ClientesModel extends Mysql{
         return $request;
     }
 
+
+    // Actualizar Datos de Cliente Similar alos otros 
+    public function updateCliente(int $idUsuario, string $identificacion, string $nombre, string $apellido, int $telefono, string $email, string $password, string $dni, string $nomFiscal, string $dirFiscal){
+
+        $this->intIdUsuario = $idUsuario;
+        $this->strIdentificacion = $identificacion;
+        $this->strNombre = $nombre;
+        $this->strApellido = $apellido;
+        $this->intTelefono = $telefono;
+        $this->strEmail = $email;
+        $this->strPassword = $password;
+        
+        $this->strDni = $dni;
+        $this->strNomFiscal = $nomFiscal;
+        $this->strDirFiscal = $dirFiscal;
+
+        // Validacion si se repite identificaio o meail
+
+        $sql = "SELECT * FROM persona WHERE (email_user = '{$this->strEmail}' AND idpersona != $this->intIdUsuario)
+                                        OR (identificacion = '{$this->strIdentificacion}' AND idpersona != $this->intIdUsuario)";
+
+        $request = $this->select_all($sql);
+
+        // condicioanl si esta no existe actualiza
+        if(empty($request)){
+            
+            // condicional si el password no esta vacio actulia 
+            if($this->strPassword != ""){
+
+                $sql = "UPDATE persona SET identificacion = ?, nombres = ?, apellidos = ?, telefono = ?, email_user = ?, password = ?,
+                        dni = ?, nombrefiscal = ?, direccionfiscal = ?  
+                        WHERE idpersona = $this->intIdUsuario ";
+                
+                $arrData = array( $this->strIdentificacion,
+                                $this->strNombre,
+                                $this->strApellido,
+                                $this->intTelefono,
+                                $this->strEmail,
+                                $this->strPassword,
+                                $this->strDni,
+                                $this->strNomFiscal,
+                                $this->strDirFiscal);
+            }else{
+                // Actualizamos todo sin la contraseña por que no lo actualizo
+                $sql = "UPDATE persona SET identificacion = ?, nombres = ?, apellidos = ?, telefono = ?, email_user = ?,
+                         dni = ?, nombrefiscal = ?, direccionfiscal = ? 
+                        WHERE idpersona = $this->intIdUsuario";
+                
+                $arrData = array( $this->strIdentificacion,
+                                $this->strNombre,
+                                $this->strApellido,
+                                $this->intTelefono,
+                                $this->strEmail,
+                                $this->strDni,
+                                $this->strNomFiscal,
+                                $this->strDirFiscal);
+            }
+
+            $request = $this->update($sql,$arrData);
+
+        }else{
+
+            $request = "exist";
+        }
+
+        return $request;
+    }
+
 }
 
 ?>

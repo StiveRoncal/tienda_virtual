@@ -53,14 +53,14 @@ class Clientes extends Controllers{
 
 
 
-    // 2do Metodo Agregar Y Actualizar cliente
+    // 2do Metodo Agregar Y Actualizar cliente 
 
     public function setCliente(){
 
   
       if($_POST){
       
-
+   
         if(empty($_POST['txtIdentificacion']) || empty($_POST['txtNombre']) || empty($_POST['txtApellido']) 
         || empty($_POST['txtTelefono']) || empty($_POST['txtEmail']) || empty($_POST['txtDni']) ||
          empty($_POST['txtNomFiscal']) || empty($_POST['txtDirFiscal'])){
@@ -108,29 +108,25 @@ class Clientes extends Controllers{
                                                           $strNomFiscal,
                                                           $strDirFiscal );
               
-            } //else{
+             } else{
 
-              // $option = 2;
-              // $strPassword = empty($_POST['txtPassword']) ? "" : hash("SHA256", $_POST['txtPassword']);
-
-
-              // if($_SESSION['permisosMod']['u']){
-              //   $request_user = $this->model->updateUsuario($idUsuario,
-              //                                             $strIdentificacion,
-              //                                             $strNombre,
-              //                                             $strApellido,
-              //                                             $intTelefono,
-              //                                             $strEmail,
-              //                                             $strPassword,
-              //                                             $intTipoId,
-              //                                             $intStatus );
-              // }
-
-                
+              $option = 2;
+              $strPassword = empty($_POST['txtPassword']) ? "" : hash("SHA256", $_POST['txtPassword']);
 
 
-
-            // } 
+              if($_SESSION['permisosMod']['u']){
+                $request_user = $this->model->updateCliente($idUsuario,
+                                                          $strIdentificacion,
+                                                          $strNombre,
+                                                          $strApellido,
+                                                          $intTelefono,
+                                                          $strEmail,
+                                                          $strPassword,
+                                                          $strDni,
+                                                          $strNomFiscal,
+                                                          $strDirFiscal);
+              }
+            } 
 
           
 
@@ -194,7 +190,7 @@ class Clientes extends Controllers{
         // BOTON 02 Permisos (u=>update)(ACTUALIZAR) Boton Lapiz
         if($_SESSION['permisosMod']['u']){
 
-            $btnEdit = '<button class="btn btn-primary btn-sm" onClick="fntEditInfo(this,'.$arrData[$i]['idpersona'].')" title="Editar Cliente"><i class="fas fa-pencil-alt"></i></button>';
+            $btnEdit = '<button class="btn btn-primary btn-sm" onClick="fntEditInfo('.$arrData[$i]['idpersona'].')" title="Editar Cliente"><i class="fas fa-pencil-alt"></i></button>';
   
         }
 
