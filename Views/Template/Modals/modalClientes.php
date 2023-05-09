@@ -1,4 +1,4 @@
-<!-- Modal Formulario Nuevo Usuario -->
+<!-- Modal Formulario Nuevo CLIENTE -->
 <div class="modal fade" id="modalFormCliente" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -110,12 +110,12 @@
 
 
 
-<!-- Modal Ver Detalle de Usuario Registrado -->
-<div class="modal fade" id="modalViewUser" tabindex="-1" role="dialog" aria-hidden="true">
+<!-- Modal Ver Detalle de CLIENTE  Registrado -->
+<div class="modal fade" id="modalViewCliente" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header header-primary">
-        <h5 class="modal-title" id="titleModal">Datos de Usuario</h5>
+        <h5 class="modal-title" id="titleModal">Datos de Cliente</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -123,6 +123,7 @@
       <div class="modal-body">
             <table class="table table-bordered">
                 <tbody>
+                  <!-- Datos No Personales tipo Cuenta Dibujito -->
                     <tr>
                         <td>Identificación:</td>
                         <td id="celIdentificacion">787887878</td>
@@ -143,13 +144,19 @@
                         <td>Email (Usuario):</td>
                         <td id="celEmail"></td>
                     </tr>
+
+                    <!-- DATOS FISCALES -->
                     <tr>
-                        <td>Tipo Usuario:</td>
-                        <td id="celTipoUsuario"></td>
+                        <td>Identificacion Tributaria:</td>
+                        <td id="celIde"></td>
                     </tr>
                     <tr>
-                        <td>Estado:</td>
-                        <td id="celEstado"></td>
+                        <td>Nombre Fiscal:</td>
+                        <td id="celNomFiscal"></td>
+                    </tr>
+                    <tr>
+                        <td>Dirección Fiscal:</td>
+                        <td id="celDirFiscal"></td>
                     </tr>
                     <tr>
                         <td>Fecha Registro:</td>

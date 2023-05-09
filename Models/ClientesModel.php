@@ -80,7 +80,7 @@ class ClientesModel extends Mysql{
 
 
 
-    // 
+    // Seleccionar Usuario que Preferimos
 
     public function selectClientes(){
         
@@ -95,6 +95,20 @@ class ClientesModel extends Mysql{
          return $request;
     }
 
+
+    // SElecionar un Cliente Espefico deacuero a su ID
+    public function selectCliente(int $idpersona){
+
+        $this->intIdUsuario = $idpersona;
+        // Validar que solo nuestre clientes
+        $sql = "SELECT idpersona, identificacion, nombres, apellidos, telefono, email_user, dni, nombrefiscal, direccionfiscal, status,
+                    DATE_FORMAT(datecreated,'%d / %m / %Y') as fechaRegistro
+                    FROM persona 
+                    WHERE idpersona = $this->intIdUsuario and rolid = 7";
+        
+        $request = $this->select($sql);
+        return $request;
+    }
 
 }
 

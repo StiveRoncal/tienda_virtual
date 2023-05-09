@@ -216,5 +216,35 @@ class Clientes extends Controllers{
     }
 
 
+    // 3er Metodo SELECIONAR UN CLIENTE ESPECIFICO
+    public function getCliente($idpersona){
+
+      // Validacion de para acceso de resticcion de roles secundario sin o tienen permisos
+      if($_SESSION['permisosMod']['r']){
+
+        $idusuario = intval($idpersona);
+        if($idpersona > 0){
+
+          $arrData = $this->model->selectCliente($idusuario);
+          
+          // Condiciona y hay o se excede de numero no existe
+          if(empty($arrData)){
+            
+            $arrResponse = array('status' => false, 'msg' => 'Datos No Encontrado, Porque no es Un CLiente Sino  Datos de Otros Roles Senatino x( ');
+
+          }else{
+
+            $arrResponse = array('status' => true, 'data' => $arrData);
+
+          }
+
+          echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
+        }
+      }
+      die();
+    }
+
+
+
     }
 ?>
