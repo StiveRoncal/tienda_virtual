@@ -1,8 +1,10 @@
 
 
-var tableClientes;  
+let tableClientes;  
 
-var divLoading = document.querySelector("#divLoading");
+let rowTable = "";
+
+let divLoading = document.querySelector("#divLoading");
 
 document.addEventListener('DOMContentLoaded', function(){
 
@@ -73,20 +75,20 @@ document.addEventListener('DOMContentLoaded', function(){
 
     if(document.querySelector('#formCliente')){
         
-        var formCliente = document.querySelector("#formCliente");
+        let formCliente = document.querySelector("#formCliente");
         formCliente.onsubmit = function(e){
             e.preventDefault();
 
-            var strIdentificacion = document.querySelector('#txtIdentificacion').value;
-            var strNombre = document.querySelector('#txtNombre').value;
-            var strApellido = document.querySelector('#txtApellido').value;
-            var strEmail = document.querySelector('#txtEmail').value;
-            var intTelefono = document.querySelector('#txtTelefono').value;
+            let strIdentificacion = document.querySelector('#txtIdentificacion').value;
+            let strNombre = document.querySelector('#txtNombre').value;
+            let strApellido = document.querySelector('#txtApellido').value;
+            let strEmail = document.querySelector('#txtEmail').value;
+            let intTelefono = document.querySelector('#txtTelefono').value;
 
-            var strDni = document.querySelector('#txtDni').value;
-            var strNomFiscal = document.querySelector('#txtNombreFiscal').value;
-            var strDirFiscal = document.querySelector('#txtDirFiscal').value;
-            var strPassword = document.querySelector('#txtPassword').value;
+            let strDni = document.querySelector('#txtDni').value;
+            let strNomFiscal = document.querySelector('#txtNombreFiscal').value;
+            let strDirFiscal = document.querySelector('#txtDirFiscal').value;
+            let strPassword = document.querySelector('#txtPassword').value;
 
             if(strIdentificacion == '' || strApellido == '' || strNombre == '' || strEmail == '' || intTelefono == '' 
                 || strDni == '' || strDirFiscal == '' || strNomFiscal == ''){
@@ -109,9 +111,9 @@ document.addEventListener('DOMContentLoaded', function(){
 
             divLoading.style.display = "flex";
 
-            var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-            var ajaxUrl = base_url+'/Clientes/setCliente';
-            var formData = new FormData(formCliente);
+            let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+            let ajaxUrl = base_url+'/Clientes/setCliente';
+            let formData = new FormData(formCliente);
             request.open("POST",ajaxUrl,true);
             request.send(formData);
 
@@ -119,14 +121,29 @@ document.addEventListener('DOMContentLoaded', function(){
 
                 if(request.readyState == 4 && request.status == 200){
 
-                    var objData = JSON.parse(request.responseText);
+                    let objData = JSON.parse(request.responseText);
 
                     if(objData.status){
+
+                        if(rowTable == ""){
+
+                            tableClientes.api().ajax.reload();
+ 
+                        }else{
+                            
+                            rowTable.cells[1].textContent = strIdentificacion;
+                            rowTable.cells[2].textContent = strNombre;
+                            rowTable.cells[3].textContent = strApellido;
+                            rowTable.cells[4].textContent = strEmail;
+                            rowTable.cells[5].textContent = intTelefono;
+
+                            // Limpiar para que no tenga ningun valor cuando no actualoza y ponemos cerrar
+                            rowTable = "";
+                        }
 
                         $('#modalFormCliente').modal("hide");
                         formCliente.reset();
                         swal("Usuario", objData.msg , "success");
-                        tableClientes.api().ajax.reload();
                     }else{
 
                         swal("Error",objData.msg,"error");
@@ -154,9 +171,9 @@ document.addEventListener('DOMContentLoaded', function(){
 function fntViewInfo(idpersona){
 
   
-    var idpersona = idpersona;
-    var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    var ajaxUrl = base_url+'/Clientes/getCliente/'+idpersona;
+    
+    let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    let ajaxUrl = base_url+'/Clientes/getCliente/'+idpersona;
 
     request.open("GET",ajaxUrl,true);
     request.send();
@@ -165,7 +182,7 @@ function fntViewInfo(idpersona){
 
         if(request.readyState == 4 && request.status == 200){
 
-            var objData = JSON.parse(request.responseText);
+            let objData = JSON.parse(request.responseText);
 
             if(objData.status){
 
@@ -198,8 +215,9 @@ function fntViewInfo(idpersona){
 // #2 BOTON EDITAR
 
 // Funcion para editar similiar al fntviewusuario
-function fntEditInfo(idpersona){
+function fntEditInfo(element, idpersona){
 
+    rowTable = element.parentNode.parentNode.parentNode;
     
     document.querySelector('#titleModal').innerHTML = "Actualizar Cliente";
     document.querySelector('.modal-header').classList.replace("headerRegister", "headerUpdate");
@@ -208,9 +226,9 @@ function fntEditInfo(idpersona){
 
     
 
-        var idpersona = idpersona;
-        var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-        var ajaxUrl = base_url+'/Clientes/getCliente/'+idpersona;
+    
+        let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+        let ajaxUrl = base_url+'/Clientes/getCliente/'+idpersona;
 
         request.open("GET",ajaxUrl,true);
         request.send();
@@ -248,7 +266,6 @@ function fntEditInfo(idpersona){
 function fntDelInfo(idpersona){
 
  
-            var idUsuario = idpersona;
             
             // Nos scrip para preguntar si quiere eliminar
             swal({
@@ -261,16 +278,16 @@ function fntDelInfo(idpersona){
               .then((willDelete) => {
                 if(willDelete){
 
-                    var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-                    var ajaxUrl = base_url+'/Clientes/delCliente';
-                    var strData = "idUsuario="+idpersona;
+                    let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+                    let ajaxUrl = base_url+'/Clientes/delCliente';
+                    let strData = "idUsuario="+idpersona;
                     request.open("POST",ajaxUrl,true);
                     request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                     request.send(strData);
 
                     request.onreadystatechange = function(){
                         if(request.readyState == 4 && request.status == 200){
-                            var objData = JSON.parse(request.responseText);
+                            let objData = JSON.parse(request.responseText);
 
                             if(objData.status){
 

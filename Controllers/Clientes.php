@@ -199,7 +199,7 @@ class Clientes extends Controllers{
         // BOTON 02 Permisos (u=>update)(ACTUALIZAR) Boton Lapiz
         if($_SESSION['permisosMod']['u']){
 
-            $btnEdit = '<button class="btn btn-primary btn-sm" onClick="fntEditInfo('.$arrData[$i]['idpersona'].')" title="Editar Cliente"><i class="fas fa-pencil-alt"></i></button>';
+            $btnEdit = '<button class="btn btn-primary btn-sm" onClick="fntEditInfo(this,'.$arrData[$i]['idpersona'].')" title="Editar Cliente"><i class="fas fa-pencil-alt"></i></button>';
   
         }
 
