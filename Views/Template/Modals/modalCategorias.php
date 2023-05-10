@@ -20,11 +20,11 @@
                         <input type="hidden" id="idCategoria" name="idCategoria" value="">
                         <div class="form-group">
                           <label class="control-label">Nombre <span class="required">*</span></label>
-                          <input class="form-control" name="txtNombre" id="txtNombre" type="text" placeholder="Nombre del Rol" required="">
+                          <input class="form-control" name="txtNombre" id="txtNombre" type="text" placeholder="Nombre Categoria" required="">
                         </div>
                         <div class="form-group">
-                          <label class="control-label">Descripcion <span class="required">*</span></label>
-                          <textarea class="form-control" id="txtDescripcion" name="txtDescripcion" rows="2" placeholder="Descripción del Rol" required=""></textarea>
+                          <label class="control-label">Descripción <span class="required">*</span></label>
+                          <textarea class="form-control" id="txtDescripcion" name="txtDescripcion" rows="2" placeholder="Descripción La Categoria" required=""></textarea>
                         </div>
                         
                         <!-- ComboBox -->
@@ -40,7 +40,29 @@
 
                     </div>
                     <div class="col-md-6">
-                    
+                        
+                    <div class="photo">
+                      <label for="foto">Foto (570x380)</label>
+                          <div class="prevPhoto">
+                            <span class="delPhoto notBlock">X</span>
+                            <label for="foto"></label>
+                              <div>
+                                <img id="img" src="<?= media(); ?>/images/uploads/portada_categoria.png">
+                              </div>
+                          </div>
+                            <div class="upimg">
+                              <input type="file" name="foto" id="foto">
+                            </div>
+                          <div id="form_alert"></div>
+                    </div>
+
+
+
+
+
+
+
+
                     </div>
                 </div> 
 
