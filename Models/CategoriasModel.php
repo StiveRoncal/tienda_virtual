@@ -42,7 +42,7 @@
 
                 $request_insert = $this->insert($query_insert,$arrData);
                 $return = $request_insert;
-                
+
             }else{
 
                 $return = "exist";
@@ -51,6 +51,19 @@
             return $return;
 
 
+        }
+
+
+
+        #2 Funcion para selecionar las categorias
+        public function selectCategorias(){
+        
+             $sql = "SELECT * FROM categoria 
+                    WHERE status != 0";
+    
+             $request = $this->select_all($sql);
+     
+             return $request;
         }
 
       
