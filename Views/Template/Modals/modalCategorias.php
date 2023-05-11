@@ -11,7 +11,7 @@
       <div class="modal-body">
 
               <form id="formCategoria" name="formCategoria" class="form-horizontal">
-                <input type="hidden" id="idUsuario" name="idUsuario" value="">
+                <input type="hidden" id="idCategoria" name="idCategoria" value="">
                 <p class="text-primary">Los Campos con Asterisco(<span class="required">*</span>) son Obligatorios</p>
 
                 
@@ -47,7 +47,7 @@
                             <span class="delPhoto notBlock">X</span>
                             <label for="foto"></label>
                               <div>
-                                <img id="img" src="<?= media(); ?>/images/uploads/portada_categoria.png">
+                                <img id="img" src="<?= media(); ?>/images/portada_categoria.png">
                               </div>
                           </div>
                             <div class="upimg">

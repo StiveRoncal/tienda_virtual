@@ -41,6 +41,60 @@
     }
 
 
+
+    // Metodo para Almacenar datos en Base de Datos de formulario categoria
+    public function setCategoria(){
+      dep($_POST);
+      dep($_FILES);exit;
+      if($_SESSION['permisosMod']['w']){
+     
+          $intIdrol = intval($_POST['idRol']);
+        
+          $strRol = strClean($_POST['txtNombre']);
+          $strDescripcion = strClean($_POST['txtDescripcion']);
+          $intStatus = intval($_POST['listStatus']);
+          
+
+          // Validacion para el nuevo rol para actualizar, si no viene Id Crea uno nuevo, va respuesta para cactular o crear
+          if($intIdrol == 0){
+          
+            // Crear
+            $request_rol = $this->model->insertRol($strRol,$strDescripcion,$intStatus);
+            $option = 1;
+          }else{
+
+            // Actualizar
+            $request_rol = $this->model->updateRol($intIdrol,$strRol,$strDescripcion,$intStatus);
+            $option = 2;
+
+          }
+
+
+          // condicial lo de insertol
+          // Si se inserto el registreo 
+          if($request_rol > 0){
+
+            // Opcion si es 1 crear si es 2 se actualizo
+            if($option == 1){
+
+              $arrResponse = array('status'=>true, 'msg'=> 'Datos Guardados Correctamente');
+            }else{
+              $arrResponse = array('status'=>true, 'msg'=> 'Datos Actualizados Correctamente');
+            }
+          }else if($request_rol == 'exist'){
+
+            $arrResponse = array('status' => false, 'msg' => '¡Atencion! El Rol Ya existe');
+          }else{
+
+            $arrResponse = array("status" => false, 'msg' => 'No es posible almacenar los datos');
+          }
+          // sleep(3);
+          echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
+      }
+          die();
+
+    }
+
   
 
   }

@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="Chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="Stive Roncal">
-    <link rel="shortcut icon" href="<?= media();?>/images/uploads/favicon.png">
+    <link rel="shortcut icon" href="<?= media();?>/images/favicon.png">
     <title><?= $data['page_tag'];?></title>
     <!-- Main CSS-->
     <link rel="stylesheet" type="text/css" href="<?= media(); ?>/css/main.css">
