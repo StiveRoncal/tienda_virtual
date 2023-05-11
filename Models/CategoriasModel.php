@@ -55,7 +55,7 @@
 
 
 
-        #2 Funcion para selecionar las categorias
+        #2 Funcion para selecionar las categorias(*)
         public function selectCategorias(){
         
              $sql = "SELECT * FROM categoria 
@@ -64,6 +64,19 @@
              $request = $this->select_all($sql);
      
              return $request;
+        }
+
+
+        #3 Funcion para Selecionar una Categoria(1)
+        public function selectCategoria(int $idcategoria){
+
+            $this->intIdCategoria = $idcategoria;
+
+            $sql = "SELECT * FROM categoria
+                    WHERE idcategoria = $this->intIdCategoria";
+
+            $request = $this->select($sql);
+            return $request;
         }
 
       

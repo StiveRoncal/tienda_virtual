@@ -189,6 +189,42 @@
 
     }
 
+
+    // Metod para Extraer las categorias
+    public function getCategoria(int $idcategoria){
+
+        // if($_SESSION['permisosMod']['r']){
+          $intIdCategoria = intval($idcategoria);
+  
+            // condicional si el datos tiene un id validos realizo procesos
+            if($intIdCategoria > 0){
+  
+                  $arrData = $this->model->selectCategoria($intIdCategoria);
+               
+                  // Si no encontro o esta vacia manda errror
+                  // Basicamente hace si detecta el id Existe lo corre si no manda mensahe de error
+                  if(empty($arrData)){
+  
+                    $arrResponse = array('status' => false, 'msg' => 'Datos No Encontrados.');
+                  }else{
+                    // Variable que alamcena la ruta de Foto
+                    $arrData['url_portada'] = media().'/images/uploads/'.$arrData['portada'];
+                    $arrResponse = array('status'=> true, 'data' => $arrData);
+                  }
+                  
+                  // dep($arrData);exit;
+
+                  // Retorna en Formato Json no Arreglo
+                  echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
+  
+              }
+        // }
+  
+      die();
+  
+    }
+  
+
   
 
   }

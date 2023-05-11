@@ -113,3 +113,16 @@
 .imgProductoDelete{
 	width: 175px;
 }
+
+
+/* Tamaño de img cuando se Mire */
+
+#imgCategoria{
+    text-align: center;
+}
+
+#imgCategoria img{
+
+    width: 200px;
+    margin: auto;
+}

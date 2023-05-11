@@ -87,11 +87,11 @@
 
 
 <!-- Modal Ver Detalle de CLIENTE  Registrado -->
-<div class="modal fade" id="modalViewCliente" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="modalViewCategoria" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header header-primary">
-        <h5 class="modal-title" id="titleModal">Datos de Cliente</h5>
+        <h5 class="modal-title" id="titleModal">Datos La Categoria</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -99,45 +99,31 @@
       <div class="modal-body">
             <table class="table table-bordered">
                 <tbody>
-                  <!-- Datos No Personales tipo Cuenta Dibujito -->
-                    <tr>
-                        <td>Identificación:</td>
-                        <td id="celIdentificacion">787887878</td>
-                    </tr>
-                    <tr>
-                        <td>Nombres:</td>
-                        <td id="celNombre"></td>
-                    </tr>
-                    <tr>
-                        <td>Apellidos:</td>
-                        <td id="celApellido"></td>
-                    </tr>
-                    <tr>
-                        <td>Teléfono:</td>
-                        <td id="celTelefono"></td>
-                    </tr>
-                    <tr>
-                        <td>Email (Usuario):</td>
-                        <td id="celEmail"></td>
-                    </tr>
+                  <!-- Datos de la categoria -->
+                   <tr>
+                    <td>ID:</td>
+                    <td id="celId"></td>
+                   </tr>
 
-                    <!-- DATOS FISCALES -->
-                    <tr>
-                        <td>Identificacion Tributaria:</td>
-                        <td id="celIde"></td>
-                    </tr>
-                    <tr>
-                        <td>Nombre Fiscal:</td>
-                        <td id="celNomFiscal"></td>
-                    </tr>
-                    <tr>
-                        <td>Dirección Fiscal:</td>
-                        <td id="celDirFiscal"></td>
-                    </tr>
-                    <tr>
-                        <td>Fecha Registro:</td>
-                        <td id="celFechaRegistro"></td>
-                    </tr>
+                   <tr>
+                    <td>Nombres:</td>
+                    <td id="celNombre">XXXXXXTTTT</td>
+                   </tr>
+
+                   <tr>
+                    <td>Descripción:</td>
+                    <td id="celDescripcion">zzzzz Stive roncal</td>
+                   </tr>
+
+                   <tr>
+                    <td>Estado:</td>
+                    <td id="celEstado">zzzzzz</td>
+                   </tr>
+
+                   <tr>
+                    <td>Foto:</td>
+                    <td id="imgCategoria">zzzzzz</td>
+                   </tr>
                 </tbody>
             </table> 
       </div>
