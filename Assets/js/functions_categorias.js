@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function(){
                             $('#modalFormCategorias').modal("hide");
                             formCategoria.reset();
                             swal("Categoria", objData.msg ,"success");
-
+                            removePhoto();
                             // Sirve para evitar Perder el evento en cada Interaccion de un boton
                             // tableRoles.api().ajax.reload();
 

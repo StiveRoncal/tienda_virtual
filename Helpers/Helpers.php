@@ -143,6 +143,17 @@
         }
     }
 
+    // Ruta Foto 
+    function uploadImage(array $data, string $name){
+
+        $url_temp = $data['tmp_name']; 
+        $destino = 'Assets/images/uploads/'.$name;
+        // ruta tempira y el dsucrino donde se mueven
+        $move = move_uploaded_file($url_temp, $destino);
+        return $move;
+
+    }
+
     // Eliminar exceso de espacios entre palabras
     function strClean($strCadena){
 

@@ -44,51 +44,81 @@
 
     // Metodo para Almacenar datos en Base de Datos de formulario categoria
     public function setCategoria(){
-      dep($_POST);
-      dep($_FILES);exit;
-      if($_SESSION['permisosMod']['w']){
-     
-          $intIdrol = intval($_POST['idRol']);
-        
-          $strRol = strClean($_POST['txtNombre']);
-          $strDescripcion = strClean($_POST['txtDescripcion']);
-          $intStatus = intval($_POST['listStatus']);
-          
+    
+      if($_POST){
 
-          // Validacion para el nuevo rol para actualizar, si no viene Id Crea uno nuevo, va respuesta para cactular o crear
-          if($intIdrol == 0){
-          
-            // Crear
-            $request_rol = $this->model->insertRol($strRol,$strDescripcion,$intStatus);
-            $option = 1;
+          if(empty($_POST['txtNombre']) || empty($_POST['txtDescripcion']) || empty($_POST['listStatus']) ){
+
+              $arrResponse = array("status" => false, "msg" => 'Datos Incorrectos.');
+              
           }else{
 
-            // Actualizar
-            $request_rol = $this->model->updateRol($intIdrol,$strRol,$strDescripcion,$intStatus);
-            $option = 2;
+              $intIdCategoria = intval($_POST['idCategoria']);
+              $strCategoria = strClean($_POST['txtNombre']);
+              $strDescripcion = strClean($_POST['txtDescripcion']);
+              $intStatus = intval($_POST['listStatus']);
 
+
+              // Variable para almacenar los DATOS DE IMG
+              $foto         = $_FILES['foto'];
+              $nombre_foto  = $foto['name'];
+              $type         = $foto['type'];
+              $url_temp     = $foto['tmp_name'];
+
+              $fecha        = date('ymd');
+              $hora         = date('Hms');
+              $imgPortada   = 'img_portada.png';
+
+              // Validacion de img si entra img vacio o no vacia
+
+              // Se esta enviando un img 
+              if($nombre_foto != ''){
+
+                $imgPortada = 'img_'.md5(date('d-m-Y H:m:s')).'.jpg';
+
+              }
+
+
+              // VALIDACION SI se va CREAR O ACTUALIZAR
+
+              if($intIdCategoria == 0){
+          
+                // Crear
+                $request_categoria = $this->model->insertCategoria($strCategoria,$strDescripcion,$imgPortada,$intStatus);
+                $option = 1;
+              }else{
+    
+                // Actualizar
+                $request_categoria = $this->model->updateCategoria($intIdrol,$strRol,$strDescripcion,$intStatus);
+                $option = 2;
+    
+              }
+
+
+              if($request_categoria > 0){
+
+                // Opcion si es 1 crear si es 2 se actualizo
+                if($option == 1){
+    
+                  $arrResponse = array('status'=>true, 'msg'=> 'Datos Guardados Correctamente');
+
+                  // Valacion de Foto
+                  if($nombre_foto != ''){
+                    uploadImage($foto,$imgPortada);
+                  }
+
+                }else{
+                  $arrResponse = array('status'=>true, 'msg'=> 'Datos Actualizados Correctamente');
+                }
+    
+              }else if($request_categoria == 'exist'){
+    
+                $arrResponse = array('status' => false, 'msg' => '¡Atencion! La Categoria  Ya existe');
+              }else{
+    
+                $arrResponse = array("status" => false, 'msg' => 'No es posible almacenar los datos');
+              }
           }
-
-
-          // condicial lo de insertol
-          // Si se inserto el registreo 
-          if($request_rol > 0){
-
-            // Opcion si es 1 crear si es 2 se actualizo
-            if($option == 1){
-
-              $arrResponse = array('status'=>true, 'msg'=> 'Datos Guardados Correctamente');
-            }else{
-              $arrResponse = array('status'=>true, 'msg'=> 'Datos Actualizados Correctamente');
-            }
-          }else if($request_rol == 'exist'){
-
-            $arrResponse = array('status' => false, 'msg' => '¡Atencion! El Rol Ya existe');
-          }else{
-
-            $arrResponse = array("status" => false, 'msg' => 'No es posible almacenar los datos');
-          }
-          // sleep(3);
           echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
       }
           die();
