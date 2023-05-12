@@ -154,6 +154,12 @@
 
     }
 
+    // Funcion para eliminar foto
+    function deleteFile(string $name){
+        // eliminar la foto
+        unlink('Assets/images/uploads/'.$name);
+    }
+
     // Eliminar exceso de espacios entre palabras
     function strClean($strCadena){
 

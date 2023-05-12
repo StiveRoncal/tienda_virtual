@@ -21,7 +21,6 @@
                 
                 <div class="row">
                     <div class="col-md-6">
-                        <input type="hidden" id="idCategoria" name="idCategoria" value="">
                         <div class="form-group">
                           <label class="control-label">Nombre <span class="required">*</span></label>
                           <input class="form-control" name="txtNombre" id="txtNombre" type="text" placeholder="Nombre Categoria" required="">

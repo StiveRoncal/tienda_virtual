@@ -121,8 +121,6 @@ document.addEventListener('DOMContentLoaded', function(){
                 // prevenir recarga
                 e.preventDefault();
 
-                // nuevo Id para ver estos si se actualizan
-                var intIdCategoria =document.querySelector('#idCategoria').value;
 
                 // Validar campossi estan vacios
                 var strNombre = document.querySelector('#txtNombre').value;
@@ -260,7 +258,8 @@ function fntEditInfo(idcategoria){
                 document.querySelector("#txtNombre").value = objData.data.nombre;
                 document.querySelector("#txtDescripcion").value = objData.data.descripcion;
                 document.querySelector("#foto_actual").value = objData.data.portada;
-                
+                // validar que no tape el arreglo y se elimine la foto accidentalmente
+                document.querySelector("#foto_remove").value = 0;
                 // Validacion de ESTADO
                 if(objData.data.status == 1){
 

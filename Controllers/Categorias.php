@@ -44,7 +44,10 @@
 
     // Metodo para Almacenar datos en Base de Datos de formulario categoria
     public function setCategoria(){
-    
+        // dep($_POST);
+
+        // dep($_FILES);exit;
+
       if($_POST){
 
           if(empty($_POST['txtNombre']) || empty($_POST['txtDescripcion']) || empty($_POST['listStatus']) ){
@@ -64,10 +67,12 @@
               $nombre_foto  = $foto['name'];
               $type         = $foto['type'];
               $url_temp     = $foto['tmp_name'];
+              $imgPortada   = 'portada_categoria.png';
+
 
               $fecha        = date('ymd');
               $hora         = date('Hms');
-              $imgPortada   = 'img_portada.png';
+              
 
               // Validacion de img si entra img vacio o no vacia
 
@@ -86,10 +91,23 @@
                 // Crear
                 $request_categoria = $this->model->insertCategoria($strCategoria,$strDescripcion,$imgPortada,$intStatus);
                 $option = 1;
+
               }else{
     
-                // Actualizar
-                $request_categoria = $this->model->updateCategoria($intIdrol,$strRol,$strDescripcion,$intStatus);
+                // Actualizar se envia ID
+
+                // Condicion para img si esta esta vacio o no para redireicir ruta
+                if($nombre_foto == ''){
+
+                    if($_POST['foto_actual'] != 'portada_categoria.png' && $_POST['foto_remove'] == 0){
+
+                      // toma foto actual no se actualiza
+                        $imgPortada = $_POST['foto_actual']; 
+                      
+                    }
+                }
+
+                $request_categoria = $this->model->updateCategoria($intIdCategoria,$strCategoria,$strDescripcion,$imgPortada,$intStatus);
                 $option = 2;
     
               }
@@ -103,12 +121,21 @@
                   $arrResponse = array('status'=>true, 'msg'=> 'Datos Guardados Correctamente');
 
                   // Valacion de Foto
-                  if($nombre_foto != ''){
-                    uploadImage($foto,$imgPortada);
-                  }
+                  if($nombre_foto != ''){uploadImage($foto,$imgPortada);}
 
                 }else{
+
                   $arrResponse = array('status'=>true, 'msg'=> 'Datos Actualizados Correctamente');
+                   // Valacion de Foto
+                   if($nombre_foto != ''){uploadImage($foto,$imgPortada);}
+
+                  // Validacion para eliminar foto actual con otro si se cambia
+                  // es vacio
+                  if( ($nombre_foto == '' && $_POST['foto_remove'] == 1 && $_POST['foto_actual'] != 'portada_categoria.png') 
+                    || ($nombre_foto != '' && $_POST['foto_actual'] != 'portada_categoria.png') ){
+
+                      deleteFile($_POST['foto_actual']);
+                  }
                 }
     
               }else if($request_categoria == 'exist'){
