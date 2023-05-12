@@ -11,7 +11,11 @@
       <div class="modal-body">
 
               <form id="formCategoria" name="formCategoria" class="form-horizontal">
+
+                <!-- Indicacion de IMG cuando actualizae lo con el valor asignado   -->
                 <input type="hidden" id="idCategoria" name="idCategoria" value="">
+                <input type="hidden" id="foto_actual" name="foto_actual" value="">
+                <input type="hidden" id="foto_remove" name="foto_remove" value="0">
                 <p class="text-primary">Los Campos con Asterisco(<span class="required">*</span>) son Obligatorios</p>
 
                 
@@ -30,7 +34,7 @@
                         <!-- ComboBox -->
                         <div class="form-group">
                             <label for="exampleSelect1">Estados <span class="required">*</span></label>
-                            <select class="form-control" id="listStatus" name="listStatus" required="">
+                            <select class="form-control selectpicker" id="listStatus" name="listStatus" required="">
                               <option value="1">Activo</option>
                               <option value="2">Inactivo</option>
                             </select>

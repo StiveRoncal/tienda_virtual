@@ -107,6 +107,8 @@ document.addEventListener('DOMContentLoaded', function(){
         if(document.querySelector(".delPhoto")){
             var delPhoto = document.querySelector(".delPhoto");
             delPhoto.onclick = function(e) {
+                // Direccion elemento con valor 1
+                document.querySelector("#foto_remove").value = 1;
                 removePhoto();
             }
         }
@@ -163,7 +165,7 @@ document.addEventListener('DOMContentLoaded', function(){
                             swal("Categoria", objData.msg ,"success");
                             removePhoto();
                             // Sirve para evitar Perder el evento en cada Interaccion de un boton
-                            // tableRoles.api().ajax.reload();
+                            tableCategorias.api().ajax.reload();
 
                         }else{
                             swal("Error", objData.msg, "error");
@@ -230,18 +232,111 @@ function fntViewInfo(idcategoria){
 }
 
 
+// #2 BOTON Editar
+function fntEditInfo(idcategoria){
+
+
+    document.querySelector('#titleModal').innerHTML = "Actualizar Categoría";
+    document.querySelector('.modal-header').classList.replace("headerRegister", "headerUpdate");
+    document.querySelector('#btnActionForm').classList.replace("btn-primary", "btn-info");
+    document.querySelector('#btnText').innerHTML = "Actualizar";
+  
+    var idcategoria = idcategoria;
+    var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    var ajaxUrl = base_url+'/Categorias/getCategoria/'+idcategoria;
+
+    request.open("GET",ajaxUrl,true);
+    request.send();
+
+    request.onreadystatechange = function(){
+
+        if(request.readyState == 4 && request.status == 200){
+
+            let objData = JSON.parse(request.responseText);
+
+            if(objData.status){
+
+                document.querySelector("#idCategoria").value = objData.data.idcategoria;
+                document.querySelector("#txtNombre").value = objData.data.nombre;
+                document.querySelector("#txtDescripcion").value = objData.data.descripcion;
+                document.querySelector("#foto_actual").value = objData.data.portada;
+                
+                // Validacion de ESTADO
+                if(objData.data.status == 1){
+
+                    document.querySelector("#listStatus").value = 1;
+
+                }else{
+
+                    document.querySelector("#listStatus").value = 2;
+
+                }
+
+                $('#listStatus').selectpicker('render');
+
+
+                // VALIDACION para img Si existe o no en Editar o para editar o quitar si hay alguna modificaicon
+                // Si existe una img por defecto 
+                if(document.querySelector('#img')){
+                    // Busca Ruta de IMG
+                    document.querySelector('#img').src = objData.data.url_portada;
+
+                }else{
+                    // Crea un elemento de img 
+                    document.querySelector('.prevPhoto div').innerHTML = "<img id='img' src="+objData.data.url_portada+">";
+
+                }
+
+
+
+                // Validacio para cambiar IMG si esto es defecto o otra, para configurara las img
+                
+                if(objData.data.portada == 'portada_categoria.png'){
+                    // quitar portada
+                    document.querySelector('.delPhoto').classList.add("notBlock");
+
+                }else{
+                    // poner portada
+                    document.querySelector('.delPhoto').classList.remove("notBlock")
+
+                }
+
+                $('#modalFormCategorias').modal('show');
+
+            }else{
+
+                swal("Error", objData.msg, "error");
+            }
+        }
+    }
+
+  
+
+}
+
+
+
+
+
+
+
 
 // funcion para eliminar foto con (X)
 function removePhoto(){
     document.querySelector('#foto').value ="";
     document.querySelector('.delPhoto').classList.add("notBlock");
-    document.querySelector('#img').remove();
+
+    // Validaicon cuando se habra varias veces, si existe de lo contraito no hace nada 
+    if(document.querySelector('#img')){
+
+        document.querySelector('#img').remove();
+    }
+    
 }
 
 function openModal(){
     
 
-    rowTable = "";
     document.querySelector('#idCategoria').value="";
     document.querySelector('.modal-header').classList.replace("headerUpdate", "headerRegister");
     document.querySelector('#btnActionForm').classList.replace("btn-info", "btn-primary");
@@ -251,6 +346,6 @@ function openModal(){
     document.querySelector('#formCategoria').reset();
 
     $('#modalFormCategorias').modal('show');
-
+    removePhoto();
 
 }
