@@ -115,7 +115,43 @@
             return $request;
         }
 
-      
+        
+        #5 Funcion Para Eliminar Categoria
+        public function deleteCategoria(int $idcategoria){
+
+         
+            $this->intIdCategoria = $idcategoria;
+          
+            $sql = "SELECT * FROM producto WHERE categoriaid = $this->intIdCategoria";
+         
+            $request = $this->select_all($sql);
+
+
+            // Condicional si esta vacio no hay tabla persona relacionado con el
+
+            if(empty($request)){
+            
+                $sql = "UPDATE categoria SET status = ? WHERE idcategoria = $this->intIdCategoria ";
+            
+                $arrData = array(0);
+             
+                $request = $this->update($sql,$arrData);
+
+             
+                if($request){
+
+                    $request = 'ok';
+                }else{
+
+                    $request = 'error';
+                }
+            }else{
+
+                $request = 'exist';
+            }
+            
+            return $request;
+        }
 
     }
 

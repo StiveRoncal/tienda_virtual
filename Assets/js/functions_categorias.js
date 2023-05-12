@@ -311,7 +311,51 @@ function fntEditInfo(idcategoria){
 
   
 
+} 
+
+// #3 BOTON ELIMINAR
+function fntDelInfo(idcategoria){
+
+ 
+        var idCategoria = idcategoria;  
+        // Nos scrip para preguntar si quiere eliminar
+        swal({
+            title: "Eliminar Categoria",
+            text: "¿Realmente quieres Eliminar Esta Categoría?",
+            icon: "warning",
+            buttons: ["No, Cancelar","Si,Eliminar"],
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if(willDelete){
+
+                let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+                let ajaxUrl = base_url+'/Categorias/delCategoria';
+                let strData = "idCategoria="+idCategoria;
+                request.open("POST",ajaxUrl,true);
+                request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                request.send(strData);
+
+                request.onreadystatechange = function(){
+                    if(request.readyState == 4 && request.status == 200){
+                        let objData = JSON.parse(request.responseText);
+
+                        if(objData.status){
+
+                            swal("Eliminar!", objData.msg, "success");
+
+                            tableCategorias.api().ajax.reload();
+                        }else{
+                            swal("Atención!", objData.msg, "error");
+                        }
+                    }
+                }
+            }
+        });
+  
+
 }
+
 
 
 

@@ -250,6 +250,42 @@
       die();
   
     }
+
+
+    // Metodo para Eliminar la Categoria
+    public function delCategoria(){
+      
+      // si se envio
+      if($_POST){
+        if($_SESSION['permisosMod']['d']){
+            // varaiblke que guarda el  el idrol
+            $intIdCategoria = intval($_POST['idCategoria']);
+
+            // ejecuta un proceso desde el modelo para eliminar
+            $requestDelete = $this->model->deleteCategoria($intIdCategoria);
+
+            // Si mi respuesta es OK
+            if($requestDelete == 'ok'){
+
+              // Ejecuta el mensaje del proceso
+              $arrResponse = array('status' => true, 'msg' => 'Se Ha Eliminado La Categoria');
+            // de lo contraio manda error
+            }else if($requestDelete == 'exist'){
+
+              $arrResponse = array('status' => false, 'msg' => 'No es posible eliminar un Categoria con productos asociado ');
+            }else{
+
+              $arrResponse = array('status' => false, 'msg' => 'Error Al Eliminar categoria');
+            }
+            // varaible guardado en json evitando caracteres especiales
+
+            echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+          }
+        }
+          // De lo contrario muere
+          die();
+
+  } 
   
 
   
