@@ -69,6 +69,7 @@
               $url_temp     = $foto['tmp_name'];
               $imgPortada   = 'portada_categoria.png';
 
+              $request_categoria = "";
 
               $fecha        = date('ymd');
               $hora         = date('Hms');
@@ -89,27 +90,29 @@
               if($intIdCategoria == 0){
           
                 // Crear
-                $request_categoria = $this->model->insertCategoria($strCategoria,$strDescripcion,$imgPortada,$intStatus);
-                $option = 1;
-
+                if($_SESSION['permisosMod']['w']){
+                    $request_categoria = $this->model->insertCategoria($strCategoria,$strDescripcion,$imgPortada,$intStatus);
+                    $option = 1;
+                }
               }else{
     
                 // Actualizar se envia ID
+                if($_SESSION['permisosMod']['u']){
+                    // Condicion para img si esta esta vacio o no para redireicir ruta
+                    if($nombre_foto == ''){
 
-                // Condicion para img si esta esta vacio o no para redireicir ruta
-                if($nombre_foto == ''){
+                        if($_POST['foto_actual'] != 'portada_categoria.png' && $_POST['foto_remove'] == 0){
 
-                    if($_POST['foto_actual'] != 'portada_categoria.png' && $_POST['foto_remove'] == 0){
-
-                      // toma foto actual no se actualiza
-                        $imgPortada = $_POST['foto_actual']; 
-                      
+                          // toma foto actual no se actualiza
+                            $imgPortada = $_POST['foto_actual']; 
+                          
+                        }
                     }
+
+                    $request_categoria = $this->model->updateCategoria($intIdCategoria,$strCategoria,$strDescripcion,$imgPortada,$intStatus);
+                    $option = 2;
                 }
 
-                $request_categoria = $this->model->updateCategoria($intIdCategoria,$strCategoria,$strDescripcion,$imgPortada,$intStatus);
-                $option = 2;
-    
               }
 
 
@@ -159,68 +162,68 @@
     public function getCategorias(){
 
       // Validacion para que no accesar roles secundarios sin permisos de root
-      // if($_SESSION['permisosMod']['r']){
+      if($_SESSION['permisosMod']['r']){
 
      
-      $arrData = $this->model->selectCategorias();
-        
+          $arrData = $this->model->selectCategorias();
+            
 
-      for($i=0; $i < count($arrData); $i++){
+          for($i=0; $i < count($arrData); $i++){
 
-        // Varaibles para Sessiones de permisos
-        $btnView = '';
-        $btnEdit = '';
-        $bntDelete = '';
-        
+            // Varaibles para Sessiones de permisos
+            $btnView = '';
+            $btnEdit = '';
+            $bntDelete = '';
+            
 
-        // Validar el Status para que se ve en Forma de Texto
+            // Validar el Status para que se ve en Forma de Texto
 
-        if($arrData[$i]['status'] == 1){
+            if($arrData[$i]['status'] == 1){
 
-            $arrData[$i]['status'] = '<span class="badge badge-success">Activo</span>';
+                $arrData[$i]['status'] = '<span class="badge badge-success">Activo</span>';
 
-        }else{
+            }else{
 
-          $arrData[$i]['status'] = '<span class="badge badge-danger">Inactivo</span>';
+              $arrData[$i]['status'] = '<span class="badge badge-danger">Inactivo</span>';
 
-        }
+            }
 
 
-        // BOTON 01 Permisos (r=>read)(LEER) Boton Ojito
-        if($_SESSION['permisosMod']['r']){
+            // BOTON 01 Permisos (r=>read)(LEER) Boton Ojito
+            if($_SESSION['permisosMod']['r']){
 
-          $btnView = '<button class="btn btn-info btn-sm" onClick="fntViewInfo('.$arrData[$i]['idcategoria'].')" title="Ver Categoria"><i class="far fa-eye"></i></button>';
-        }
+              $btnView = '<button class="btn btn-info btn-sm" onClick="fntViewInfo('.$arrData[$i]['idcategoria'].')" title="Ver Categoria"><i class="far fa-eye"></i></button>';
+            }
 
-        // BOTON 02 Permisos (u=>update)(ACTUALIZAR) Boton Lapiz
-        if($_SESSION['permisosMod']['u']){
+            // BOTON 02 Permisos (u=>update)(ACTUALIZAR) Boton Lapiz
+            if($_SESSION['permisosMod']['u']){
 
-            $btnEdit = '<button class="btn btn-primary btn-sm" onClick="fntEditInfo(this,'.$arrData[$i]['idcategoria'].')" title="Editar Categoria"><i class="fas fa-pencil-alt"></i></button>';
-  
-        }
-
-        // BOTON 03 Permisos (d=>delte)(ELIMINAR) Boton tacho de basura
-        if($_SESSION['permisosMod']['d']){
-          
-            $bntDelete = '<button class="btn btn-danger btn-sm" onClick="fntDelInfo('.$arrData[$i]['idcategoria'].')" title="Eliminar Categoria"><i class="far fa-trash-alt"></i></button>';
-
-        }
-
-      //  Concadenamiento de varaibles para mostras botones de acciones
-        $arrData[$i]['options'] = '<div class="text-center">'.$btnView.' '.$btnEdit.' '.$bntDelete.' </div>';
-      }
+                $btnEdit = '<button class="btn btn-primary btn-sm" onClick="fntEditInfo(this,'.$arrData[$i]['idcategoria'].')" title="Editar Categoria"><i class="fas fa-pencil-alt"></i></button>';
       
-      echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
-    // }
+            }
+
+            // BOTON 03 Permisos (d=>delte)(ELIMINAR) Boton tacho de basura
+            if($_SESSION['permisosMod']['d']){
+              
+                $bntDelete = '<button class="btn btn-danger btn-sm" onClick="fntDelInfo('.$arrData[$i]['idcategoria'].')" title="Eliminar Categoria"><i class="far fa-trash-alt"></i></button>';
+
+            }
+
+          //  Concadenamiento de varaibles para mostras botones de acciones
+            $arrData[$i]['options'] = '<div class="text-center">'.$btnView.' '.$btnEdit.' '.$bntDelete.' </div>';
+          }
+          
+          echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
+    }
       die();
 
     }
 
 
     // Metod para Extraer las categorias
-    public function getCategoria(int $idcategoria){
+    public function getCategoria($idcategoria){
 
-        // if($_SESSION['permisosMod']['r']){
+        if($_SESSION['permisosMod']['r']){
           $intIdCategoria = intval($idcategoria);
   
             // condicional si el datos tiene un id validos realizo procesos
@@ -245,7 +248,7 @@
                   echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
   
               }
-        // }
+        }
   
       die();
   
@@ -287,7 +290,24 @@
 
   } 
   
+    public function getSelectCategorias(){
+      $htmlOptions = "";
+      $arrData = $this->model->selectCategorias();
 
+      if(count($arrData) > 0){
+
+          for($i=0; $i < count($arrData); $i++){
+
+            if($arrData[$i]['status'] == 1){
+
+              $htmlOptions .= '<option value="'.$arrData[$i]['idcategoria'].'" >'.$arrData[$i]['nombre'].'</option>';
+            }
+          }
+      }
+
+      echo $htmlOptions;
+      die();
+    }
   
 
   }
