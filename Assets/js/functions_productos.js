@@ -1,9 +1,36 @@
+// Incluir libreria de Codigo de Barra
+document.write(`<script src="${base_url}/Assets/js/plugins/jsBarcode.all.min.js"></script>`);
 
+// habilitar la URL de enlazes
 $(document).on('focusin', function(e) {
     if ($(e.target).closest(".tox-dialog").length) {
         e.stopImmediatePropagation();
     }
 });
+
+
+// SCRIP PARA ASIGNAR EVENTO DEL CODIGO EN BARRA CUANDO PONGA NUMERO
+
+// Validar si existe
+if(document.querySelector("#txtCodigo")){
+    // almacenar dicho campo
+    let inputCodigo = document.querySelector("#txtCodigo");
+    // Realizara un evento cuando pulsamos click
+    inputCodigo.onkeyup = function(){
+        // inicia despues de 5 caracteres
+        if(inputCodigo.value.length >= 5){
+
+            document.querySelector('#divBarCode').classList.remove("notBlock");
+            // Llamade de img codigo de barra
+            fntBarcode();
+        }else{
+
+            document.querySelector('#divBarCode').classList.add("notBlock");
+        }
+    };
+}
+
+
 
 // Plugin para El TextArea para algo garnde
 tinymce.init({
@@ -18,6 +45,27 @@ tinymce.init({
     ],
     toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons",
 });
+
+
+// Funcion para Ver img de Codigo en barra
+function fntBarcode(){
+
+    let codigo = document.querySelector("#txtCodigo").value;
+    JsBarcode("#barcode", codigo);
+}
+
+// Imprimir el codigo en Barra
+function fntPrintBarcode(area){
+
+    let elemntArea = document.querySelector(area);
+    let vprint = window.open('', 'popimpr', 'height=400,width=600');
+    vprint.document.write(elemntArea.innerHTML);
+    vprint.document.close();
+    // Funcion para imprimir
+    vprint.print();
+    vprint.close();
+}
+
 
 // Mostrar Modal
 

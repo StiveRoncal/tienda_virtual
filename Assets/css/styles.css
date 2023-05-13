@@ -15,8 +15,9 @@
     color: #fff;
 
 }
-.notBlock{
-    display: none;
+
+.textcenter{
+    text-align: center;
 }
 
 /*Estilos login carga*/
@@ -81,6 +82,8 @@
 .upimg, .notBlock{
 	display: none !important;
 }
+
+
 .errorArchivo{
 	font-size: 16px;
 	font-family: arial;
