@@ -99,6 +99,61 @@ window.addEventListener('load',function(){
         "order":[[0,"desc"]]
     });
 
+
+    // Verificar Si Existe El Formulario
+    if(document.querySelector("#formProductos")){
+
+
+        let formProductos = document.querySelector("#formProductos");
+
+        formProductos.onsubmit = function(e){
+
+            e.preventDefault();
+
+
+            let strNombre = document.querySelector('#txtNombre').value;
+            let intCodigo = document.querySelector('#txtCodigo').value;
+            let strPrecio = document.querySelector('#txtPrecio').value;
+            let intStock = document.querySelector('#txtStock').value;
+
+            if(strNombre == '' || intCodigo == ''  || strPrecio == '' || intStock == ''){
+
+                swal("Atención", "Todos Los Campos son Obligatorios", "error");
+                return false;
+            }
+
+            if(intCodigo.length < 5){
+                
+                swal("Atención", "El Codigo debe Ser mayor que 5 Dígitos","error");
+                return false;
+
+            }
+
+            divLoading.style.display = "flex";
+            tinyMCE.triggerSave();
+
+            let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+
+            let ajaxUrl = base_url+'/Productos/setProducto';
+            let formData = new FormData(formProductos);
+
+            request.open("POST",ajaxUrl,true);
+            request.send(formData);
+
+            request.onreadystatechange = function(){
+
+                if(request.readyState == 4 && request.status == 200){
+
+                    console.log(request.responseText);
+                }   
+
+                divLoading.style.display = "none";
+
+            }
+        }
+
+    }
+    
     // Funcion de Abajo
     fntCategorias();
 

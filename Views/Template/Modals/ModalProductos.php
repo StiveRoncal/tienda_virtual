@@ -29,10 +29,7 @@
                           <textarea class="form-control" id="txtDescripcion" name="txtDescripcion" rows="4"></textarea>
                         </div>
                         
-                        
-
-
-
+        
                     </div>
 
                     <div class="col-md-4">
@@ -84,12 +81,14 @@
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     
-                                    <button  id="btnActionForm" class="btn btn-primary btn-lg btn-block" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i><span id="btnText">Guardar</span></button>&nbsp;&nbsp;&nbsp;
+                                    <button  id="btnActionForm" class="btn btn-primary btn-lg btn-block" type="submit">
+                                    <i class="fa fa-fw fa-lg fa-check-circle"></i><span id="btnText">Guardar</span></button>
 
                                 </div>
                                 <div class="form-group col-md-6">
                                     
-                                    <button class="btn btn-danger btn-lg btn-block" type="button" data-dismiss="modal"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cerrar</button>
+                                    <button class="btn btn-danger btn-lg btn-block" type="button" data-dismiss="modal">
+                                    <i class="fa fa-fw fa-lg fa-times-circle"></i>Cerrar</button>
 
                                 </div>
                             </div>    
@@ -101,8 +100,8 @@
               
 
                 <!-- Botones -->
-                <div class="tile-footer">
-                </div>
+                <!-- <div class="tile-footer">
+                </div> -->
 
                 
               </form>

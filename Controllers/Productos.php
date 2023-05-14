@@ -109,4 +109,119 @@
     }
 
 
+    // Funcion para Guardar Producto cuando agregamos
+    public function setProducto(){
+     
+
+    if($_POST){
+       dep($_POST);
+       die();
+
+  
+
+        if(empty($_POST['txtNombre']) || empty($_POST['txtDescripcion']) || empty($_POST['listStatus']) ){
+
+            $arrResponse = array("status" => false, "msg" => 'Datos Incorrectos.');
+            
+        }else{
+
+            $intIdCategoria = intval($_POST['idCategoria']);
+            $strCategoria = strClean($_POST['txtNombre']);
+            $strDescripcion = strClean($_POST['txtDescripcion']);
+            $intStatus = intval($_POST['listStatus']);
+
+
+            // Variable para almacenar los DATOS DE IMG
+            $foto         = $_FILES['foto'];
+            $nombre_foto  = $foto['name'];
+            $type         = $foto['type'];
+            $url_temp     = $foto['tmp_name'];
+            $imgPortada   = 'portada_categoria.png';
+
+            $request_categoria = "";
+
+            $fecha        = date('ymd');
+            $hora         = date('Hms');
+            
+
+            // Validacion de img si entra img vacio o no vacia
+
+            // Se esta enviando un img 
+            if($nombre_foto != ''){
+
+              $imgPortada = 'img_'.md5(date('d-m-Y H:m:s')).'.jpg';
+
+            }
+
+
+            // VALIDACION SI se va CREAR O ACTUALIZAR
+
+            if($intIdCategoria == 0){
+        
+              // Crear
+              if($_SESSION['permisosMod']['w']){
+                  $request_categoria = $this->model->insertCategoria($strCategoria,$strDescripcion,$imgPortada,$intStatus);
+                  $option = 1;
+              }
+            }else{
+  
+              // Actualizar se envia ID
+              if($_SESSION['permisosMod']['u']){
+                  // Condicion para img si esta esta vacio o no para redireicir ruta
+                  if($nombre_foto == ''){
+
+                      if($_POST['foto_actual'] != 'portada_categoria.png' && $_POST['foto_remove'] == 0){
+
+                        // toma foto actual no se actualiza
+                          $imgPortada = $_POST['foto_actual']; 
+                        
+                      }
+                  }
+
+                  $request_categoria = $this->model->updateCategoria($intIdCategoria,$strCategoria,$strDescripcion,$imgPortada,$intStatus);
+                  $option = 2;
+              }
+
+            }
+
+
+            if($request_categoria > 0){
+
+              // Opcion si es 1 crear si es 2 se actualizo
+              if($option == 1){
+  
+                $arrResponse = array('status'=>true, 'msg'=> 'Datos Guardados Correctamente');
+
+                // Valacion de Foto
+                if($nombre_foto != ''){uploadImage($foto,$imgPortada);}
+
+              }else{
+
+                $arrResponse = array('status'=>true, 'msg'=> 'Datos Actualizados Correctamente');
+                 // Valacion de Foto
+                 if($nombre_foto != ''){uploadImage($foto,$imgPortada);}
+
+                // Validacion para eliminar foto actual con otro si se cambia
+                // es vacio
+                if( ($nombre_foto == '' && $_POST['foto_remove'] == 1 && $_POST['foto_actual'] != 'portada_categoria.png') 
+                  || ($nombre_foto != '' && $_POST['foto_actual'] != 'portada_categoria.png') ){
+
+                    deleteFile($_POST['foto_actual']);
+                }
+              }
+  
+            }else if($request_categoria == 'exist'){
+  
+              $arrResponse = array('status' => false, 'msg' => '¡Atencion! La Categoria  Ya existe');
+            }else{
+  
+              $arrResponse = array("status" => false, 'msg' => 'No es posible almacenar los datos');
+            }
+        }
+        echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
+    }
+        die();
+
+  }
+
   }
