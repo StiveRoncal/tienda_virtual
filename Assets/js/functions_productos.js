@@ -9,6 +9,16 @@ $(document).on('focusin', function(e) {
 });
 
 
+// JS puro para ejecutar una funcion cuando se carge la pagina para que automaticamente se ejecuta la funcion
+
+window.addEventListener('load',function(){
+    
+    fntCategorias();
+
+}, false);
+ 
+
+
 // SCRIP PARA ASIGNAR EVENTO DEL CODIGO EN BARRA CUANDO PONGA NUMERO
 
 // Validar si existe
@@ -47,6 +57,42 @@ tinymce.init({
 });
 
 
+// Funcion para que se ejecuta para cargar la vista 
+
+function fntCategorias(){
+
+    // Agaramos el id de combox
+    // Si Existe el Elemento
+    if(document.querySelector('#listCategoria')){
+
+        // Almacena funcion de Controlador
+        let ajaxUrl = base_url+'/Categorias/getSelectCategorias';
+
+        let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+
+        request.open("GET",ajaxUrl,true);
+        request.send();
+
+        // Validacion de retorno de informacion
+        
+        request.onreadystatechange = function(){
+
+            // Si se envio correctamente  de informacion
+            if(request.readyState == 4 && request.status == 200){
+
+                // devuelve los options de combox
+                document.querySelector('#listCategoria').innerHTML = request.responseText;
+                // Jquery para usa funcion selectpicker para que rendere todoas las opcion aplicando el buscado
+                $('#listCategoria').selectpicker('render');
+
+            }
+        }
+
+    }
+
+}
+
+
 // Funcion para Ver img de Codigo en barra
 function fntBarcode(){
 
@@ -59,7 +105,7 @@ function fntPrintBarcode(area){
 
     let elemntArea = document.querySelector(area);
     let vprint = window.open('', 'popimpr', 'height=400,width=600');
-    vprint.document.write(elemntArea.innerHTML);
+    vprint.document.write(elemntArea.innerHTML );
     vprint.document.close();
     // Funcion para imprimir
     vprint.print();

@@ -290,21 +290,31 @@
 
   } 
   
+
+    // Lista despegable
     public function getSelectCategorias(){
+
       $htmlOptions = "";
+      // usa funcion de modelo y lo guarda en variable de sql
       $arrData = $this->model->selectCategorias();
 
+      // valida si devuel algo el metodo del modelo
+      // si recibe algo
       if(count($arrData) > 0){
 
+          // realizar un form para mostra las opciones de lista desplegable de categoria
+          // recorre la cantidad de elemento que tenga
           for($i=0; $i < count($arrData); $i++){
 
+            // valida el estatus 1 para que no muestre las inactivas
             if($arrData[$i]['status'] == 1){
 
+              // variable que imprime un html con id y nombre de la categoria
               $htmlOptions .= '<option value="'.$arrData[$i]['idcategoria'].'" >'.$arrData[$i]['nombre'].'</option>';
             }
           }
       }
-
+      // Solo devuelve html no json
       echo $htmlOptions;
       die();
     }

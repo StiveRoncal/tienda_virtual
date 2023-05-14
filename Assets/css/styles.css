@@ -20,6 +20,11 @@
     text-align: center;
 }
 
+/* Decorar combox */
+.bootstrap-select > .dropdown-toggle{
+    border: 1px solid #CCC;
+}
+
 /*Estilos login carga*/
 
 #divLoading{
