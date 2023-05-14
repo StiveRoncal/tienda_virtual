@@ -71,6 +71,11 @@
 
             }
 
+
+            // Codigo de Formato de Moneda PERU(Soles/PEN)
+            // Poner al costado como agrego del precio
+            
+            $arrData[$i]['precio'] = SMONEY.' '.formatMoney($arrData[$i]['precio']);
             
 
             // BOTON 01 Permisos (r=>read)(LEER) Boton Ojito

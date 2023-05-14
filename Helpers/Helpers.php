@@ -233,6 +233,6 @@
     }
 
     // Simbolo de moneda
-    const SMONEY = "S/";
+    // const SMONEY = "S/";
 
 ?>

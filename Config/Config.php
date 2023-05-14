@@ -20,7 +20,8 @@
     const SPD = ".";
     const SPM = ',';
 
-
+    // Simbolo de moneda
+    const SMONEY = "S/";
     // Datos envio correo
 
     const NOMBRE_REMITENTE = "Tienda Virtual GROSOTEC";
