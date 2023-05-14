@@ -1,6 +1,9 @@
 // Incluir libreria de Codigo de Barra
 document.write(`<script src="${base_url}/Assets/js/plugins/jsBarcode.all.min.js"></script>`);
 
+
+let tableProductos;
+
 // habilitar la URL de enlazes
 $(document).on('focusin', function(e) {
     if ($(e.target).closest(".tox-dialog").length) {
@@ -12,7 +15,69 @@ $(document).on('focusin', function(e) {
 // JS puro para ejecutar una funcion cuando se carge la pagina para que automaticamente se ejecuta la funcion
 
 window.addEventListener('load',function(){
-    
+      // DATATABLES
+      tableProductos = $('#tableProductos').dataTable({
+
+        "aProcessing":true,
+        "aServerSide": true,
+        "language":{
+            "url":"//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
+        },
+        
+        "ajax":{
+            "url": " "+base_url+"/Productos/getProductos",
+            
+            "dataSrc": ""
+        },
+
+        "columns":[
+            // nombres del formato json
+            {"data":"idproducto"},
+            {"data":"codigo"},
+            {"data":"nombre"},
+            {"data":"stock"},
+            {"data":"precio"},
+            {"data":"status"},
+            // otro para acciones para sus columnas
+            {"data":"options"}
+            
+        ],
+        // Botones de exportaciones
+        'dom': 'lBfrtip',
+        'buttons': [
+            {
+                "extend":"copyHtml5",
+                "text":"<i class='far fa-copy'></i> Copiar",
+                "titleAttr":"Copiar",
+                "className": "btn btn-secondary"
+
+            },
+            {
+                "extend":"excelHtml5",
+                "text":"<i class='fas fa-file-excel'></i> Excel",
+                "titleAttr":"Exportar Excel",
+                "className": "btn btn-success"
+            },{
+                "extend":"pdfHtml5",
+                "text":"<i class='fas fa-file-pdf'></i> PDF",
+                "titleAttr":"Exportar PDF",
+                "className": "btn btn-danger"
+            },{
+                "extend":"csvHtml5",
+                "text":"<i class='fas fa-file-csv'></i> CSV",
+                "titleAttr":"Exportar CVS",
+                "className": "btn btn-info"
+
+            }
+        ],
+        // Paginacion
+        "resonsieve":"true",
+        "bDestroy": true,
+        "iDisplayLength": 10,
+        "order":[[0,"desc"]]
+    });
+
+    // Funcion de Abajo
     fntCategorias();
 
 }, false);

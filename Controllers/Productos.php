@@ -39,4 +39,69 @@
         $this->views->getView($this,"productos",$data);
     }
 
+
+
+    // Funcion para Listar Producto HAciendo json
+    public function getProductos(){
+
+      // Validacion para que no accesar roles secundarios sin permisos de root
+      if($_SESSION['permisosMod']['r']){
+
+     
+          $arrData = $this->model->selectProductos();
+            
+
+          for($i=0; $i < count($arrData); $i++){
+
+            // Varaibles para Sessiones de permisos
+            $btnView = '';
+            $btnEdit = '';
+            $bntDelete = '';
+            
+
+            // Validar el Status para que se ve en Forma de Texto
+
+            if($arrData[$i]['status'] == 1){
+
+                $arrData[$i]['status'] = '<span class="badge badge-success">Activo</span>';
+
+            }else{
+
+              $arrData[$i]['status'] = '<span class="badge badge-danger">Inactivo</span>';
+
+            }
+
+            
+
+            // BOTON 01 Permisos (r=>read)(LEER) Boton Ojito
+            if($_SESSION['permisosMod']['r']){
+
+              $btnView = '<button class="btn btn-info btn-sm" onClick="fntViewInfo('.$arrData[$i]['idproducto'].')" title="Ver Producto"><i class="far fa-eye"></i></button>';
+            }
+
+            // BOTON 02 Permisos (u=>update)(ACTUALIZAR) Boton Lapiz
+            if($_SESSION['permisosMod']['u']){
+
+                $btnEdit = '<button class="btn btn-primary btn-sm" onClick="fntEditInfo(this,'.$arrData[$i]['idproducto'].')" title="Editar Producto"><i class="fas fa-pencil-alt"></i></button>';
+      
+            }
+
+            // BOTON 03 Permisos (d=>delte)(ELIMINAR) Boton tacho de basura
+            if($_SESSION['permisosMod']['d']){
+              
+                $bntDelete = '<button class="btn btn-danger btn-sm" onClick="fntDelInfo('.$arrData[$i]['idproducto'].')" title="Eliminar Producto"><i class="far fa-trash-alt"></i></button>';
+
+            }
+
+          //  Concadenamiento de varaibles para mostras botones de acciones
+            $arrData[$i]['options'] = '<div class="text-center">'.$btnView.' '.$btnEdit.' '.$bntDelete.' </div>';
+          }
+          
+          echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
+    }
+      die();
+
+    }
+
+
   }
