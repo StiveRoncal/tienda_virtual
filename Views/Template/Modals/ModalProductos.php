@@ -99,9 +99,48 @@
 
               
 
-                <!-- Botones -->
-                <!-- <div class="tile-footer">
-                </div> -->
+                <!-- Galeria de Imagenes -->
+                <div class="tile-footer">
+                    <div class="form-group col-md-12">
+                        <div id="containerGallery">
+                          <button class="btnAddImage btn btn-info btn-sm" type="button">
+                              <i class="fas fa-plus"></i>
+                          </button>
+                        </div>
+
+                        <hr>
+
+                        <div id="containerImages">
+                          <div id="div24">
+                            <div class="prevImage">
+                              <img src="<?= media(); ?>/images/uploads/teclado.jpg">
+                            </div>
+
+                            <input type="file" name="foto" id="img1" class="inputUploadfile">
+                            <label for="img1" class="btnUpdatefile"><i class="fas fa-upload"></i></label>
+                            <button class="btnDeleteImage" type="button" oncClick="fntDelItem('div24)"><i class="fas fa-trash-alt"></i></button>
+                          </div>
+                          <div id="div24">
+                            <div class="prevImage">
+                              <img  class="loading"src="<?= media(); ?>/images/loading.svg">
+                            </div>
+
+                            <input type="file" name="foto" id="img1" class="inputUploadfile">
+                            <label for="img1" class="btnUpdatefile"><i class="fas fa-upload"></i></label>
+                            <button class="btnDeleteImage" type="button" oncClick="fntDelItem('div24)"><i class="fas fa-trash-alt"></i></button>
+                          </div>
+                          <div id="div24">
+                            <div class="prevImage">
+                              <img src="<?= media(); ?>/images/uploads/teclado.jpg">
+                            </div>
+
+                            <input type="file" name="foto" id="img1" class="inputUploadfile">
+                            <label for="img1" class="btnUpdatefile"><i class="fas fa-upload"></i></label>
+                            <button class="btnDeleteImage" type="button" oncClick="fntDelItem('div24)"><i class="fas fa-trash-alt"></i></button>
+                          </div>
+                        </div>
+                    </div>
+                </div>
 
                 
               </form>
