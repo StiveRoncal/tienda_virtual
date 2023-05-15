@@ -1,3 +1,4 @@
+
 // Incluir libreria de Codigo de Barra
 document.write(`<script src="${base_url}/Assets/js/plugins/jsBarcode.all.min.js"></script>`);
 
@@ -100,7 +101,7 @@ window.addEventListener('load',function(){
     });
 
 
-    // Verificar Si Existe El Formulario
+    // Verificar Si Existe El Formulario Sirve para crear un producto
     if(document.querySelector("#formProductos")){
 
 
@@ -172,6 +173,42 @@ window.addEventListener('load',function(){
 
     }
     
+
+    // Boton de Agregar IMG en Galeria en modal de productos
+    if(document.querySelector(".btnAddImage")){
+
+        let btnAddImage = document.querySelector(".btnAddImage");
+
+        btnAddImage.onclick = function(e){
+            // Cambiar los elemento de div24 que es Id a uno diferente que no se repita
+            let key = Date.now();
+            let newElement = document.createElement("div");
+            // cambio de valor el id="div24" por algo aleatorio
+            newElement.id = "div"+key;
+
+            newElement.innerHTML = `
+            <div class="prevImage">
+                
+            </div>
+
+            <input type="file" name="foto" id="img${key}" class="inputUploadfile">
+            <label for="img${key}" class="btnUpdatefile"><i class="fas fa-upload"></i></label>
+            <button class="btnDeleteImage" type="button" onclick="fntDelItem('#div${key}')"><i class="fas fa-trash-alt"></i></button>`;
+            
+            // Colocar Todo el elemento de DIV images #containerImages con la funcion de appendChild
+            document.querySelector("#containerImages").appendChild(newElement);
+            // referencia a la clase para subir imagen en carpeta local, para que se muestre en el explorador y crear una ventanita de img 
+            document.querySelector(".btnUpdatefile").click();
+            
+        }
+    }
+   
+
+        
+
+    
+
+
     // Funcion de Abajo
     fntCategorias();
 
