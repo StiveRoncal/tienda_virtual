@@ -144,10 +144,28 @@ window.addEventListener('load',function(){
 
                 if(request.readyState == 4 && request.status == 200){
 
-                    console.log(request.responseText);
+                    // json a Objeto
+                    let objData = JSON.parse(request.responseText);
+
+                    if(objData.status){
+
+                        swal("", objData.msg, "success");
+
+                        // establcer ID
+                        document.querySelector('#idProducto').value = objData.idproducto;
+                        tableProductos.api().ajax.reload();
+
+                    }else{
+
+                        swal("Error", objData.msg, "error");
+
+                    }
+
+                
                 }   
 
                 divLoading.style.display = "none";
+                return false;
 
             }
         }

@@ -114,109 +114,74 @@
      
 
     if($_POST){
-       dep($_POST);
-       die();
+       
 
   
-
-        if(empty($_POST['txtNombre']) || empty($_POST['txtDescripcion']) || empty($_POST['listStatus']) ){
+        // Validar -datos Vacios
+        if(empty($_POST['txtNombre']) || empty($_POST['txtCodigo'])  || empty($_POST['listCategoria']) 
+        || empty($_POST['txtPrecio'])|| empty($_POST['listStatus']) ){
 
             $arrResponse = array("status" => false, "msg" => 'Datos Incorrectos.');
             
         }else{
 
-            $intIdCategoria = intval($_POST['idCategoria']);
-            $strCategoria = strClean($_POST['txtNombre']);
+            $idProducto = intval($_POST['idProducto']);
+            $strNombre = strClean($_POST['txtNombre']);
             $strDescripcion = strClean($_POST['txtDescripcion']);
+            $strCodigo = strClean($_POST['txtCodigo']);
+            $intCategoriaId = intval($_POST['listCategoria']);
+            $strPrecio = strClean($_POST['txtPrecio']);
+            $intStock = intval($_POST['txtStock']);
             $intStatus = intval($_POST['listStatus']);
 
+          // Codigo
+          // Condicional para Insertar Datos porque no hay ID
+          if($idProducto == 0){
 
-            // Variable para almacenar los DATOS DE IMG
-            $foto         = $_FILES['foto'];
-            $nombre_foto  = $foto['name'];
-            $type         = $foto['type'];
-            $url_temp     = $foto['tmp_name'];
-            $imgPortada   = 'portada_categoria.png';
+            $option = 1;
 
-            $request_categoria = "";
-
-            $fecha        = date('ymd');
-            $hora         = date('Hms');
-            
-
-            // Validacion de img si entra img vacio o no vacia
-
-            // Se esta enviando un img 
-            if($nombre_foto != ''){
-
-              $imgPortada = 'img_'.md5(date('d-m-Y H:m:s')).'.jpg';
-
-            }
+            $request_producto = $this->model->insertProducto($strNombre,
+                                                            $strDescripcion,
+                                                            $strCodigo,
+                                                            $intCategoriaId,
+                                                            $strPrecio,
+                                                            $intStock,
+                                                            $intStatus);
 
 
-            // VALIDACION SI se va CREAR O ACTUALIZAR
+          }else{
 
-            if($intIdCategoria == 0){
-        
-              // Crear
-              if($_SESSION['permisosMod']['w']){
-                  $request_categoria = $this->model->insertCategoria($strCategoria,$strDescripcion,$imgPortada,$intStatus);
-                  $option = 1;
-              }
-            }else{
-  
-              // Actualizar se envia ID
-              if($_SESSION['permisosMod']['u']){
-                  // Condicion para img si esta esta vacio o no para redireicir ruta
-                  if($nombre_foto == ''){
-
-                      if($_POST['foto_actual'] != 'portada_categoria.png' && $_POST['foto_remove'] == 0){
-
-                        // toma foto actual no se actualiza
-                          $imgPortada = $_POST['foto_actual']; 
-                        
-                      }
-                  }
-
-                  $request_categoria = $this->model->updateCategoria($intIdCategoria,$strCategoria,$strDescripcion,$imgPortada,$intStatus);
-                  $option = 2;
-              }
-
-            }
+            $option = 2;
 
 
-            if($request_categoria > 0){
+          }
 
-              // Opcion si es 1 crear si es 2 se actualizo
+          // Validacion de Resultado de Insertar  Un Producto, Si se inserto el producto
+          if($request_producto > 0){
+
               if($option == 1){
-  
-                $arrResponse = array('status'=>true, 'msg'=> 'Datos Guardados Correctamente');
-
-                // Valacion de Foto
-                if($nombre_foto != ''){uploadImage($foto,$imgPortada);}
+                // Agregamos id dde producto con respuesta de un entero
+                $arrResponse = array('status' => true, 'idproducto' => $request_producto, 'msg' => 'Datos Guardado correctamente');
 
               }else{
 
-                $arrResponse = array('status'=>true, 'msg'=> 'Datos Actualizados Correctamente');
-                 // Valacion de Foto
-                 if($nombre_foto != ''){uploadImage($foto,$imgPortada);}
-
-                // Validacion para eliminar foto actual con otro si se cambia
-                // es vacio
-                if( ($nombre_foto == '' && $_POST['foto_remove'] == 1 && $_POST['foto_actual'] != 'portada_categoria.png') 
-                  || ($nombre_foto != '' && $_POST['foto_actual'] != 'portada_categoria.png') ){
-
-                    deleteFile($_POST['foto_actual']);
-                }
               }
-  
-            }else if($request_categoria == 'exist'){
-  
-              $arrResponse = array('status' => false, 'msg' => '¡Atencion! La Categoria  Ya existe');
-            }else{
-  
-              $arrResponse = array("status" => false, 'msg' => 'No es posible almacenar los datos');
-            }
+              // Si existe el codigo de barras
+          }else if($request_producto == 'exist'){
+
+              $arrResponse = array('status' => false, 'msg' => '!Atención¡ Ya existe un producto con El Codigo en Barra Ingresado');
+          }else{
+
+            $arrResponse = array("status" => false, "msg" => 'No es Posible Almacenar los Datos');
+          }
+        
+
+            
+
+          
+
+
+           
         }
         echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
     }
