@@ -192,14 +192,17 @@ window.addEventListener('load',function(){
             </div>
 
             <input type="file" name="foto" id="img${key}" class="inputUploadfile">
-            <label for="img${key}" class="btnUpdatefile"><i class="fas fa-upload"></i></label>
+            <label for="img${key}" class="btnUploadfile"><i class="fas fa-upload"></i></label>
             <button class="btnDeleteImage" type="button" onclick="fntDelItem('#div${key}')"><i class="fas fa-trash-alt"></i></button>`;
             
             // Colocar Todo el elemento de DIV images #containerImages con la funcion de appendChild
             document.querySelector("#containerImages").appendChild(newElement);
             // referencia a la clase para subir imagen en carpeta local, para que se muestre en el explorador y crear una ventanita de img 
-            document.querySelector(".btnUpdatefile").click();
+            // concadenar elemto para eviar que la img se agrega en el [0] => img i similar por eso acemos eso
+            document.querySelector("#div"+key+" .btnUploadfile").click();
             
+            // eejcuta funcion
+            fntInputFile();
         }
     }
    
@@ -207,7 +210,8 @@ window.addEventListener('load',function(){
         
 
     
-
+    // Invocar funcion
+    fntInputFile();
 
     // Funcion de Abajo
     fntCategorias();
@@ -237,6 +241,126 @@ if(document.querySelector("#txtCodigo")){
     };
 }
 
+
+// Funcion para Cambiar de ver y poner la ruta de imagen en el input inputUploadfile
+function fntInputFile(){
+
+    // almacena clase de input y lo referencia
+    let inputUploadfile = document.querySelectorAll(".inputUploadfile");
+
+    // recore todo los elemto de las clases
+    inputUploadfile.forEach(function(inputUploadfile){
+
+        // aplicamps la funcion de cambio de clase
+        inputUploadfile.addEventListener('change', function(){
+
+            // elemeto de tipo hiden del formulario
+            let idProducto = document.querySelector("#idProducto").value;   
+            // obetner id de class="div24(aleotorio)"
+            // referncia al boton de fecha arriba para subir img
+            let parentId = this.parentNode.getAttribute("id");
+            // referencia de id al elemento que damos click que obtiene su id <input id="img1"/>
+            let idFile = this.getAttribute("id");
+            // almacena el id file para concadenar con un selector # que obtiene el valor de ese elemento
+            let uploadFoto = document.querySelector("#"+idFile).value;  
+            // los mismo pero aqui obtiene el archivo que carga
+            let fileimg = document.querySelector("#"+idFile).files;
+            // seleciiona elemeto <div id="div"> y se dirige a previmage
+            let prevImg = document.querySelector("#"+parentId+" .prevImage");
+
+            // alamcena  el navengadpr del vwtan de url 
+            let nav = window.URL || window.webkitURL;
+
+
+            // Validar si Existe Alguna Imagen, si existe algun archibo img
+            if(uploadFoto != ''){
+
+                // almacena input en poscion 0 para obtener el tipo de archivo
+                let type = fileimg[0].type;
+                // aqui obtiene el nombre del archivo
+                let name = fileimg[0].name;
+
+                // Validamos el tipo de Archivo enviado
+
+                if(type != 'image/jpeg' && type != 'image/jpg' && type != 'image/png'){
+
+                    // da Respsues de archivo no correspondiente
+                    prevImg.innerHTML = "Archivo no Valido,Esto Senati no corresponde al formato de img aceptado";
+                    // deja el valor vacio
+                    uploadFoto.value = "";
+                    // detiene el proveso
+                    return false;
+
+                }else{
+                    // Si es correcto el archivo
+
+                    // alamce el input file del tipo de artchi
+                    let objeto_url = nav.createObjectURL(this.files[0]);
+
+                    // muestra la img y direccion de img de carga
+                    prevImg.innerHTML = `<img class="loading" src="${base_url}/Assets/images/loading.svg">`;
+                    
+
+                    // Proceso de Ajax
+
+                    // Validacion de navegacio
+                    let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+
+                    // ruta de funcion que usa 
+                    let ajaxUrl = base_url+'/Productos/setImage';
+                    // instancia
+                    let formData = new FormData();
+                    // con sea instanci agremos  el campo id producto con valor definido en liena 256 de una varaible
+                    formData.append('idproducto', idProducto);
+                    // otro eleemto de guarda foto, con contendio del tipo files
+                    formData .append("foto", this.files[0]);
+
+                    // peticion de post con varianle anterirores
+                    request.open("POST",ajaxUrl, true);
+                    // envip
+                    request.send(formData);
+
+                    // Validcaion si fueron enviados correctamente
+
+                    request.onreadystatechange = function(){
+                        
+                        if(request.readyState !=4) return;
+
+                        if(request.status == 200){
+
+                            // convertirmos json en objto
+                            let objData = JSON.parse(request.responseText);
+
+                          
+
+
+                            // Validacion de objeto
+                            if(objData.status){
+                            
+                                  // alamcenr la url de url de imagen temporal
+                                prevImg.innerHTML = `<img  src="${objeto_url}">`;
+                                //diregir al id del parnet especial mente a los botone que se van a configurar 
+                                document.querySelector("#"+parentId+" .btnDeleteImage").setAttribute("imgname",objData.imgname);
+
+                                document.querySelector("#"+parentId+" .btnUploadfile").classList.add("notBlock");
+
+                                document.querySelector("#"+parentId+" .btnDeleteImage").classList.remove("notBlock");
+                                
+                            }else{
+                                swal("Error", objData.msg, "error");
+                            }
+                        }
+
+                    }
+
+                }
+
+
+            }
+        });
+
+    });
+}
 
 
 // Plugin para El TextArea para algo garnde
