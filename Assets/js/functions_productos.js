@@ -4,7 +4,7 @@ document.write(`<script src="${base_url}/Assets/js/plugins/jsBarcode.all.min.js"
 
 
 let tableProductos;
-
+let rowTable = "";
 // habilitar la URL de enlazes
 $(document).on('focusin', function(e) {
     if ($(e.target).closest(".tox-dialog").length) {
@@ -116,7 +116,7 @@ window.addEventListener('load',function(){
             let intCodigo = document.querySelector('#txtCodigo').value;
             let strPrecio = document.querySelector('#txtPrecio').value;
             let intStock = document.querySelector('#txtStock').value;
-
+            let intStatus = document.querySelector('#listStatus').value;
             if(strNombre == '' || intCodigo == ''  || strPrecio == '' || intStock == ''){
 
                 swal("Atención", "Todos Los Campos son Obligatorios", "error");
@@ -154,8 +154,28 @@ window.addEventListener('load',function(){
 
                         // establcer ID
                         document.querySelector('#idProducto').value = objData.idproducto;
-                        tableProductos.api().ajax.reload();
+                        
+                        // validacion cuando se actualiza no recarge la pagina
+                        if(rowTable == ""){
 
+                            tableProductos.api().ajax.reload();
+
+
+                        }else{
+
+                            // validar el html de estatus y mostrar
+                            htmlStatus = intStatus  == 1 ?
+                            '<span class="badge badge-success">Activo</span>' : 
+                            '<span class="badge badge-danger">Inactivo</span>';
+                            // retorna al class padre ya que son hijas
+                            rowTable.cells[1].textContent = intCodigo;
+                            rowTable.cells[2].textContent = strNombre;
+                            rowTable.cells[3].textContent = intStock;
+                            rowTable.cells[4].textContent = smoney+strPrecio;
+                            rowTable.cells[5].innerHTML = htmlStatus;
+                            rowTable = "";
+                        }
+                       
                     }else{
 
                         swal("Error", objData.msg, "error");
@@ -446,8 +466,9 @@ function fntViewInfo(idProducto){
 
 // Boton para Editar Producto
 
-function fntEditInfo(idproducto){
+function fntEditInfo(element,idproducto){
 
+    rowTable = element.parentNode.parentNode.parentNode; 
     document.querySelector('#titleModal').innerHTML = "Actualizar Producto";
     document.querySelector('.modal-header').classList.replace("headerRegister", "headerUpdate");
     document.querySelector('#btnActionForm').classList.replace("btn-primary", "btn-info");

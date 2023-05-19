@@ -1,6 +1,7 @@
   <!-- Varibles para que reconozca js de la ruta de localhost -->
   <script>
       const base_url = "<?= base_url(); ?>";
+      const smoney = "<?= SMONEY; ?>";
   </script>
   
   <!-- Essential javascripts for application to work-->

@@ -87,7 +87,7 @@
             // BOTON 02 Permisos (u=>update)(ACTUALIZAR) Boton Lapiz
             if($_SESSION['permisosMod']['u']){
 
-                $btnEdit = '<button class="btn btn-primary btn-sm" onClick="fntEditInfo('.$arrData[$i]['idproducto'].')" title="Editar Producto"><i class="fas fa-pencil-alt"></i></button>';
+                $btnEdit = '<button class="btn btn-primary btn-sm" onClick="fntEditInfo(this,'.$arrData[$i]['idproducto'].')" title="Editar Producto"><i class="fas fa-pencil-alt"></i></button>';
       
             }
 
