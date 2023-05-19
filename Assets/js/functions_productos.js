@@ -444,6 +444,106 @@ function fntViewInfo(idProducto){
 }
 
 
+// Boton para Editar Producto
+
+function fntEditInfo(idproducto){
+
+    document.querySelector('#titleModal').innerHTML = "Actualizar Producto";
+    document.querySelector('.modal-header').classList.replace("headerRegister", "headerUpdate");
+    document.querySelector('#btnActionForm').classList.replace("btn-primary", "btn-info");
+    document.querySelector('#btnText').innerHTML = "Actualizar";
+
+
+     // Validacion AJAX
+     let request  = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+
+     let ajaxUrl = base_url+'/Productos/getProducto/'+idproducto;
+ 
+     request.open("GET",ajaxUrl,true);
+ 
+     request.send();
+ 
+     request.onreadystatechange = function(){
+       
+        if(request.readyState == 4 && request.status == 200){
+            
+     
+        let objData = JSON.parse(request.responseText);
+
+        if(objData.status){
+
+            let htmlImage = "";
+            let objProducto = objData.data;
+
+            console.log(objProducto);
+
+            // mOSTRA DATOS AL FORMULARIO editar
+
+            document.querySelector("#idProducto").value = objProducto.idproducto;
+            document.querySelector("#txtNombre").value = objProducto.nombre;
+            document.querySelector("#txtDescripcion").value = objProducto.descripcion;
+            document.querySelector("#txtCodigo").value = objProducto.codigo;
+            document.querySelector("#txtPrecio").value = objProducto.precio;
+            document.querySelector("#txtStock").value = objProducto.stock;
+            document.querySelector("#listCategoria").value = objProducto.categoriaid;
+            document.querySelector("#listStatus").value = objProducto.status;
+
+
+            tinymce.activeEditor.setContent(objProducto.descripcion);
+            // ver lista despagables
+            $('#listCategoria').selectpicker('render');
+            $('#listStatus').selectpicker('render');
+
+            // ver codigo en barra
+            fntBarcode();
+
+            // Ver imagenes puestas
+
+            // verificar las cantidad de elemeto de imagenes,
+            if(objProducto.images.length > 0){
+
+                // alamcena datos de img de data
+                let objProductos = objProducto.images;
+
+                // aplica for para recorrene el arrelgo
+                for(let p = 0; p < objProductos.length; p++){
+                    // alamena un datos aleotrio para que  el numero no se repita, condadena con el ciclo
+                    let key = Date.now()+p;
+                    // html que muesta las img y ver elemetos de carga
+                    htmlImage += `<div id="div${key}">
+                        <div class="prevImage">
+                            <img src="${objProductos[p].url_image}"></img>
+                        </div>
+
+                        <button type="button" class="btnDeleteImage" onclick="fntDelItem('#div${key}')" imgname="${objProductos[p].img}" >
+                        <i class="fas fa-trash-alt"></i></button>
+                    </div>`;
+                }
+
+            }
+
+            // Da las img con su html respectivo, referencia al id de contenedor    
+            document.querySelector("#containerImages").innerHTML = htmlImage;
+
+
+
+            // ver codigo en barra, eliminando elemento oculto
+            document.querySelector("#divBarCode").classList.remove("notBlock");
+
+            $('#modalFormProductos').modal('show');
+
+        }else{
+
+            swal("Error", objData.msg, "error");
+        }
+     }   
+    }
+
+
+ 
+
+}
+
 // Funcion para que se ejecuta para cargar la vista 
 
 function fntCategorias(){
