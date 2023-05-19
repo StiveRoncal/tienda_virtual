@@ -114,7 +114,7 @@
      
 
     if($_POST){
-       
+  
 
   
         // Validar -datos Vacios
@@ -153,6 +153,15 @@
 
             $option = 2;
 
+            $request_producto = $this->model->updateProducto($idProducto,
+                                                            $strNombre,
+                                                            $strDescripcion,
+                                                            $strCodigo,
+                                                            $intCategoriaId,
+                                                            $strPrecio,
+                                                            $intStock,
+                                                            $intStatus);
+
 
           }
 
@@ -164,6 +173,8 @@
                 $arrResponse = array('status' => true, 'idproducto' => $request_producto, 'msg' => 'Datos Guardado correctamente');
 
               }else{
+                
+                $arrResponse = array('status' => true,'idproducto' => $idProducto , 'msg' => 'Datos Actualizados Correctamente');
 
               }
               // Si existe el codigo de barras
@@ -174,13 +185,6 @@
 
             $arrResponse = array("status" => false, "msg" => 'No es Posible Almacenar los Datos');
           }
-        
-
-            
-
-          
-
-
            
         }
         echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);

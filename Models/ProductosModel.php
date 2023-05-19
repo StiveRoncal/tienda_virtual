@@ -58,7 +58,7 @@
 
             $return = 0;
 
-            $sql = "SELECT * FROM producto WHERE codigo = $this->intCodigo";
+            $sql = "SELECT * FROM producto WHERE codigo = '{$this->intCodigo}' ";
 
             $request = $this->select_all($sql);
 
@@ -84,6 +84,61 @@
                 $request_insert = $this->insert($query_insert, $arrData);
 
                 $return = $request_insert;
+            }else{
+
+                $return = "exist";
+
+            }
+
+            return $return;
+
+
+
+
+        }
+
+
+        // 2.1 Metodo para actualizar el producto
+        public function updateProducto(int $idproducto,string $nombre, string $descripcion, int $codigo, int $categoriaid, string $precio, int $stock, int $status){
+
+            $this->intIdProducto = $idproducto;
+            $this->strNombre = $nombre;
+            $this->strDescripcion = $descripcion;
+            $this->intCodigo = $codigo;
+            $this->intCategoriaId = $categoriaid;
+            $this->strPrecio = $precio;
+            $this->intStock = $stock;
+            $this->intStatus = $status;
+
+            $return = 0;
+
+            $sql = "SELECT * FROM producto WHERE codigo = '{ $this->intCodigo}' AND idproducto !=  $this->intIdProducto";
+
+            $request = $this->select_all($sql);
+
+            if(empty($request)){
+
+                $sql = "UPDATE producto
+                        SET categoriaid=?,
+                            codigo=?,
+                            nombre=?,
+                            descripcion=?,
+                            precio=?,
+                            stock=?,
+                            status=?
+                            WHERE idproducto = $this->intIdProducto";
+
+                $arrData = array($this->intIdProducto,
+                                $this->intCodigo,
+                                $this->strNombre,
+                                $this->strDescripcion,
+                                $this->strPrecio,
+                                $this->intStock,
+                                $this->intStatus);
+                
+                $request = $this->update($sql, $arrData);
+
+                $return = $request;
             }else{
 
                 $return = "exist";
