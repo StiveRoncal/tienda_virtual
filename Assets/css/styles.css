@@ -180,7 +180,7 @@
     display: none;
 }
 
-.btnUpdatefile, .btnDeleteImage{
+.btnUploadfile, .btnDeleteImage{
 
     border: 0;
     background-color: #009688;

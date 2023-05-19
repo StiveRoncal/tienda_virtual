@@ -12,6 +12,7 @@
         private $intStock;
         private $intStatus;
         private $strPrecio;
+        private $strImagen;
 
         public function __construct(){
 
@@ -95,8 +96,64 @@
 
 
         }
+
+        // 3er Metodo para insertar imagen 
+        public function insertImage(int $idproducto, string $imagen){
+
+
+            $this->intIdProducto = $idproducto;
+            $this->strImagen = $imagen;
+
+            $query_insert = "INSERT INTO imagen(productoid,img) 
+                            VALUES(?,?)";
+            
+            $arrData = array($this->intIdProducto,
+                            $this->strImagen);
+
+            $request_insert = $this->insert($query_insert,$arrData);
+
+            return $request_insert;
+        }
      
 
+        // 4to Metodo para ver en DB un producto
+        public function selectProducto(int $idproducto){
+
+            $this->intIdProducto = $idproducto;
+
+            $sql = "SELECT p.idproducto,
+                            p.codigo,
+                            p.nombre,
+                            p.descripcion,
+                            p.precio,
+                            p.stock,
+                            p.categoriaid,
+                            c.nombre as categoria,
+                            p.status
+                    FROM producto p
+                    INNER JOIN categoria c
+                    ON p.categoriaid = c.idcategoria
+                    WHERE idproducto = $this->intIdProducto";
+
+            $request = $this->select($sql);
+            return $request;
+        }
+
+
+        // 5to Metodo para selecionar imagenes
+
+        public function selectImages(int $idproducto){
+
+            $this->intIdProducto = $idproducto;
+
+            $sql = "SELECT productoid, img
+                    FROM imagen
+                    WHERE productoid = $this->intIdProducto";
+
+            $request = $this->select_all($sql);
+            return $request;
+
+        }
     }
 
 ?>

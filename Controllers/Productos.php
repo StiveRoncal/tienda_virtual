@@ -189,16 +189,90 @@
 
     }
 
+    // Funcion para ver un producto
+    public function getProducto($producto){
 
+      $idproducto = intval($producto);
+    
+      // Si existe un producto
+      if($idproducto > 0){
+        // almacenamiento de funcion de modelo
+        $arrData = $this->model->selectProducto($idproducto);
+        
+        // Validar si viene vacio
+          if(empty($arrData)){
 
-    // Funcion para 
+              $arrResponse = array('status' => false, 'msg' => 'Datos no encontrado');
+
+          }else{
+
+              // almacena funcion de modelo
+              $arrImg = $this->model->selectImages($idproducto);
+
+              // contar cuantos registro van a devolver la funcion del modelo
+              if(count($arrImg) > 0){
+
+                  // recorre cada registro con For
+                  for($i=0; $i< count($arrImg) ; $i++){
+                      // accede posico del arreglo y ruta del arreglo, concadenar nombre de la imagen
+                      $arrImg[$i]['url_image'] = media().'/images/uploads/'.$arrImg[$i]['img'];
+                  }
+              }
+
+              $arrData['images'] = $arrImg;
+
+              $arrResponse = array('status' => true, 'data' => $arrData);
+
+          }
+
+  
+          echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+          die();
+      }
+
+    }
+
+    // Funcion para  guardar una imagen
     public function setImage(){
       // dep($_POST);
       // dep($_FILES);
 
-      $arrResponse = array('status' => true, 'imgname' => "img_fsdsdfsddsdf.jpg");
+      // Valida el Envio
+      if($_POST){
+        if(empty($_POST['idproducto'])){
+          $arrResponse = array('status' => false, 'msg' => 'Error de Dato Id Vacio en Envio. Esperare todavia no');
+        }else{
+                  // Almacena Valor del JS 
+            $idProducto = intval($_POST['idproducto']);
+            
+            // almacena arreglo de file en posicion de foto
+            $foto = $_FILES['foto'];
+            // almacena el nombre random de la imagen para evitar que los nombres de los productos se repitan
+            $imgNombre = 'pro_'.md5(date('d-m-Y H:m:s')).'.jpg';
+            // utilizamos metod de model para insertar imagen
+            $request_image = $this->model->insertImage($idProducto,$imgNombre);
+
+            // Validar si Retorna valor verdadero
+            if($request_image){
+
+                // almacion funcion global de helper para dar ruta de img con cierto parametros
+                $uploadImage = uploadImage($foto,$imgNombre);
+                $arrResponse = array('status' =>  true, 'imgname' => $imgNombre, 'msg' => 'Archivo Cargado.');
+            }else{
+
+                $arrResponse = array('status' => false, 'msg' => 'Error de Carga.');
+
+            }
+        }
+    
+          // retornar variables en JSon
+    
       echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
+      }
+    
       die();
     }
 
   }
+
+  ?>
