@@ -277,6 +277,47 @@
       die();
     }
 
+
+    // funcion para Eliminar img de formulario
+    public function delFile(){
+
+      // validar el envio
+      if($_POST){
+        // validar que no esten vacios las variables 
+
+        if(empty($_POST['idproducto']) || empty($_POST['file'])){
+
+            $arrResponse = array("status" => false, "msg" => 'Datos Incorrectos, Los Campos Estan Vacio');
+
+        }else{
+
+          // eliminar de la base de Datos
+          $idProducto = intval($_POST['idproducto']);
+
+          $imgNombre = strClean($_POST['file']);
+
+          // alamcena una funcion del modelo pasando las variables como parametro
+          $request_image = $this->model->deleteImage($idProducto,$imgNombre);
+
+          // evaluacio si es verdaero la variable con la funcion
+          if($request_image){
+
+            // alamcena funcion de helper,busca ruta y lo elimna la imagne
+              $deleteFile = deleteFile($imgNombre);
+
+              $arrResponse = array('status' => true, 'msg' => 'Archivo Eliminado');
+
+          }else{
+
+              $arrResponse = array('status' => false, 'msg' => 'Error Al Eliminar Imagen');
+          }
+        }
+
+        echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
+      }
+      die();
+    }
+
   }
 
   ?>

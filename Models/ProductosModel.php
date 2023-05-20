@@ -209,6 +209,25 @@
             return $request;
 
         }
+
+        // 6to Metodo para Eliminar img
+
+        public function deleteImage(int $idproducto, string $imagen){
+
+            $this->intIdProducto = $idproducto;
+
+            $this->strImagen = $imagen;
+
+            // consulta para eliminar la img directamente
+            $query = "DELETE FROM imagen 
+                    WHERE productoid = $this->intIdProducto
+                    AND img = '{$this->strImagen}'";
+
+            $request_delete = $this->delete($query);
+
+            return $request_delete;
+
+        }
     }
 
 ?>

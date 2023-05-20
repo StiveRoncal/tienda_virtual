@@ -382,6 +382,62 @@ function fntInputFile(){
     });
 }
 
+// Funcion para eliminar img 
+function fntDelItem(element){
+    
+
+    // alamcenar codigo de img para dirgir al id, redifvion al boton de class, y direjiendo al atributo igmnae donde esta el nobre de la img con pro_dsadasasd
+    // let nameImg = document.querySelector("#div1684601656646"+' .btnDeleteImage').getAttribute("imgname");
+    let nameImg = document.querySelector(element+' .btnDeleteImage').getAttribute("imgname");
+
+     // almacena de un input oculto del formulario de producto 
+     let idProducto = document.querySelector("#idProducto").value;
+
+    // implementacion de ajax
+    let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+
+    let ajaxUrl = base_url+'/Productos/delFile';
+
+    // instacia de varaible  para objeto
+    let formData = new FormData();
+    // form que se agrefa campos con ID y campo
+    formData.append('idproducto', idProducto);
+    // agregar otro campo file y nombre de la foto
+    formData.append("file",nameImg);
+    // abrimos el ajax
+    request.open("POST",ajaxUrl,true);
+    // enviamos el ajax en formato json 
+    request.send(formData);
+
+    request.onreadystatechange = function(){
+        // validacion de respuesta
+
+        if(request.readyState != 4) return;
+
+        if(request.status == 200){
+            
+            // convertir json a OBJETO
+             let objData = JSON.parse(request.responseText);
+
+            // si esl stadso es verdaero significa que se elimno la foto
+             if(objData.status){
+
+                // almacena elemento de img de parametro
+                let itemRemove = document.querySelector(element);
+                
+                // indicamos al padre del elemetno se direigi al id="containerImages" y removemoese l eemeto hijo
+                itemRemove.parentNode.removeChild(itemRemove);
+               
+
+             }else{
+
+                swal("", objData.msg, "error");
+
+             }
+        }
+    }
+   
+}
 
 // Plugin para El TextArea para algo garnde
 tinymce.init({
