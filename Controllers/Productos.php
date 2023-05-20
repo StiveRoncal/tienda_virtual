@@ -318,6 +318,34 @@
       die();
     }
 
+
+    public function delProducto(){
+
+      // Validar Envio
+      if($_POST){
+
+        // almacenar variable de js 
+        $intIdProducto = intval($_POST['idProducto']);
+
+        // almacenar Funcion de modelo
+        $requestDelete = $this->model->deleteProducto($intIdProducto);
+
+        // Validar si funcion en variable llega 
+        if($requestDelete){
+
+          $arrResponse = array('status' => true, 'msg' => 'Se Ha Eliminador Correctamente El Producto Senati');
+
+        }else{
+
+          $arrResponse = array('status' => false, 'msg' => 'Error al eliminar Un Producto');
+
+        }
+
+        echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+      }
+      die();
+    }
+
   }
 
   ?>

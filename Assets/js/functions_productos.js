@@ -621,6 +621,52 @@ function fntEditInfo(element,idproducto){
 
 }
 
+
+// Funcion PAra Eliminar Producto
+
+function fntDelInfo(idProducto){
+
+ 
+      
+    // Nos scrip para preguntar si quiere eliminar
+    swal({
+        title: "Eliminar Producto",
+        text: "¿Realmente quieres Eliminar El Producto?",
+        icon: "warning",
+        buttons: ["No, Cancelar","Si,Eliminar"],
+        dangerMode: true,
+    })
+    .then((willDelete) => {
+        if(willDelete){
+
+            let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+            let ajaxUrl = base_url+'/Productos/delProducto';  //OJO
+            let strData = "idProducto="+idProducto;
+            request.open("POST",ajaxUrl,true);
+            request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            request.send(strData);
+
+            request.onreadystatechange = function(){
+                if(request.readyState == 4 && request.status == 200){
+                    let objData = JSON.parse(request.responseText);
+
+                    if(objData.status){
+
+                        swal("Eliminar!", objData.msg, "success");
+
+                        tableProductos.api().ajax.reload();
+                    }else{
+                        swal("Atención!", objData.msg, "error");
+                    }
+                }
+            }
+        }
+    });
+
+
+}
+
+
 // Funcion para que se ejecuta para cargar la vista 
 
 function fntCategorias(){

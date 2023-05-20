@@ -228,6 +228,22 @@
             return $request_delete;
 
         }
+
+
+        // 7Mo Eliminar Producto 
+
+        public function deleteProducto(int $idproducto){
+
+            $this->intIdProducto = $idproducto;
+
+            $sql = "UPDATE producto SET status = ? WHERE idproducto = $this->intIdProducto";
+            // referencia al ID del arreglo
+            $arrData = array(0);
+            // almacena funcion de mysql.php
+            $request = $this->update($sql,$arrData);
+
+            return $request;
+        }
     }
 
 ?>
