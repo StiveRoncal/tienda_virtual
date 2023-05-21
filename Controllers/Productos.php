@@ -180,7 +180,7 @@
 
               }
               // Si existe el codigo de barras
-          }else if($request_producto == 'exist'){
+          }else if($request_producto == false){
 
               $arrResponse = array('status' => false, 'msg' => '!Atención¡ Ya existe un producto con El Codigo en Barra Ingresado');
           }else{

@@ -86,7 +86,7 @@
                 $return = $request_insert;
             }else{
 
-                $return = "exist";
+                $return = false;
 
             }
 

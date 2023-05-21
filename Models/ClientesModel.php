@@ -73,7 +73,7 @@ class ClientesModel extends Mysql{
             $return = $request_insert;
         }else{
 
-            $return = "exist";
+            $return = false;
         }
         return $return;
     }
@@ -172,7 +172,7 @@ class ClientesModel extends Mysql{
 
         }else{
 
-            $request = "exist";
+            $request = false;
         }
 
         return $request;

@@ -611,6 +611,8 @@ function fntEditInfo(element,idproducto){
             // ver codigo en barra, eliminando elemento oculto
             document.querySelector("#divBarCode").classList.remove("notBlock");
 
+            document.querySelector("#containerGallery").classList.remove("notBlock");
+
             $('#modalFormProductos').modal('show');
 
         }else{

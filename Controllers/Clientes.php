@@ -154,7 +154,7 @@ class Clientes extends Controllers{
                 }
 
               
-           }else if($request_user == 'exist'){
+           }else if($request_user == false){
 
                 $arrResponse = array('status' => false, 'msg' => 'Atencion El email o identificacion ya Existe, ingrese otro');
 

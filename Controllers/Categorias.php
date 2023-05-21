@@ -141,7 +141,7 @@
                   }
                 }
     
-              }else if($request_categoria == 'exist'){
+              }else if($request_categoria == false){
     
                 $arrResponse = array('status' => false, 'msg' => '¡Atencion! La Categoria  Ya existe');
               }else{
@@ -273,7 +273,7 @@
               // Ejecuta el mensaje del proceso
               $arrResponse = array('status' => true, 'msg' => 'Se Ha Eliminado La Categoria');
             // de lo contraio manda error
-            }else if($requestDelete == 'exist'){
+            }else if($requestDelete == false){
 
               $arrResponse = array('status' => false, 'msg' => 'No es posible eliminar un Categoria con productos asociado ');
             }else{
