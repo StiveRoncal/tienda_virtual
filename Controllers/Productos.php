@@ -103,8 +103,8 @@
           }
           
           echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
-    }
-      die();
+      }
+        die();
 
     }
 
@@ -134,12 +134,14 @@
             $intStock = intval($_POST['txtStock']);
             $intStatus = intval($_POST['listStatus']);
 
+            $request_producto = "";
+
           // Codigo
           // Condicional para Insertar Datos porque no hay ID
           if($idProducto == 0){
 
             $option = 1;
-
+            if($_SESSION['permisosMod']['w']){
             $request_producto = $this->model->insertProducto($strNombre,
                                                             $strDescripcion,
                                                             $strCodigo,
@@ -147,12 +149,12 @@
                                                             $strPrecio,
                                                             $intStock,
                                                             $intStatus);
-
+            }
 
           }else{
 
             $option = 2;
-
+            if($_SESSION['permisosMod']['u']){
             $request_producto = $this->model->updateProducto($idProducto,
                                                             $strNombre,
                                                             $strDescripcion,
@@ -162,7 +164,7 @@
                                                             $intStock,
                                                             $intStatus);
 
-
+            }
           }
 
           // Validacion de Resultado de Insertar  Un Producto, Si se inserto el producto
@@ -195,6 +197,9 @@
 
     // Funcion para ver un producto
     public function getProducto($producto){
+
+      // Validacion de Permisos
+     if($_SESSION['permisosMod']['r']){
 
       $idproducto = intval($producto);
     
@@ -231,6 +236,7 @@
 
   
           echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+        }
           die();
       }
 
@@ -324,6 +330,7 @@
       // Validar Envio
       if($_POST){
 
+        if($_SESSION['permisosMod']['d']){
         // almacenar variable de js 
         $intIdProducto = intval($_POST['idProducto']);
 
@@ -342,6 +349,7 @@
         }
 
         echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+        }
       }
       die();
     }
