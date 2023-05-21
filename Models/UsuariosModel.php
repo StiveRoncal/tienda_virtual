@@ -61,7 +61,7 @@ class UsuariosModel extends Mysql{
             $return = $request_insert;
         }else{
 
-            $return = "exist";
+            $return = false;
         }
         return $return;
     }
@@ -158,7 +158,7 @@ class UsuariosModel extends Mysql{
 
         }else{
 
-            $request = "exist";
+            $request = false;
         }
 
         return $request;

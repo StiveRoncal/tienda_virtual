@@ -62,7 +62,7 @@
                 $return = $request_insert;
             }else{
 
-                $return = "exist";
+                $return = false;
             }
 
             return $return;
@@ -91,7 +91,7 @@
                 $request = $this->update($sql, $arrData);
             }else{
 
-                $request = "exist";
+                $request = false;
             }
 
             return $request;
@@ -128,7 +128,7 @@
                 }
             }else{
 
-                $request = 'exist';
+                $request = false;
             }
             
             return $request;

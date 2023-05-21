@@ -199,7 +199,7 @@
             }else{
               $arrResponse = array('status'=>true, 'msg'=> 'Datos Actualizados Correctamente');
             }
-          }else if($request_rol == 'exist'){
+          }else if($request_rol == false){
 
             $arrResponse = array('status' => false, 'msg' => '¡Atencion! El Rol Ya existe');
           }else{
@@ -231,7 +231,7 @@
                   // Ejecuta el mensaje del proceso
                   $arrResponse = array('status' => true, 'msg' => 'Se Ha Eliminado El Rol');
                 // de lo contraio manda error
-                }else if($requestDelete == 'exist'){
+                }else if($requestDelete == false){
 
                   $arrResponse = array('status' => false, 'msg' => 'No es posible eliminar un Rol asociado a Usuario');
                 }
