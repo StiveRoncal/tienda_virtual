@@ -153,8 +153,11 @@ window.addEventListener('load',function(){
                         swal("", objData.msg, "success");
 
                         // establcer ID
-                        document.querySelector('#idProducto').value = objData.idproducto;
+                        document.querySelector("#idProducto").value = objData.idproducto;
                         
+                        // Seccion de Galerria
+                        document.querySelector("#containerGallery").classList.remove("notBlock");
+
                         // validacion cuando se actualiza no recarge la pagina
                         if(rowTable == ""){
 
@@ -213,7 +216,7 @@ window.addEventListener('load',function(){
 
             <input type="file" name="foto" id="img${key}" class="inputUploadfile">
             <label for="img${key}" class="btnUploadfile"><i class="fas fa-upload"></i></label>
-            <button class="btnDeleteImage" type="button" onclick="fntDelItem('#div${key}')"><i class="fas fa-trash-alt"></i></button>`;
+            <button class="btnDeleteImage notBlock" type="button" onclick="fntDelItem('#div${key}')"><i class="fas fa-trash-alt"></i></button>`;
             
             // Colocar Todo el elemento de DIV images #containerImages con la funcion de appendChild
             document.querySelector("#containerImages").appendChild(newElement);
@@ -525,6 +528,7 @@ function fntViewInfo(idProducto){
 function fntEditInfo(element,idproducto){
 
     rowTable = element.parentNode.parentNode.parentNode; 
+    // console.log(rowTable);
     document.querySelector('#titleModal').innerHTML = "Actualizar Producto";
     document.querySelector('.modal-header').classList.replace("headerRegister", "headerUpdate");
     document.querySelector('#btnActionForm').classList.replace("btn-primary", "btn-info");
@@ -727,7 +731,7 @@ function fntPrintBarcode(area){
 
 function openModal(){
     
-    // rowTable = "";
+    rowTable = "";
     document.querySelector('#idProducto').value="";
     document.querySelector('.modal-header').classList.replace("headerUpdate", "headerRegister");
     document.querySelector('#btnActionForm').classList.replace("btn-info", "btn-primary");
@@ -735,6 +739,12 @@ function openModal(){
     document.querySelector('#titleModal').innerHTML = "Nueva Producto";
    
     document.querySelector('#formProductos').reset();
+
+
+    // Esconder Codigo en Barras y Imagens cuando Creamos Nuevo Producto
+    document.querySelector("#divBarCode").classList.add("notBlock");
+    document.querySelector("#containerGallery").classList.add("notBlock");
+    document.querySelector("#containerImages").innerHTML = "";
 
     $('#modalFormProductos').modal('show');
     // removePhoto();
