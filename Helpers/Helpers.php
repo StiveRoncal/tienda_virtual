@@ -16,7 +16,7 @@
     }
 
 
-    // funcion para retornar el header_admin y footer_admin
+    // #1 funcion para retornar el header_admin y footer_admin
     function headerAdmin($data=""){
 
         $view_header = "Views/Template/header_admin.php";
@@ -27,6 +27,21 @@
         $view_footer = "Views/Template/footer_admin.php";
         require_once ($view_footer);
     }
+
+
+
+    // # 2funcion para retornar el header_tienda.php y footer_tienda.php
+    function headerTienda($data=""){
+
+        $view_header = "Views/Template/header_tienda.php";
+        require_once ($view_header);
+    } 
+
+    function footerTienda($data = ""){
+        $view_footer = "Views/Template/footer_tienda.php";
+        require_once ($view_footer);
+    }
+
 
     // Nueva informacion formateada
     function dep($data){

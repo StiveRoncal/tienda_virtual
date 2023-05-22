@@ -28,8 +28,8 @@
     const EMAIL_REMITENTE = "no-reply@abelosh.com";
 
 
-    const NOMBRE_EMPRESA = "GROSOTEC";
-    const WEB_EMPRESA = "www.abelosh.com";
+    const NOMBRE_EMPRESA = "GROSOTEC Tienda Virtual";
+    const WEB_EMPRESA = "www.stiveroncal.com";
 
     // const NOMBRE_REMITENTE = "Nombre Remitente de correo";
 	// const EMAIL_REMITENTE = "no-reply@abelosh.com";
