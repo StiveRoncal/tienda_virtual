@@ -36,5 +36,8 @@
 	// const NOMBRE_EMPESA = "Nombre Empresa";
 	// const WEB_EMPRESA = "Página Web empresa";
 
+
+    const CAT_SLIDER = "1,2,3";
+    const CAT_BANNER = "4,5,6";
   
 ?>
