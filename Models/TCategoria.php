@@ -32,7 +32,7 @@
                 for($stive = 0; $stive < count($request) ; $stive++){
 
                     // for que alamcena una url d ela imagen con el nombre de la portada
-                    $request[$stive]['portada'] = BASE_URL.'/Assets/images/uploads'.$request[$stive]['portada'];
+                    $request[$stive]['portada'] = BASE_URL.'/Assets/images/uploads/'.$request[$stive]['portada'];
 
                 }
 

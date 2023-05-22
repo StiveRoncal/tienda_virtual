@@ -27,8 +27,7 @@
         $data['slider'] = $this->getCategoriasT(CAT_SLIDER);
         $data['banner'] = $this->getCategoriasT(CAT_BANNER);
 
-        dep($data);exit;
-
+        // dep($data);
         // invocar la vista su metodo libraries/Core/Views.php
         $this->views->getView($this,"home",$data);
     }
