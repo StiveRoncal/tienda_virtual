@@ -68,7 +68,7 @@
 				<nav class="limiter-menu-desktop container">
 					
 					<!-- Logo desktop -->		
-					<a href="#" class="logo">
+					<a href="<?= base_url(); ?>" class="logo">
 						<!-- Implementar el logo GROSOTEC o NSRONCAL 133x17 -->
 						<img src="<?= media();?>/tienda/images/icons/logo-01.png" alt="Tienda Virtual">
 					</a>

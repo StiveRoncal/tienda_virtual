@@ -235,8 +235,6 @@
 			<div class="row isotope-grid">
 
 			<?php
-				// verificar si array esta vacio
-			if(!empty($arrProductos)){
 
 				for($p=0; $p < count($arrProductos); $p++){
 
@@ -285,10 +283,7 @@
 					</div>
 				</div>
 			<?php
-								
-					}
-				}else{
-					echo "No Hay Producto Para Mostrar Senatino XD.";
+			
 				}
 			?>
 
