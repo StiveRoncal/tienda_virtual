@@ -555,7 +555,7 @@ function fntEditInfo(element,idproducto){
 
             let htmlImage = "";
             let objProducto = objData.data;
-
+            
             // console.log(objProducto);
 
             // mOSTRA DATOS AL FORMULARIO editar

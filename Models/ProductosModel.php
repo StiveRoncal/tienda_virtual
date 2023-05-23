@@ -128,7 +128,7 @@
                             status=?
                             WHERE idproducto = $this->intIdProducto";
 
-                $arrData = array($this->intIdProducto,
+                $arrData = array($this->intCategoriaId,
                                 $this->intCodigo,
                                 $this->strNombre,
                                 $this->strDescripcion,
