@@ -7,7 +7,7 @@
     trait Tcategoria{
 
         // conexion
-        public $con;
+        private $con;
 
         // #1 Metodo para Extaer Las Categorias
 
