@@ -10,7 +10,7 @@
     
     <main class="app-content">
       <div class="page-error tile">
-        <h1><i class="fa fa-exclamation-circle"></i> Error 404: Pagina no Encontrada</h1>
+        <h1><i class="fa fa-exclamation-circle"></i> Error 404: Pagina no Encontrada; Senior Stive Roncal</h1>
         <p>La Pagina no Existe.</p>
         <p><a class="btn btn-primary" href="javascript:window.history.back();">Go Back</a></p>
       </div>
