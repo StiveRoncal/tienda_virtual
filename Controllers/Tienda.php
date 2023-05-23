@@ -42,13 +42,10 @@
         }else{
 
             $categoria = strClean($params);
-            dep($this->getProductosCategoriaT($categoria));
-          
-
-            $data['page_tag'] = $categoria;
+            $data['page_tag'] = NOMBRE_EMPRESA." - ".$categoria;
             $data['page_title'] = $categoria;
             $data['page_name'] = "categoria";
-            // $data['productos'] = $this->getProductosT();
+            $data['productos'] = $this->getProductosCategoriaT($categoria);
             $this->views->getView($this,"categoria",$data);
         }
 
